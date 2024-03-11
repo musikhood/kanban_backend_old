@@ -1,6 +1,7 @@
 <?php
 
 namespace App\User\Application\Model\Command;
+use App\User\Domain\Enum\RoleType;
 use SensitiveParameter;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -11,7 +12,12 @@ readonly class CreateUserCommand
             message: 'Mail {{ value }} jest nie poprawny.'
         )]
         private string $email,
+
+        #[Assert\All([
+            new Assert\Choice(callback: [RoleType::class, 'enumValues'])
+        ])]
         private array $roles,
+
         #[SensitiveParameter]
         private string $password
     )

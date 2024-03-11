@@ -2,6 +2,7 @@
 
 namespace App\User\Application\Handler;
 
+use App\User\Application\Exception\UserAlreadyExistException;
 use App\User\Application\Model\Command\CreateUserCommand;
 use App\User\Domain\Entity\User;
 use App\User\Domain\RepositoryPort\UserRepositoryInterface;
@@ -20,8 +21,16 @@ readonly class CreateUserHandler
     {
     }
 
+    /**
+     * @throws UserAlreadyExistException
+     */
     public function __invoke(CreateUserCommand $createUserCommand)
     {
+        $user = $this->userRepository->findOneBy(['email'=>$createUserCommand->getEmail()]);
+        if ($user){
+            throw new UserAlreadyExistException($createUserCommand);
+        }
+
         $user = User::registerUser($createUserCommand);
         $hashedPassword =
             $this->userPasswordHasher->hashPassword(
