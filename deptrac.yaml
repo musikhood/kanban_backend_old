@@ -1,0 +1,10 @@
+deptrac:
+  paths:
+    - ./src
+  exclude_files:
+    - '#.*test.*#'
+
+imports:
+  - src/Shared/deps.yaml
+  - src/Board/deps.yaml
+  - src/User/deps.yaml

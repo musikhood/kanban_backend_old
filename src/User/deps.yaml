@@ -1,0 +1,37 @@
+deptrac:
+    layers:
+        # Warstwa Domenowa
+      - name: UserDomain
+        collectors:
+          - type: className
+            regex: App\\User\\Domain\\.*
+
+        # Warstwa Aplikacji
+      - name: UserApplication
+        collectors:
+          - type: className
+            regex: App\\User\\Application\\.*
+
+        # Warstwa Infrastruktury
+      - name: UserInfrastructure
+        collectors:
+          - type: className
+            regex: App\\User\\Infrastructure\\.*
+
+    ruleset: #Każda warstwa ma dostęp do Shared oraz paczek z Vendora
+      #User/Domain ma dostęp do warstwy Aplikacji i Infrastruktury
+      UserDomain:
+        - UserApplication
+        - UserInfrastructure
+        - +Shared
+
+      #User/Application ma dostęp do warstwy Domenowej
+      UserApplication:
+        - UserDomain
+        - +Shared
+
+      #User/Infrastructure ma dostęp do warstwy Domenowej i Aplikacji
+      UserInfrastructure:
+        - UserDomain
+        - UserApplication
+        - +Shared

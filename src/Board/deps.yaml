@@ -1,0 +1,29 @@
+deptrac:
+    layers:
+      - name: BoardDomain
+        collectors:
+          - type: className
+            regex: App\\Board\\Domain\\.*
+      - name: BoardApplication
+        collectors:
+          - type: className
+            regex: App\\Board\\Application\\.*
+      - name: BoardInfrastructure
+        collectors:
+          - type: className
+            regex: App\\Board\\Infrastructure\\.*
+
+    ruleset:
+      BoardDomain:
+        - BoardApplication
+        - BoardInfrastructure
+        - +Shared
+
+      BoardApplication:
+        - BoardDomain
+        - +Shared
+
+      BoardInfrastructure:
+        - BoardDomain
+        - BoardApplication
+        - +Shared

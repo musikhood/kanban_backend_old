@@ -1,0 +1,15 @@
+deptrac:
+  layers:
+    - name: Shared
+      collectors:
+        - type: className
+          regex: App\\Shared\\.*
+
+    - name: Vendor
+      collectors:
+        - type: className
+          regex: ^(Symfony|Doctrine|Gesdinet).*
+
+  ruleset:
+    Shared:
+      - Vendor
