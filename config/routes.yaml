@@ -5,7 +5,16 @@ board_controller:
     type: attribute
 
 user_controller:
-  resource:
-    path: ../src/User/Application/Controller/
-    namespace: App\User\Application\Controller
-  type: attribute
+    resource:
+        path: ../src/User/Application/Controller/
+        namespace: App\User\Application\Controller
+    type: attribute
+
+api_login_check:
+    path: /api/login_check
+
+api_refresh_token:
+    path: /api/token/refresh
+
+api_token_invalidate:
+    path: /api/token/invalidate
