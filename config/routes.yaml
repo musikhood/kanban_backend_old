@@ -1,5 +1,11 @@
-controllers:
+board_controller:
     resource:
         path: ../src/Board/Application/Controller/
         namespace: App\Board\Application\Controller
     type: attribute
+
+user_controller:
+  resource:
+    path: ../src/User/Application/Controller/
+    namespace: App\User\Application\Controller
+  type: attribute
