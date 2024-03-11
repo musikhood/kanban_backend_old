@@ -15,7 +15,6 @@ deptrac:
 
     ruleset:
       BoardDomain:
-        - BoardInfrastructure
         - +Shared
 
       BoardApplication:
@@ -24,5 +23,4 @@ deptrac:
 
       BoardInfrastructure:
         - BoardDomain
-        - BoardApplication
         - +Shared
