@@ -3,14 +3,13 @@
 namespace App\User\Domain\Event;
 
 use App\Shared\Event\DomainEventInterface;
-use App\User\Application\Model\Command\CreateUserCommand;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class UserCreatedEvent extends Event implements DomainEventInterface
 {
     private \DateTimeImmutable $occur;
     public function __construct(
-        private readonly CreateUserCommand $createUserCommand,
+        private readonly string $email,
     )
     {
         $this->occur = new \DateTimeImmutable();
@@ -21,8 +20,9 @@ class UserCreatedEvent extends Event implements DomainEventInterface
         return $this->occur;
     }
 
-    public function getCreateUserCommand(): CreateUserCommand
+    public function getEmail(): string
     {
-        return $this->createUserCommand;
+        return $this->email;
     }
+
 }

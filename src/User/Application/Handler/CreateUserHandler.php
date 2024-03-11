@@ -31,12 +31,18 @@ readonly class CreateUserHandler
             throw new UserAlreadyExistException($createUserCommand);
         }
 
-        $user = User::registerUser($createUserCommand);
+        $user =
+            User::registerUser(
+                $createUserCommand->getEmail(),
+                $createUserCommand->getRoles()
+            );
+
         $hashedPassword =
             $this->userPasswordHasher->hashPassword(
                 $user,
                 $createUserCommand->getPassword()
             );
+
         $user->setPassword($hashedPassword);
 
         $this->userRepository->save($user);

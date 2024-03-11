@@ -2,7 +2,6 @@
 
 namespace App\Board\Domain\Entity;
 
-use App\Board\Application\Model\Command\CreateBoardCommand;
 use App\Board\Domain\Event\BoardCreatedEvent;
 use App\Board\Infrastructure\Repository\BoardRepository;
 use App\Shared\Aggregate\AggregateRoot;
@@ -42,12 +41,12 @@ class Board extends AggregateRoot
     }
 
     public static function create(
-        CreateBoardCommand $createBoardCommand,
+        string $name
     ): self {
         $board = new self();
-        $board->setName($createBoardCommand->getName());
+        $board->setName($name);
 
-        $board->recordDomainEvent(new BoardCreatedEvent($createBoardCommand));
+        $board->recordDomainEvent(new BoardCreatedEvent($name));
 
         return $board;
     }

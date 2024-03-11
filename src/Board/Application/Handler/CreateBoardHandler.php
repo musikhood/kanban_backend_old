@@ -20,7 +20,7 @@ readonly class CreateBoardHandler
 
     public function __invoke(CreateBoardCommand $createBoardCommand)
     {
-        $board = Board::create($createBoardCommand);
+        $board = Board::create($createBoardCommand->getName());
 
         $this->boardRepository->save($board);
 

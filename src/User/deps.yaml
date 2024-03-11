@@ -21,7 +21,6 @@ deptrac:
     ruleset: #Każda warstwa ma dostęp do Shared oraz paczek z Vendora
       #User/Domain ma dostęp do warstwy Aplikacji i Infrastruktury
       UserDomain:
-        - UserApplication
         - UserInfrastructure
         - +Shared
 

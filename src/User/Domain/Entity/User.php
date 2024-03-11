@@ -3,7 +3,6 @@
 namespace App\User\Domain\Entity;
 
 use App\Shared\Aggregate\AggregateRoot;
-use App\User\Application\Model\Command\CreateUserCommand;
 use App\User\Domain\Event\UserCreatedEvent;
 use App\User\Infrastructure\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -114,12 +113,12 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         return get_object_vars($this);
     }
 
-    public static function registerUser(CreateUserCommand $createUserCommand): self
+    public static function registerUser(string $email, array $roles): self
     {
         $user = new User();
-        $user->setEmail($createUserCommand->getEmail());
-        $user->setRoles($createUserCommand->getRoles());
-        $user->recordDomainEvent(new UserCreatedEvent($createUserCommand));
+        $user->setEmail($email);
+        $user->setRoles($roles);
+        $user->recordDomainEvent(new UserCreatedEvent($email));
         // Nie tworzymy tutaj hasła, bo trzeba będzie je zahashować.
         // Nie możemy zrobić tego w tym miejscu, bo musimy wstrzyknąć serwis do hashowania
 
