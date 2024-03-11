@@ -4,12 +4,12 @@ namespace App\User\Domain\Entity;
 
 use App\Shared\Aggregate\AggregateRoot;
 use App\User\Domain\Event\UserCreatedEvent;
-use App\User\Domain\RepositoryPort\UserRepositoryInterface;
+use App\User\Infrastructure\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: UserRepositoryInterface::class)]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User extends AggregateRoot implements UserInterface, PasswordAuthenticatedUserInterface
 {

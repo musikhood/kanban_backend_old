@@ -3,11 +3,11 @@
 namespace App\Board\Domain\Entity;
 
 use App\Board\Domain\Event\BoardCreatedEvent;
-use App\Board\Domain\RepositoryPort\BoardRepositoryInterface;
+use App\Board\Infrastructure\Repository\BoardRepository;
 use App\Shared\Aggregate\AggregateRoot;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: BoardRepositoryInterface::class)]
+#[ORM\Entity(repositoryClass: BoardRepository::class)]
 class Board extends AggregateRoot
 {
     #[ORM\Id]

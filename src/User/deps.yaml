@@ -19,8 +19,9 @@ deptrac:
             regex: App\\User\\Infrastructure\\.*
 
     ruleset: #Każda warstwa ma dostęp do Shared oraz paczek z Vendora
-      #User/Domain ma dostęp tylko do shared
+      #User/Domain ma dostęp do warstwy Infrastruktury
       UserDomain:
+        - UserInfrastructure
         - +Shared
 
       #User/Application ma dostęp do warstwy Domenowej
