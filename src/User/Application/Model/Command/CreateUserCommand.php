@@ -1,6 +1,7 @@
 <?php
 
 namespace App\User\Application\Model\Command;
+use SensitiveParameter;
 use Symfony\Component\Validator\Constraints as Assert;
 
 readonly class CreateUserCommand
@@ -11,6 +12,7 @@ readonly class CreateUserCommand
         )]
         private string $email,
         private array $roles,
+        #[SensitiveParameter]
         private string $password
     )
     {
