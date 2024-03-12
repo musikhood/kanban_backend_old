@@ -2,22 +2,20 @@
 
 namespace App\Board\Application\Exception;
 
-use App\Board\Application\Model\Query\FindBoardQuery;
+use App\Shared\Application\Exception\CustomException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\WithHttpStatus;
 
 #[WithHttpStatus(Response::HTTP_NOT_FOUND)]
-class BoardNotFoundException extends \Exception
+class BoardNotFoundException extends CustomException
 {
-    public function __construct(
-        private readonly FindBoardQuery $query
-    )
+    public function errorCode(): string
     {
-        parent::__construct('Board Not Found');
+        return Response::HTTP_NOT_FOUND;
     }
 
-    public function getQuery(): FindBoardQuery
+    public function errorMessage(): string
     {
-        return $this->query;
+        return 'Board Not Found';
     }
 }

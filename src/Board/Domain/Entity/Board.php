@@ -41,11 +41,6 @@ class Board extends AggregateRoot
         $this->userId = $user;
     }
 
-    public function toArray(): array
-    {
-        return get_object_vars($this);
-    }
-
     public static function create(
         BoardId $boardId,
         UserId $userId,

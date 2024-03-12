@@ -25,7 +25,7 @@ readonly class FindBoardHandler
         $board = $this->boardRepository->findOneBy(['id'=>$findBoardQuery->getBoardId()]);
 
         if (!$board){
-            throw new BoardNotFoundException($findBoardQuery);
+            throw new BoardNotFoundException();
         }
 
         return $board;

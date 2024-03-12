@@ -31,7 +31,7 @@ readonly class CreateUserHandler
     {
         $user = $this->userRepository->findOneBy(['email'=>$createUserCommand->getEmail()]);
         if ($user){
-            throw new UserAlreadyExistException($createUserCommand);
+            throw new UserAlreadyExistException();
         }
 
         $user = User::registerUser(

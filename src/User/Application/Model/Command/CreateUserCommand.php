@@ -8,6 +8,7 @@ readonly class CreateUserCommand
 {
     public function __construct(
         #[Assert\NotBlank]
+        #[Assert\Email]
         private string $email,
 
         #[Assert\NotBlank]

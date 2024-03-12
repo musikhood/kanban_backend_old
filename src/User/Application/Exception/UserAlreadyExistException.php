@@ -2,22 +2,20 @@
 
 namespace App\User\Application\Exception;
 
-use App\User\Application\Model\Command\CreateUserCommand;
+use App\Shared\Application\Exception\CustomException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\WithHttpStatus;
 
 #[WithHttpStatus(Response::HTTP_CONFLICT)]
-class UserAlreadyExistException extends \Exception
+class UserAlreadyExistException extends CustomException
 {
-    public function __construct(
-        private readonly CreateUserCommand $command
-    )
+    public function errorCode(): string
     {
-        parent::__construct('User Already Exist');
+        return Response::HTTP_CONFLICT;
     }
 
-    public function getCommand(): CreateUserCommand
+    public function errorMessage(): string
     {
-        return $this->command;
+        return 'User Already Exist';
     }
 }

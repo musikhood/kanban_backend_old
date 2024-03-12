@@ -6,7 +6,7 @@ abstract class StringValueObject
 {
     public function __construct(protected string $value) {}
 
-    final public function value(): string
+    final public function getValue(): string
     {
         return $this->value;
     }
