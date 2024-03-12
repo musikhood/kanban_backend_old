@@ -27,7 +27,7 @@ readonly class CreateBoardHandler
     {
         $board = Board::create(
             new BoardId(Uuid::uuid4()->toString()),
-            new UserId($this->security->getUser()->getId()),
+            new UserId($this->security->getUser()->getId()->getValue()),
             $createBoardCommand->getName()
         );
 

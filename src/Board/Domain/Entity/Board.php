@@ -3,23 +3,13 @@
 namespace App\Board\Domain\Entity;
 
 use App\Board\Domain\Event\BoardCreatedEvent;
-use App\Board\Infrastructure\Repository\BoardRepository;
 use App\Shared\Aggregate\AggregateRoot;
 use App\Shared\ValueObject\UserId;
-use Doctrine\ORM\Mapping as ORM;
-
-#[ORM\Entity(repositoryClass: BoardRepository::class)]
 class Board extends AggregateRoot
 {
-    #[ORM\Id]
-    #[ORM\Column]
     private string $id;
-
-    #[ORM\Column]
     private string $name;
-
-    #[ORM\Column]
-    private string $userId;
+    private string $user;
 
     public function __construct(BoardId $id)
     {
@@ -41,14 +31,14 @@ class Board extends AggregateRoot
         $this->name = $name;
     }
 
-    public function getUserId(): UserId
+    public function getUser(): UserId
     {
-        return new UserId($this->userId);
+        return new UserId($this->user);
     }
 
-    public function setUserId(UserId $userId): void
+    public function setUser(UserId $user): void
     {
-        $this->userId = $userId->getValue();
+        $this->user = $user->getValue();
     }
 
     public function toArray(): array
@@ -62,7 +52,7 @@ class Board extends AggregateRoot
         string $name
     ): self {
         $board = new self($boardId);
-        $board->setUserId($userId);
+        $board->setUser($userId);
         $board->setName($name);
 
         $board->recordDomainEvent(new BoardCreatedEvent($name));

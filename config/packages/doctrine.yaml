@@ -17,16 +17,16 @@ doctrine:
         auto_mapping: true
         mappings:
           Board:
-              type: attribute
+              type: xml
               is_bundle: false
-              dir: '%kernel.project_dir%/src/Board/Domain/Entity'
+              dir: '%kernel.project_dir%/src/Board/Infrastructure/DoctrineMappings'
               prefix: 'App\Board\Domain\Entity'
               alias: Board
 
           User:
-            type: attribute
+            type: xml
             is_bundle: false
-            dir: '%kernel.project_dir%/src/User/Domain/Entity'
+            dir: '%kernel.project_dir%/src/User/Infrastructure/DoctrineMappings'
             prefix: 'App\User\Domain\Entity'
             alias: User
 
