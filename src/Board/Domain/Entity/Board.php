@@ -5,34 +5,50 @@ namespace App\Board\Domain\Entity;
 use App\Board\Domain\Event\BoardCreatedEvent;
 use App\Board\Infrastructure\Repository\BoardRepository;
 use App\Shared\Aggregate\AggregateRoot;
+use App\Shared\ValueObject\UserId;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BoardRepository::class)]
 class Board extends AggregateRoot
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private string $id;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    #[ORM\Column]
+    private string $name;
 
-    public function getId(): ?int
+    #[ORM\Column]
+    private string $userId;
+
+    public function __construct(BoardId $id)
     {
-        return $this->id;
+        $this->id = $id->getValue();
     }
 
-    public function getName(): ?string
+    public function getId(): BoardId
+    {
+        return new BoardId($this->id);
+    }
+
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(string $name): void
     {
         $this->name = $name;
+    }
 
-        return $this;
+    public function getUserId(): UserId
+    {
+        return new UserId($this->userId);
+    }
+
+    public function setUserId(UserId $userId): void
+    {
+        $this->userId = $userId->getValue();
     }
 
     public function toArray(): array
@@ -41,9 +57,12 @@ class Board extends AggregateRoot
     }
 
     public static function create(
+        BoardId $boardId,
+        UserId $userId,
         string $name
     ): self {
-        $board = new self();
+        $board = new self($boardId);
+        $board->setUserId($userId);
         $board->setName($name);
 
         $board->recordDomainEvent(new BoardCreatedEvent($name));

@@ -7,7 +7,7 @@ readonly class CreateBoardCommand
 {
     public function __construct(
         #[Assert\NotBlank]
-        private string $name
+        private string $name,
     )
     {
     }

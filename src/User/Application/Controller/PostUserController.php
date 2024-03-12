@@ -22,7 +22,7 @@ class PostUserController extends AbstractController
     /**
      * @throws Throwable
      */
-    #[Route('/api/user', name: 'app_post_user', methods: ['POST'])]
+    #[Route('/user', name: 'app_post_user', methods: ['POST'])]
     public function index(#[MapRequestPayload] CreateUserCommand $createUserCommand): JsonResponse
     {
         $this->dispatch($createUserCommand);

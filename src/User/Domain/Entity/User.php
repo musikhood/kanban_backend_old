@@ -3,9 +3,11 @@
 namespace App\User\Domain\Entity;
 
 use App\Shared\Aggregate\AggregateRoot;
+use App\Shared\ValueObject\UserId;
 use App\User\Domain\Event\UserCreatedEvent;
 use App\User\Infrastructure\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -14,12 +16,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User extends AggregateRoot implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private string $id;
 
-    #[ORM\Column(length: 180)]
-    private ?string $email = null;
+    #[ORM\Column]
+    private string $email;
 
     /**
      * @var list<string> The user roles
@@ -31,23 +32,26 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
      * @var string The hashed password
      */
     #[ORM\Column]
-    private ?string $password = null;
+    private string $password;
 
-    public function getId(): ?int
+    public function __construct(UserId $userId)
     {
-        return $this->id;
+        $this->id = $userId->getValue();
     }
 
-    public function getEmail(): ?string
+    public function getId(): UserId
     {
-        return $this->email;
+        return new UserId($this->id);
     }
 
-    public function setEmail(string $email): static
+    public function getEmail(): UserEmail
     {
-        $this->email = $email;
+        return new UserEmail($this->email);
+    }
 
-        return $this;
+    public function setEmail(UserEmail $email): void
+    {
+        $this->email = $email->getValue();
     }
 
     /**
@@ -57,7 +61,7 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return $this->email;
     }
 
     /**
@@ -77,11 +81,9 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
     /**
      * @param list<string> $roles
      */
-    public function setRoles(array $roles): static
+    public function setRoles(array $roles): void
     {
         $this->roles = $roles;
-
-        return $this;
     }
 
     /**
@@ -92,11 +94,9 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(string $password): void
     {
         $this->password = $password;
-
-        return $this;
     }
 
     /**
@@ -113,9 +113,10 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         return get_object_vars($this);
     }
 
-    public static function registerUser(string $email, array $roles): self
+    public static function registerUser(UserEmail $email, array $roles): self
     {
-        $user = new User();
+        $userId = new UserId(Uuid::uuid4()->toString());
+        $user = new User($userId);
         $user->setEmail($email);
         $user->setRoles($roles);
         $user->recordDomainEvent(new UserCreatedEvent($email));

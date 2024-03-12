@@ -5,6 +5,7 @@ namespace App\User\Application\Handler;
 use App\User\Application\Exception\UserAlreadyExistException;
 use App\User\Application\Model\Command\CreateUserCommand;
 use App\User\Domain\Entity\User;
+use App\User\Domain\Entity\UserEmail;
 use App\User\Domain\RepositoryPort\UserRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -31,18 +32,15 @@ readonly class CreateUserHandler
             throw new UserAlreadyExistException($createUserCommand);
         }
 
-        $user =
-            User::registerUser(
-                $createUserCommand->getEmail(),
-                $createUserCommand->getRoles()
-            );
+        $user = User::registerUser(
+            new UserEmail($createUserCommand->getEmail()),
+            $createUserCommand->getRoles()
+        );
 
-        $hashedPassword =
-            $this->userPasswordHasher->hashPassword(
-                $user,
-                $createUserCommand->getPassword()
-            );
-
+        $hashedPassword = $this->userPasswordHasher->hashPassword(
+            $user,
+            $createUserCommand->getPassword()
+        );
         $user->setPassword($hashedPassword);
 
         $this->userRepository->save($user);
