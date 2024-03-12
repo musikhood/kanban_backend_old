@@ -8,7 +8,7 @@ deptrac:
     - name: Vendor
       collectors:
         - type: className
-          regex: ^(Symfony|Doctrine|Gesdinet).*
+          regex: ^(Symfony|Doctrine|Gesdinet|Ramsey).*
 
   ruleset:
     Shared:

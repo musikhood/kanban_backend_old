@@ -9,15 +9,17 @@ use App\User\Domain\Entity\UserEmail;
 use App\User\Domain\RepositoryPort\UserRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[AsMessageHandler]
 readonly class CreateUserHandler
 {
     public function __construct(
         private UserRepositoryInterface  $userRepository,
-        private EventDispatcherInterface $eventDispatcher,
-        private UserPasswordHasherInterface $userPasswordHasher
+        private EventDispatcherInterface $eventDispatcher
     )
     {
     }
@@ -25,7 +27,7 @@ readonly class CreateUserHandler
     /**
      * @throws UserAlreadyExistException
      */
-    public function __invoke(CreateUserCommand $createUserCommand)
+    public function __invoke(CreateUserCommand $createUserCommand): void
     {
         $user = $this->userRepository->findOneBy(['email'=>$createUserCommand->getEmail()]);
         if ($user){
@@ -34,14 +36,9 @@ readonly class CreateUserHandler
 
         $user = User::registerUser(
             $createUserCommand->getEmail(),
+            $createUserCommand->getPassword(),
             $createUserCommand->getRoles()
         );
-
-        $hashedPassword = $this->userPasswordHasher->hashPassword(
-            $user,
-            $createUserCommand->getPassword()
-        );
-        $user->setPassword($hashedPassword);
 
         $this->userRepository->save($user);
 

@@ -6,6 +6,8 @@ use App\Shared\Aggregate\AggregateRoot;
 use App\Shared\Domain\Entity\UserId;
 use App\User\Domain\Event\UserCreatedEvent;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -73,10 +75,28 @@ final class User extends AggregateRoot implements UserInterface, PasswordAuthent
         return get_object_vars($this);
     }
 
-    public static function registerUser(string $email, array $roles): self
+    public static function registerUser(string $email, string $password, array $roles): self
     {
+        $passwordHasherFactory = new PasswordHasherFactory([
+            // auto hasher with default options for the User class (and children)
+            User::class => ['algorithm' => 'auto'],
+
+            // auto hasher with custom options for all PasswordAuthenticatedUserInterface instances
+            PasswordAuthenticatedUserInterface::class => [
+                'algorithm' => 'auto',
+                'cost' => 15,
+            ],
+        ]);
+        $hasher = new UserPasswordHasher($passwordHasherFactory);
+
         $userId = new UserId(Uuid::uuid4()->toString());
         $user = new self($userId, $email, 'TEMP_STRING', $roles);
+
+        $hashedPassword = $hasher->hashPassword(
+            $user,
+            $password
+        );
+        $user->setPassword($hashedPassword);
 
         $user->recordDomainEvent(new UserCreatedEvent($email));
         // Nie tworzymy tutaj hasła, bo trzeba będzie je zahashować.
