@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Shared\Aggregate;
+namespace App\Shared\Domain\Aggregate;
 
-use App\Shared\Event\DomainEventInterface;
+use App\Shared\Domain\Event\DomainEventInterface;
 
 abstract class AggregateRoot
 {

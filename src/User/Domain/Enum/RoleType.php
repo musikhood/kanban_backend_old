@@ -2,7 +2,7 @@
 
 namespace App\User\Domain\Enum;
 
-use App\Shared\Trait\EnumTrait;
+use App\Shared\Domain\Trait\EnumTrait;
 
 enum RoleType: string
 {

@@ -2,7 +2,7 @@
 
 namespace App\Board\Domain\Entity;
 
-use App\Shared\ValueObject\UuidValueObject;
+use App\Shared\Domain\ValueObject\UuidValueObject;
 
 final class BoardId extends UuidValueObject
 {

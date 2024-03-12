@@ -2,10 +2,9 @@
 
 namespace App\Shared\Infrastructure\DoctrineTypes;
 
-use App\Shared\ValueObject\UuidValueObject;
-use Doctrine\DBAL\Types\StringType;
+use App\Shared\Domain\ValueObject\UuidValueObject;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Ramsey\Uuid\Uuid;
+use Doctrine\DBAL\Types\StringType;
 
 
 abstract class UuidType extends StringType

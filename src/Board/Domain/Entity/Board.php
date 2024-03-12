@@ -3,7 +3,7 @@
 namespace App\Board\Domain\Entity;
 
 use App\Board\Domain\Event\BoardCreatedEvent;
-use App\Shared\Aggregate\AggregateRoot;
+use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\Shared\Domain\Entity\UserId;
 
 class Board extends AggregateRoot

@@ -3,7 +3,7 @@
 namespace App\Board\Domain\Event;
 
 use App\Board\Domain\Entity\BoardName;
-use App\Shared\Event\DomainEventInterface;
+use App\Shared\Domain\Event\DomainEventInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class BoardCreatedEvent extends Event implements DomainEventInterface

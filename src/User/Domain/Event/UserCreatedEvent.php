@@ -2,7 +2,7 @@
 
 namespace App\User\Domain\Event;
 
-use App\Shared\Event\DomainEventInterface;
+use App\Shared\Domain\Event\DomainEventInterface;
 use App\User\Domain\Entity\UserEmail;
 use Symfony\Contracts\EventDispatcher\Event;
 

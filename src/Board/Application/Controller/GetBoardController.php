@@ -4,19 +4,17 @@ namespace App\Board\Application\Controller;
 
 use App\Board\Application\Model\Query\FindBoardQuery;
 use App\Board\Domain\Entity\Board;
-use App\Shared\Trait\DispatchTrait;
+use App\Shared\Application\Bus\CQBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Throwable;
 
 class GetBoardController extends AbstractController
 {
-    use DispatchTrait;
     public function __construct(
-        private MessageBusInterface $messageBus,
+        private readonly CQBus $bus
     ) {
     }
 
@@ -27,7 +25,7 @@ class GetBoardController extends AbstractController
     public function index(#[MapQueryString] FindBoardQuery $findBoardQuery): JsonResponse
     {
         /** @var Board $board */
-        $board = $this->dispatch($findBoardQuery);
+        $board = $this->bus->dispatch($findBoardQuery);
         return new JsonResponse($board->toArray());
     }
 }

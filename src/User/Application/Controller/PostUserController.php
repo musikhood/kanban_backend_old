@@ -2,20 +2,18 @@
 
 namespace App\User\Application\Controller;
 
-use App\Shared\Trait\DispatchTrait;
+use App\Shared\Application\Bus\CQBus;
 use App\User\Application\Model\Command\CreateUserCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Throwable;
 
 class PostUserController extends AbstractController
 {
-    use DispatchTrait;
     public function __construct(
-        private MessageBusInterface $messageBus,
+        private readonly CQBus $bus
     ) {
     }
 
@@ -25,7 +23,7 @@ class PostUserController extends AbstractController
     #[Route('/user', name: 'app_post_user', methods: ['POST'])]
     public function index(#[MapRequestPayload] CreateUserCommand $createUserCommand): JsonResponse
     {
-        $this->dispatch($createUserCommand);
+        $this->bus->dispatch($createUserCommand);
         return new JsonResponse(['message'=>'created']);
     }
 }

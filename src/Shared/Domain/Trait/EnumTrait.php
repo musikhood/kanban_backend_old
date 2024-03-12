@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Trait;
+namespace App\Shared\Domain\Trait;
 
 use BackedEnum;
 

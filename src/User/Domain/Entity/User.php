@@ -2,7 +2,7 @@
 
 namespace App\User\Domain\Entity;
 
-use App\Shared\Aggregate\AggregateRoot;
+use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\Shared\Domain\Entity\UserId;
 use App\User\Domain\Event\UserCreatedEvent;
 use Ramsey\Uuid\Uuid;

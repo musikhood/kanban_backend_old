@@ -1,20 +1,26 @@
 <?php
 
-namespace App\Shared\Trait;
+namespace App\Shared\Application\Bus;
 
-use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\HandleTrait;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Throwable;
 
-trait DispatchTrait
+class CQBus
 {
     use HandleTrait;
+
+    public function __construct(
+        private MessageBusInterface $messageBus
+    )
+    {
+    }
 
     /**
      * @throws Throwable
      */
-    private function dispatch($message): mixed
+    public function dispatch($message): mixed
     {
         try {
             return $this->handle($message);
