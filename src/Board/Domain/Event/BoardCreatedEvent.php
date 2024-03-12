@@ -2,6 +2,7 @@
 
 namespace App\Board\Domain\Event;
 
+use App\Board\Domain\Entity\BoardName;
 use App\Shared\Event\DomainEventInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -9,7 +10,7 @@ class BoardCreatedEvent extends Event implements DomainEventInterface
 {
     private \DateTimeImmutable $occur;
     public function __construct(
-        private readonly string $name,
+        private readonly BoardName $name,
     )
     {
         $this->occur = new \DateTimeImmutable();
@@ -20,7 +21,7 @@ class BoardCreatedEvent extends Event implements DomainEventInterface
         return $this->occur;
     }
 
-    public function getName(): string
+    public function getBoardName(): BoardName
     {
         return $this->name;
     }

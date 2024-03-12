@@ -33,7 +33,7 @@ readonly class CreateUserHandler
         }
 
         $user = User::registerUser(
-            new UserEmail($createUserCommand->getEmail()),
+            $createUserCommand->getEmail(),
             $createUserCommand->getRoles()
         );
 

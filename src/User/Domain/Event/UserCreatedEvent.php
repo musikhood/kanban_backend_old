@@ -10,7 +10,7 @@ class UserCreatedEvent extends Event implements DomainEventInterface
 {
     private \DateTimeImmutable $occur;
     public function __construct(
-        private readonly UserEmail $userEmail,
+        private readonly string $userEmail,
     )
     {
         $this->occur = new \DateTimeImmutable();
@@ -21,7 +21,7 @@ class UserCreatedEvent extends Event implements DomainEventInterface
         return $this->occur;
     }
 
-    public function getUserEmail(): UserEmail
+    public function getUserEmail(): string
     {
         return $this->userEmail;
     }

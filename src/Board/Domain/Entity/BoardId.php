@@ -2,9 +2,9 @@
 
 namespace App\Board\Domain\Entity;
 
-use App\Shared\ValueObject\AggregateRootIdValueObject;
+use App\Shared\ValueObject\UuidValueObject;
 
-final class BoardId extends AggregateRootIdValueObject
+final class BoardId extends UuidValueObject
 {
 
 }

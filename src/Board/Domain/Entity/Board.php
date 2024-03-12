@@ -4,41 +4,41 @@ namespace App\Board\Domain\Entity;
 
 use App\Board\Domain\Event\BoardCreatedEvent;
 use App\Shared\Aggregate\AggregateRoot;
-use App\Shared\ValueObject\UserId;
+use App\Shared\Domain\Entity\UserId;
+
 class Board extends AggregateRoot
 {
-    private string $id;
-    private string $name;
-    private string $user;
-
-    public function __construct(BoardId $id)
+    public function __construct(
+        private readonly BoardId $id,
+        private BoardName        $name,
+        private UserId           $userId
+    )
     {
-        $this->id = $id->getValue();
     }
 
     public function getId(): BoardId
     {
-        return new BoardId($this->id);
+        return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): BoardName
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(BoardName $name): void
     {
         $this->name = $name;
     }
 
     public function getUser(): UserId
     {
-        return new UserId($this->user);
+        return $this->userId;
     }
 
     public function setUser(UserId $user): void
     {
-        $this->user = $user->getValue();
+        $this->userId = $user;
     }
 
     public function toArray(): array
@@ -49,11 +49,9 @@ class Board extends AggregateRoot
     public static function create(
         BoardId $boardId,
         UserId $userId,
-        string $name
+        BoardName $name
     ): self {
-        $board = new self($boardId);
-        $board->setUser($userId);
-        $board->setName($name);
+        $board = new self($boardId, $name, $userId);
 
         $board->recordDomainEvent(new BoardCreatedEvent($name));
 

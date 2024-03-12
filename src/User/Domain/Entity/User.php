@@ -3,39 +3,36 @@
 namespace App\User\Domain\Entity;
 
 use App\Shared\Aggregate\AggregateRoot;
-use App\Shared\ValueObject\UserId;
+use App\Shared\Domain\Entity\UserId;
 use App\User\Domain\Event\UserCreatedEvent;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class User extends AggregateRoot implements UserInterface, PasswordAuthenticatedUserInterface
+final class User extends AggregateRoot implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    private string $id;
-
-    private string $email;
-    private array $roles = [];
-
-    private string $password;
-
-    public function __construct(UserId $userId)
+    public function __construct(
+        private readonly UserId $id,
+        private string $email,
+        private string $password,
+        private array $roles = []
+    )
     {
-        $this->id = $userId->getValue();
     }
 
     public function getId(): UserId
     {
-        return new UserId($this->id);
+        return $this->id;
     }
 
-    public function getEmail(): UserEmail
+    public function getEmail(): string
     {
-        return new UserEmail($this->email);
+        return $this->email;
     }
 
-    public function setEmail(UserEmail $email): void
+    public function setEmail(string $email): void
     {
-        $this->email = $email->getValue();
+        $this->email = $email;
     }
     public function getUserIdentifier(): string
     {
@@ -76,12 +73,11 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         return get_object_vars($this);
     }
 
-    public static function registerUser(UserEmail $email, array $roles): self
+    public static function registerUser(string $email, array $roles): self
     {
         $userId = new UserId(Uuid::uuid4()->toString());
-        $user = new self($userId);
-        $user->setEmail($email);
-        $user->setRoles($roles);
+        $user = new self($userId, $email, 'TEMP_STRING', $roles);
+
         $user->recordDomainEvent(new UserCreatedEvent($email));
         // Nie tworzymy tutaj hasła, bo trzeba będzie je zahashować.
         // Nie możemy zrobić tego w tym miejscu, bo musimy wstrzyknąć serwis do hashowania
