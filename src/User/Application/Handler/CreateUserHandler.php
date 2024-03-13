@@ -2,6 +2,7 @@
 
 namespace App\User\Application\Handler;
 
+use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use App\User\Application\Exception\UserAlreadyExistException;
 use App\User\Application\Model\Command\CreateUserCommand;
 use App\User\Domain\Entity\User;
@@ -9,13 +10,9 @@ use App\User\Domain\Entity\UserEmail;
 use App\User\Domain\RepositoryPort\UserRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[AsMessageHandler]
-readonly class CreateUserHandler
+readonly class CreateUserHandler implements CommandHandlerInterface
 {
     public function __construct(
         private UserRepositoryInterface  $userRepository,

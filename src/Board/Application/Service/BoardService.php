@@ -8,13 +8,16 @@ use App\Board\Application\Model\Command\CreateBoardCommand;
 use App\Board\Application\Model\Query\FindBoardQuery;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\Board;
-use App\Shared\Application\Bus\CQBus;
+use App\Shared\Application\Bus\BusInterface;
+use App\Shared\Application\Bus\CommandBusInterface;
+use App\Shared\Application\Bus\QueryBusInterface;
 use Throwable;
 
 readonly class BoardService implements BoardServiceInterface
 {
     public function __construct(
-        private CQBus $bus,
+        private CommandBusInterface $commandBus,
+        private QueryBusInterface $queryBus
     ) {
     }
 
@@ -27,7 +30,7 @@ readonly class BoardService implements BoardServiceInterface
         $findBoardQuery = new FindBoardQuery($boardId);
 
         /** @var Board $board */
-        $board = $this->bus->dispatch($findBoardQuery);
+        $board = $this->queryBus->handle($findBoardQuery);
 
         return new FindBoardResponseDto(
             $board->name()->value(),
@@ -42,7 +45,7 @@ readonly class BoardService implements BoardServiceInterface
     {
         $createBoardCommand = new CreateBoardCommand($boardName);
 
-        $this->bus->dispatch($createBoardCommand);
+        $this->commandBus->dispatch($createBoardCommand);
 
         return new CreateBoardResponseDto(
             'Board created successfully'

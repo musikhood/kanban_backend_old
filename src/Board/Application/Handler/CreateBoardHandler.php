@@ -7,6 +7,7 @@ use App\Board\Domain\Entity\Board;
 use App\Board\Domain\Entity\BoardId;
 use App\Board\Domain\Entity\BoardName;
 use App\Board\Domain\RepositoryPort\BoardRepositoryInterface;
+use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use App\Shared\Domain\Entity\UserId;
 use App\User\Domain\Entity\User;
 use Ramsey\Uuid\Uuid;
@@ -15,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-readonly class CreateBoardHandler
+readonly class CreateBoardHandler implements CommandHandlerInterface
 {
     public function __construct(
         private BoardRepositoryInterface $boardRepository,

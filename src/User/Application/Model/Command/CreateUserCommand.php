@@ -1,10 +1,10 @@
 <?php
 
 namespace App\User\Application\Model\Command;
+use App\Shared\Application\Cqrs\CommandInterface;
 use SensitiveParameter;
-use Symfony\Component\Validator\Constraints as Assert;
 
-readonly class CreateUserCommand
+readonly class CreateUserCommand implements CommandInterface
 {
     public function __construct(
         private string $email,

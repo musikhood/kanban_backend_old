@@ -6,10 +6,11 @@ use App\Board\Application\Exception\BoardNotFoundException;
 use App\Board\Application\Model\Query\FindBoardQuery;
 use App\Board\Domain\Entity\Board;
 use App\Board\Domain\RepositoryPort\BoardRepositoryInterface;
+use App\Shared\Application\Cqrs\QueryHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-readonly class FindBoardHandler
+readonly class FindBoardHandler implements QueryHandlerInterface
 {
     public function __construct(
         private BoardRepositoryInterface $boardRepository,

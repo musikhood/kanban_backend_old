@@ -2,7 +2,9 @@
 
 namespace App\User\Application\Service;
 
-use App\Shared\Application\Bus\CQBus;
+use App\Shared\Application\Bus\BusInterface;
+use App\Shared\Application\Bus\CommandBusInterface;
+use App\Shared\Application\Bus\QueryBusInterface;
 use App\User\Application\Dto\CreateUserResponseDto;
 use App\User\Application\Model\Command\CreateUserCommand;
 use App\User\Application\Port\UserServiceInterface;
@@ -12,7 +14,8 @@ use Throwable;
 readonly class UserService implements UserServiceInterface
 {
     public function __construct(
-        private CQBus $bus
+        private CommandBusInterface $commandBus,
+        private QueryBusInterface $queryBus
     )
     {
     }
@@ -28,7 +31,7 @@ readonly class UserService implements UserServiceInterface
             $password
         );
 
-        $this->bus->dispatch($createUserCommand);
+        $this->commandBus->dispatch($createUserCommand);
 
         return new CreateUserResponseDto('User created successfully');
     }
