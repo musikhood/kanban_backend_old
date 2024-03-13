@@ -8,6 +8,7 @@ use App\Board\Domain\Entity\BoardId;
 use App\Board\Domain\Entity\BoardName;
 use App\Board\Domain\RepositoryPort\BoardRepositoryInterface;
 use App\Shared\Domain\Entity\UserId;
+use App\User\Domain\Entity\User;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -26,9 +27,12 @@ readonly class CreateBoardHandler
 
     public function __invoke(CreateBoardCommand $createBoardCommand): void
     {
+        /** @var User $user */
+        $user = $this->security->getUser();
+
         $board = Board::create(
             new BoardId(Uuid::uuid4()->toString()),
-            new UserId($this->security->getUser()->getUserIdentifier()),
+            new UserId($user->id()->uuid()),
             new BoardName($createBoardCommand->getName())
         );
 

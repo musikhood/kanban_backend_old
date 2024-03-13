@@ -38,7 +38,7 @@ final class User extends AggregateRoot implements UserInterface, PasswordAuthent
     }
     public function getUserIdentifier(): string
     {
-        return $this->id->uuid();
+        return $this->email();
     }
     public function getRoles(): array
     {
