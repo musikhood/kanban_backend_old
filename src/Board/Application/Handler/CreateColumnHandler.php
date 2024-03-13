@@ -37,12 +37,8 @@ readonly class CreateColumnHandler implements CommandHandlerInterface
      */
     public function __invoke(CreateColumnCommand $createColumnCommand): void
     {
-        /** @var Board|null $board */
-        $board = $this->boardRepository->findOneBy(['id'=>$createColumnCommand->getBoardId()]);
 
-        if (!$board){
-            throw new BoardNotFoundException();
-        }
+        $board = $createColumnCommand->getBoard();
 
         $column = Board::createColumn(
             $board,

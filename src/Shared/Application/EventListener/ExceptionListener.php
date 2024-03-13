@@ -25,7 +25,6 @@ readonly class ExceptionListener
     {
         $exception = $event->getThrowable();
 
-        throw $exception;
         if(
             (
                 $exception instanceof HttpException ||
