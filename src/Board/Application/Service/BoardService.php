@@ -36,13 +36,17 @@ readonly class BoardService implements BoardServiceInterface
         /** @var Board $board */
         $board = $this->queryBus->handle($findBoardQuery);
 
+        $columns = $board->columns();
+
         $user = $this->userService->findUser(
             $board->user()->uuid()
         );
 
         return new FindBoardResponseDto(
+            $board->id()->uuid(),
+            $user->getEmail(),
             $board->name()->value(),
-            $user->getEmail()
+            $columns->toArray()
         );
     }
 

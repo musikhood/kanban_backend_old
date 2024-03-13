@@ -5,9 +5,9 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="App\Board\Domain\Entity\Board" table="board" repository-class="App\Board\Infrastructure\Repository\BoardRepository">
-        <id name="id" type="board_id" column="id" length="36" />
+        <id name="id" type="guid" column="id" length="36" />
 
-        <one-to-many field="columns" target-entity="App\Board\Domain\Entity\Column" mapped-by="id">
+        <one-to-many field="columns" target-entity="App\Board\Domain\Entity\Column" mapped-by="board">
             <cascade>
                 <cascade-persist/>
                 <cascade-remove/>

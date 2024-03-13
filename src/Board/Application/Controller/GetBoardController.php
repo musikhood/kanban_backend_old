@@ -3,7 +3,6 @@
 namespace App\Board\Application\Controller;
 
 use App\Board\Application\Dto\FindBoardRequestDto;
-use App\Board\Application\Model\Query\FindBoardQuery;
 use App\Board\Application\Port\BoardServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,7 +15,7 @@ class GetBoardController extends AbstractController
 {
     public function __construct(
         private readonly BoardServiceInterface $boardService,
-        private readonly NormalizerInterface $normalizer
+        private readonly NormalizerInterface $normalizer,
     ) {
     }
 

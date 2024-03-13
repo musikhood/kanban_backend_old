@@ -8,15 +8,13 @@ use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\Shared\Domain\Entity\UserId;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use JsonSerializable;
 
-class Board extends AggregateRoot
+class Board extends AggregateRoot implements JsonSerializable
 {
-    /**
-     * @var Collection<int, Column>
-     */
     private Collection $columns;
     public function __construct(
-        private readonly BoardId $id,
+        private readonly string $id,
         private BoardName        $name,
         private UserId           $userId
     )
@@ -26,7 +24,7 @@ class Board extends AggregateRoot
 
     public function id(): BoardId
     {
-        return $this->id;
+        return new BoardId($this->id);
     }
 
     public function name(): BoardName
@@ -49,6 +47,11 @@ class Board extends AggregateRoot
         $this->userId = $user;
     }
 
+    public function columns(): Collection
+    {
+        return $this->columns;
+    }
+
     public function addColumn(Column $column): void{
         $this->columns->add($column);
     }
@@ -59,7 +62,7 @@ class Board extends AggregateRoot
         ColumnName $name
     ): Column {
         $column = new Column(
-            $columnId,
+            $columnId->uuid(),
             $board,
             $name
         );
@@ -73,10 +76,20 @@ class Board extends AggregateRoot
         UserId $userId,
         BoardName $name
     ): self {
-        $board = new self($boardId, $name, $userId);
+        $board = new self($boardId->uuid(), $name, $userId);
 
         $board->recordDomainEvent(new BoardCreatedEvent($name));
 
         return $board;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id()->uuid(),
+            'userId' => $this->user()->uuid(),
+            'name' => $this->name()->value(),
+            'columns' => $this->columns()
+        ];
     }
 }

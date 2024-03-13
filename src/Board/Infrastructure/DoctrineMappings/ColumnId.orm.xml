@@ -5,6 +5,6 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <embeddable name="App\Board\Domain\Entity\ColumnId">
-        <field name="uuid" type="column_id" column="column_id" />
+        <field name="uuid" type="guid" column="column_id" />
     </embeddable>
 </doctrine-mapping>

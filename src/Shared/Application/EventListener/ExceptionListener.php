@@ -24,6 +24,8 @@ readonly class ExceptionListener
     public function onException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
+
+        throw $exception;
         if(
             (
                 $exception instanceof HttpException ||

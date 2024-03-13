@@ -15,7 +15,7 @@ final class User extends AggregateRoot implements UserInterface, PasswordAuthent
 {
     private string $password;
     public function __construct(
-        private readonly UserId $id,
+        private readonly string $id,
         private string $email,
         private array $roles = []
     )
@@ -24,7 +24,7 @@ final class User extends AggregateRoot implements UserInterface, PasswordAuthent
 
     public function id(): UserId
     {
-        return $this->id;
+        return new UserId($this->id);
     }
 
     public function email(): string
@@ -89,7 +89,7 @@ final class User extends AggregateRoot implements UserInterface, PasswordAuthent
         ]);
         $hasher = new UserPasswordHasher($passwordHasherFactory);
 
-        $userId = new UserId(Uuid::uuid4()->toString());
+        $userId = Uuid::uuid4()->toString();
         $user = new self($userId, $email, $roles);
 
         $hashedPassword = $hasher->hashPassword(
