@@ -40,7 +40,7 @@ readonly class ExceptionListener
                     'code' => $this->exceptionCodeFor($exception),
                     'message' => $exception->getMessage(),
                 ],
-                $this->exceptionHandler->statusCodeFor($exception::class)
+                $this->exceptionStatusCodeFor($exception)
             )
         );
     }
@@ -50,6 +50,13 @@ readonly class ExceptionListener
         return $error instanceof CustomException
             ? $error->errorCode()
             : Utils::toSnakeCase($this->extractClassName($error));
+    }
+
+    private function exceptionStatusCodeFor(Throwable $error): string
+    {
+        return $error instanceof CustomException
+            ? $error->errorCode()
+            : $this->exceptionHandler->statusCodeFor($error::class);
     }
 
     private function extractClassName(object $object): string
