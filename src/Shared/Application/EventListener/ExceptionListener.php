@@ -9,6 +9,7 @@ use ReflectionClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Throwable;
 
 readonly class ExceptionListener
@@ -23,7 +24,13 @@ readonly class ExceptionListener
     public function onException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
-        if($exception instanceof HttpException && $exception->getPrevious()){
+        if(
+            (
+                $exception instanceof HttpException ||
+                $exception instanceof HandlerFailedException
+            ) &&
+            $exception->getPrevious()
+        ){
             $exception = $exception->getPrevious();
         }
 

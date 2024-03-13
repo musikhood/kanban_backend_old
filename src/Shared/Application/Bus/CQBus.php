@@ -22,14 +22,6 @@ class CQBus
      */
     public function dispatch($message): mixed
     {
-        try {
-            return $this->handle($message);
-        } catch (HandlerFailedException $e) {
-            while ($e instanceof HandlerFailedException) {
-                $e = $e->getPrevious();
-            }
-
-            throw $e;
-        }
+        return $this->handle($message);
     }
 }
