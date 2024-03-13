@@ -8,9 +8,9 @@ use Stringable;
 
 abstract class UuidValueObject implements Stringable
 {
-    final public function __construct(protected string $value)
+    final public function __construct(protected string $uuid)
     {
-        $this->ensureIsValidUuid($value);
+        $this->ensureIsValidUuid($uuid);
     }
 
     final public static function random(): self
@@ -18,19 +18,19 @@ abstract class UuidValueObject implements Stringable
         return new static(RamseyUuid::uuid4()->toString());
     }
 
-    final public function getValue(): string
+    final public function uuid(): string
     {
-        return $this->value;
+        return $this->uuid;
     }
 
     final public function equals(self $other): bool
     {
-        return $this->getValue() === $other->getValue();
+        return $this->uuid() === $other->uuid();
     }
 
     public function __toString(): string
     {
-        return $this->getValue();
+        return $this->uuid();
     }
 
     private function ensureIsValidUuid(string $id): void

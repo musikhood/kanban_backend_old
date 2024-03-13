@@ -23,8 +23,7 @@ readonly class ExceptionListener
     public function onException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
-
-        if($exception instanceof HttpException){
+        if($exception instanceof HttpException && $exception->getPrevious()){
             $exception = $exception->getPrevious();
         }
 

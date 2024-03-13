@@ -33,8 +33,8 @@ class GetBoardController extends AbstractController
         $board = $this->bus->dispatch($findBoardQuery);
 
         $data = [
-            'name' => $board->name()->getValue(),
-            'author' => $board->user()->getValue()
+            'name' => $board->name()->value(),
+            'author' => $board->user()->uuid()
         ];
 
         return new JsonResponse($data);

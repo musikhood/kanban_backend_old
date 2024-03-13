@@ -22,6 +22,6 @@ abstract class UuidType extends StringType
     {
         /** @var UuidValueObject $value */
 
-        return $value instanceof UuidValueObject ? $value->getValue() : $value;
+        return $value instanceof UuidValueObject ? $value->uuid() : $value;
     }
 }
