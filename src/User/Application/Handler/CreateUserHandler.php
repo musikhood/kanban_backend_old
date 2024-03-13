@@ -6,7 +6,6 @@ use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use App\User\Application\Exception\UserAlreadyExistException;
 use App\User\Application\Model\Command\CreateUserCommand;
 use App\User\Domain\Entity\User;
-use App\User\Domain\Entity\UserEmail;
 use App\User\Domain\RepositoryPort\UserRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
