@@ -11,8 +11,4 @@ abstract class StringValueObject
         return $this->value;
     }
 
-    final public function updateValue(): string
-    {
-        return $this->value;
-    }
 }
