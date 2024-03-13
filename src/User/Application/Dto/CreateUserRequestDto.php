@@ -1,15 +1,22 @@
 <?php
 
-namespace App\User\Application\Model\Command;
+namespace App\User\Application\Dto;
+
 use SensitiveParameter;
 use Symfony\Component\Validator\Constraints as Assert;
 
-readonly class CreateUserCommand
+readonly class CreateUserRequestDto
 {
     public function __construct(
+        #[Assert\NotBlank]
+        #[Assert\Email]
         private string $email,
+
+        #[Assert\NotBlank]
         private array $roles,
+
         #[SensitiveParameter]
+        #[Assert\NotBlank]
         private string $password
     )
     {
@@ -29,5 +36,4 @@ readonly class CreateUserCommand
     {
         return $this->password;
     }
-
 }
