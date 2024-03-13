@@ -8,6 +8,7 @@ doctrine:
         types:
             user_id: App\Shared\Infrastructure\DoctrineMappings\UserIdType
             board_id: App\Board\Infrastructure\DoctrineMappings\BoardIdType
+            column_id: App\Board\Infrastructure\DoctrineMappings\ColumnIdType
 
         profiling_collect_backtrace: '%kernel.debug%'
         use_savepoints: true

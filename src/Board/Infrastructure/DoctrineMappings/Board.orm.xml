@@ -7,6 +7,12 @@
     <entity name="App\Board\Domain\Entity\Board" table="board" repository-class="App\Board\Infrastructure\Repository\BoardRepository">
         <id name="id" type="board_id" column="id" length="36" />
 
+        <one-to-many field="columns" target-entity="App\Board\Domain\Entity\Column" mapped-by="id">
+            <cascade>
+                <cascade-all />
+            </cascade>
+        </one-to-many>
+
         <embedded name="userId" class="App\Shared\Domain\Entity\UserId"  use-column-prefix="false" />
         <embedded name="name" class="App\Board\Domain\Entity\BoardName"  use-column-prefix="false" />
     </entity>
