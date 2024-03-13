@@ -2,24 +2,21 @@
 
 namespace App\Board\Application\Controller;
 
+use App\Board\Application\Dto\FindBoardRequestDto;
 use App\Board\Application\Model\Query\FindBoardQuery;
-use App\Board\Domain\Entity\Board;
-use App\Shared\Application\Bus\CQBus;
-use App\Shared\Utils;
+use App\Board\Application\Port\BoardServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Throwable;
 
 class GetBoardController extends AbstractController
 {
     public function __construct(
-        private readonly CQBus $bus
+        private readonly BoardServiceInterface $boardService,
+        private readonly NormalizerInterface $normalizer
     ) {
     }
 
@@ -27,16 +24,14 @@ class GetBoardController extends AbstractController
      * @throws Throwable
      */
     #[Route('/api/board', name: 'app_get_board', methods: ['GET'])]
-    public function index(#[MapQueryString] FindBoardQuery $findBoardQuery): JsonResponse
+    public function index(#[MapQueryString] FindBoardRequestDto $findBoardRequestDto): JsonResponse
     {
-        /** @var Board $board */
-        $board = $this->bus->dispatch($findBoardQuery);
+        $board = $this->boardService->findBoard(
+            $findBoardRequestDto->getBoardId()
+        );
 
-        $data = [
-            'name' => $board->name()->value(),
-            'author' => $board->user()->uuid()
-        ];
+        $response = $this->normalizer->normalize($board);
 
-        return new JsonResponse($data);
+        return new JsonResponse($response);
     }
 }

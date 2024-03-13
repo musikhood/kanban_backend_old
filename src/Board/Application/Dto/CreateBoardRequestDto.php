@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Board\Application\Model\Command;
+namespace App\Board\Application\Dto;
 
-readonly class CreateBoardCommand
+use Symfony\Component\Validator\Constraints as Assert;
+
+readonly class CreateBoardRequestDto
 {
     public function __construct(
+        #[Assert\NotBlank]
         private string $name,
     )
     {

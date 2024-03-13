@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Board\Application\Model\Query;
+namespace App\Board\Application\Dto;
 
-readonly class FindBoardQuery
+use Symfony\Component\Validator\Constraints as Assert;
+readonly class FindBoardRequestDto
 {
     public function __construct(
+        #[Assert\NotBlank]
         private string $boardId
     )
     {
