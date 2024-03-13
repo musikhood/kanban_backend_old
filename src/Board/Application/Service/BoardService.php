@@ -3,8 +3,10 @@
 namespace App\Board\Application\Service;
 
 use App\Board\Application\Dto\CreateBoardResponseDto;
+use App\Board\Application\Dto\CreateColumnResponseDto;
 use App\Board\Application\Dto\FindBoardResponseDto;
 use App\Board\Application\Model\Command\CreateBoardCommand;
+use App\Board\Application\Model\Command\CreateColumnCommand;
 use App\Board\Application\Model\Query\FindBoardQuery;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\Board;
@@ -56,5 +58,20 @@ readonly class BoardService implements BoardServiceInterface
         return new CreateBoardResponseDto(
             'Board created successfully'
         );
+    }
+
+    public function addColumn(string $boardId, string $columnName): CreateColumnResponseDto
+    {
+        $createColumnCommand = new CreateColumnCommand(
+            $boardId,
+            $columnName
+        );
+
+        $this->commandBus->dispatch($createColumnCommand);
+
+        return new CreateColumnResponseDto(
+            'Column created successfully'
+        );
+
     }
 }

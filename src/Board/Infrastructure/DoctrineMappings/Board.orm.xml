@@ -9,7 +9,8 @@
 
         <one-to-many field="columns" target-entity="App\Board\Domain\Entity\Column" mapped-by="id">
             <cascade>
-                <cascade-all />
+                <cascade-persist/>
+                <cascade-remove/>
             </cascade>
         </one-to-many>
 

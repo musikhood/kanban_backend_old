@@ -6,6 +6,7 @@ class Column
 {
     public function __construct(
         private readonly ColumnId $id,
+        private Board $board,
         private ColumnName $name
     )
     {
@@ -21,5 +22,10 @@ class Column
     }
     public function rename(ColumnName $name): void{
         $this->name = $name;
+    }
+
+    public function board(): Board
+    {
+        return $this->board;
     }
 }

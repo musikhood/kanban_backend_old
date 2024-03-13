@@ -60,6 +60,7 @@ class Board extends AggregateRoot
     ): Column {
         $column = new Column(
             $columnId,
+            $board,
             $name
         );
 

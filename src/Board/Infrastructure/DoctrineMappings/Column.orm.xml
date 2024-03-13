@@ -4,8 +4,15 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="App\Board\Domain\Entity\Column" table="column" repository-class="App\Board\Infrastructure\Repository\ColumnRepository">
+    <entity name="App\Board\Domain\Entity\Column" table="board_column" repository-class="App\Board\Infrastructure\Repository\ColumnRepository">
         <id name="id" type="column_id" column="id" length="36" />
+
+        <many-to-one
+            field="board"
+            target-entity="App\Board\Domain\Entity\Board"
+            inversed-by="id">
+            <join-column nullable="false" />
+        </many-to-one>
 
         <embedded name="name" class="App\Board\Domain\Entity\ColumnName"  use-column-prefix="false" />
     </entity>
