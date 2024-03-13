@@ -11,13 +11,15 @@ use App\Board\Domain\Entity\Board;
 use App\Shared\Application\Bus\BusInterface;
 use App\Shared\Application\Bus\CommandBusInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
+use App\User\Application\Port\UserServiceInterface;
 use Throwable;
 
 readonly class BoardService implements BoardServiceInterface
 {
     public function __construct(
         private CommandBusInterface $commandBus,
-        private QueryBusInterface $queryBus
+        private QueryBusInterface $queryBus,
+        private UserServiceInterface $userService
     ) {
     }
 
@@ -32,9 +34,13 @@ readonly class BoardService implements BoardServiceInterface
         /** @var Board $board */
         $board = $this->queryBus->handle($findBoardQuery);
 
+        $user = $this->userService->findUser(
+            $board->user()->uuid()
+        );
+
         return new FindBoardResponseDto(
             $board->name()->value(),
-            $board->user()->uuid()
+            $user->getEmail()
         );
     }
 

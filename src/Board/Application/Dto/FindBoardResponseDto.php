@@ -6,7 +6,7 @@ readonly class FindBoardResponseDto
 {
     public function __construct(
         private string $boardName,
-        private string $userId
+        private string $user
     )
     {
     }
@@ -16,8 +16,8 @@ readonly class FindBoardResponseDto
         return $this->boardName;
     }
 
-    public function getUserId(): string
+    public function getUser(): string
     {
-        return $this->userId;
+        return $this->user;
     }
 }
