@@ -80,16 +80,4 @@ class Utils
     {
         return is_array($coll) ? self::get_array($key, $coll, $default) : self::get_traversable($key, $coll, $default);
     }
-
-    public static function serializeObject($object): array
-    {
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-
-        $serializer = new Serializer($normalizers, $encoders);
-
-        $json = $serializer->serialize($object, 'json');
-
-        return json_decode($json, true);
-    }
 }

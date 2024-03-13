@@ -13,32 +13,32 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 final class User extends AggregateRoot implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    private string $password;
     public function __construct(
         private readonly UserId $id,
         private string $email,
-        private string $password,
         private array $roles = []
     )
     {
     }
 
-    public function getId(): UserId
+    public function id(): UserId
     {
         return $this->id;
     }
 
-    public function getEmail(): string
+    public function email(): string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    public function updateEmail(string $email): void
     {
         $this->email = $email;
     }
     public function getUserIdentifier(): string
     {
-        return $this->email;
+        return $this->id->getValue();
     }
     public function getRoles(): array
     {
@@ -49,7 +49,7 @@ final class User extends AggregateRoot implements UserInterface, PasswordAuthent
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): void
+    public function updateRoles(array $roles): void
     {
         $this->roles = $roles;
     }
@@ -59,7 +59,7 @@ final class User extends AggregateRoot implements UserInterface, PasswordAuthent
         return $this->password;
     }
 
-    public function setPassword(string $password): void
+    public function updatePassword(string $password): void
     {
         $this->password = $password;
     }
@@ -90,13 +90,13 @@ final class User extends AggregateRoot implements UserInterface, PasswordAuthent
         $hasher = new UserPasswordHasher($passwordHasherFactory);
 
         $userId = new UserId(Uuid::uuid4()->toString());
-        $user = new self($userId, $email, 'TEMP_STRING', $roles);
+        $user = new self($userId, $email, $roles);
 
         $hashedPassword = $hasher->hashPassword(
             $user,
             $password
         );
-        $user->setPassword($hashedPassword);
+        $user->updatePassword($hashedPassword);
 
         $user->recordDomainEvent(new UserCreatedEvent($email));
         // Nie tworzymy tutaj hasła, bo trzeba będzie je zahashować.

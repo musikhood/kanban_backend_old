@@ -16,27 +16,27 @@ class Board extends AggregateRoot
     {
     }
 
-    public function getId(): BoardId
+    public function id(): BoardId
     {
         return $this->id;
     }
 
-    public function getName(): BoardName
+    public function name(): BoardName
     {
         return $this->name;
     }
 
-    public function setName(BoardName $name): void
+    public function rename(BoardName $name): void
     {
         $this->name = $name;
     }
 
-    public function getUser(): UserId
+    public function user(): UserId
     {
         return $this->userId;
     }
 
-    public function setUser(UserId $user): void
+    public function updateUser(UserId $user): void
     {
         $this->userId = $user;
     }

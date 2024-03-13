@@ -32,8 +32,11 @@ class GetBoardController extends AbstractController
         /** @var Board $board */
         $board = $this->bus->dispatch($findBoardQuery);
 
-        $prepared = Utils::serializeObject($board);
+        $data = [
+            'name' => $board->name()->getValue(),
+            'author' => $board->user()->getValue()
+        ];
 
-        return new JsonResponse($prepared);
+        return new JsonResponse($data);
     }
 }
