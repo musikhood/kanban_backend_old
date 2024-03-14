@@ -79,7 +79,10 @@ readonly class BoardService implements BoardServiceInterface
 
     public function addColumn(string $boardId, string $columnName): CreateColumnResponseDto
     {
-        $findBoardQuery = new FindBoardQuery($boardId);
+        $findBoardQuery = new FindBoardQuery(
+            $boardId,
+            $this->user->id()->uuid()
+        );
 
         /** @var Board $board */
         $board = $this->queryBus->handle($findBoardQuery);
