@@ -41,10 +41,8 @@ readonly class UserService implements UserServiceInterface
 
     public function findUser(string $userId): FindUserResponseDto
     {
-        $findUserQuery = new FindUserQuery($userId);
 
-        /** @var User $user */
-        $user = $this->queryBus->handle($findUserQuery);
+        $user = $this->findUserEntity($userId);
 
         return new FindUserResponseDto(
             $user->id(),
