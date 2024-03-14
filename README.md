@@ -122,6 +122,9 @@ Przykład Portu: Board/Application/Port/BoardServiceInterface
 Przykład Adaptera: Board/Application/Service/BoardService
 Przykład wykorzystania Portu: Board/Application/Controller/GetBoardController
 
+W architekturze Hexagonalnej też mamy podział na warstwy który działa podobnie do
+podziału DDD którzy był już wyżej opisany.
+
 ## CQRS
 
 Architektura CQRS każe nam dzielić rodzaje zapytań do bazy na dwie akcje:
