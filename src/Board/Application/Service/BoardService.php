@@ -12,9 +12,6 @@ use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\Board;
 use App\Shared\Application\Bus\CommandBusInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
-use App\User\Domain\Entity\User;
-use Symfony\Bundle\SecurityBundle\Security;
-use Throwable;
 
 readonly class BoardService implements BoardServiceInterface
 {
@@ -23,10 +20,6 @@ readonly class BoardService implements BoardServiceInterface
         private QueryBusInterface $queryBus,
     ) {
     }
-
-    /**
-     * @throws Throwable
-     */
     public function findBoard(string $userId, string $boardId): FindBoardResponseDto
     {
 
@@ -54,10 +47,7 @@ readonly class BoardService implements BoardServiceInterface
 
         return $board;
     }
-
-    /**
-     * @throws Throwable
-     */
+    
     public function createBoard(string $userId, string $boardName): CreateBoardResponseDto
     {
         $createBoardCommand = new CreateBoardCommand(
