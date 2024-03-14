@@ -7,6 +7,7 @@ use App\Board\Application\Model\Query\FindBoardQuery;
 use App\Board\Domain\Entity\Board;
 use App\Board\Domain\RepositoryPort\BoardRepositoryInterface;
 use App\Shared\Application\Cqrs\QueryHandlerInterface;
+use App\User\Domain\Entity\User;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -23,7 +24,12 @@ readonly class FindBoardHandler implements QueryHandlerInterface
      */
     public function __invoke(FindBoardQuery $findBoardQuery): ?Board
     {
-        $board = $this->boardRepository->findOneBy(['id'=>$findBoardQuery->getBoardId()]);
+        $board = $this->boardRepository->findOneBy(
+            [
+                'id' => $findBoardQuery->getBoardId(),
+                'userId.uuid' => $findBoardQuery->getUserId()
+            ]
+        );
 
         if (!$board){
             throw new BoardNotFoundException();

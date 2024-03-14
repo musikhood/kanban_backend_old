@@ -2,11 +2,9 @@
 
 namespace App\Board\Application\Controller;
 
-use App\Board\Application\Dto\FindBoardRequestDto;
 use App\Board\Application\Port\BoardServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Throwable;
@@ -22,12 +20,10 @@ class GetBoardController extends AbstractController
     /**
      * @throws Throwable
      */
-    #[Route('/api/board', name: 'app_get_board', methods: ['GET'])]
-    public function index(#[MapQueryString] FindBoardRequestDto $findBoardRequestDto): JsonResponse
+    #[Route('/api/board/{boardId}', name: 'app_get_board', methods: ['GET'])]
+    public function index(string $boardId): JsonResponse
     {
-        $board = $this->boardService->findBoard(
-            $findBoardRequestDto->getBoardId()
-        );
+        $board = $this->boardService->findBoard($boardId);
 
         $response = $this->normalizer->normalize($board);
 

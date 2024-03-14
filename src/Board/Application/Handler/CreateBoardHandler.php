@@ -28,12 +28,10 @@ readonly class CreateBoardHandler implements CommandHandlerInterface
 
     public function __invoke(CreateBoardCommand $createBoardCommand): void
     {
-        /** @var User $user */
-        $user = $this->security->getUser();
 
         $board = Board::create(
             new BoardId(Uuid::uuid4()->toString()),
-            new UserId($user->id()->uuid()),
+            new UserId($createBoardCommand->getUserId()),
             new BoardName($createBoardCommand->getName())
         );
 
