@@ -9,14 +9,14 @@ readonly class CreateBoardCommand implements CommandInterface
 {
     public function __construct(
         private string $name,
-        private User $user
+        private string $userId
     )
     {
     }
 
-    public function getUser(): User
+    public function getUserId(): string
     {
-        return $this->user;
+        return $this->userId;
     }
 
     public function getName(): string

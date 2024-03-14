@@ -9,14 +9,14 @@ readonly class FindBoardQuery implements QueryInterface
 {
     public function __construct(
         private string $boardId,
-        private User $user
+        private string $userId
     )
     {
     }
 
-    public function getUser(): User
+    public function getUserId(): string
     {
-        return $this->user;
+        return $this->userId;
     }
 
     public function getBoardId(): string

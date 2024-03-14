@@ -3,6 +3,7 @@
 namespace App\Board\Application\Controller;
 
 use App\Board\Application\Port\BoardServiceInterface;
+use App\User\Domain\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,7 +24,10 @@ class GetBoardController extends AbstractController
     #[Route('/api/board/{boardId}', name: 'app_get_board', methods: ['GET'])]
     public function index(string $boardId): JsonResponse
     {
-        $board = $this->boardService->findBoard($boardId);
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $board = $this->boardService->findBoard($user->id()->uuid(), $boardId);
 
         $response = $this->normalizer->normalize($board);
 

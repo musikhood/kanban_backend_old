@@ -18,49 +18,51 @@ use Throwable;
 
 readonly class BoardService implements BoardServiceInterface
 {
-    private User $user;
     public function __construct(
         private CommandBusInterface $commandBus,
         private QueryBusInterface $queryBus,
-        private Security $security
     ) {
-        /** @var User $user */
-        $user = $this->security->getUser();
-        $this->user = $user;
     }
 
     /**
      * @throws Throwable
      */
-    public function findBoard(string $boardId): FindBoardResponseDto
+    public function findBoard(string $userId, string $boardId): FindBoardResponseDto
     {
 
-        $findBoardQuery = new FindBoardQuery(
-            $boardId,
-            $this->user
-        );
-
-        /** @var Board $board */
-        $board = $this->queryBus->handle($findBoardQuery);
+        $board = $this->findBoardEntity($userId, $boardId);
 
         $columns = $board->columns();
 
         return new FindBoardResponseDto(
             $board->id()->uuid(),
-            $this->user->email(),
+            $board->user()->email(),
             $board->name()->value(),
             $columns->toArray()
         );
     }
 
+    public function findBoardEntity(string $userId, string $boardId): Board
+    {
+        $findBoardQuery = new FindBoardQuery(
+            $boardId,
+            $userId
+        );
+
+        /** @var Board $board */
+        $board = $this->queryBus->handle($findBoardQuery);
+
+        return $board;
+    }
+
     /**
      * @throws Throwable
      */
-    public function createBoard(string $boardName): CreateBoardResponseDto
+    public function createBoard(string $userId, string $boardName): CreateBoardResponseDto
     {
         $createBoardCommand = new CreateBoardCommand(
             $boardName,
-            $this->user
+            $userId
         );
 
         $this->commandBus->dispatch($createBoardCommand);
@@ -70,18 +72,11 @@ readonly class BoardService implements BoardServiceInterface
         );
     }
 
-    public function addColumn(string $boardId, string $columnName): CreateColumnResponseDto
+    public function addColumn(string $userId, string $boardId, string $columnName): CreateColumnResponseDto
     {
-        $findBoardQuery = new FindBoardQuery(
-            $boardId,
-            $this->user
-        );
-
-        /** @var Board $board */
-        $board = $this->queryBus->handle($findBoardQuery);
-
         $createColumnCommand = new CreateColumnCommand(
-            $board,
+            $userId,
+            $boardId,
             $columnName
         );
 

@@ -8,15 +8,21 @@ use App\Shared\Application\Cqrs\CommandInterface;
 readonly class CreateColumnCommand implements CommandInterface
 {
     public function __construct(
-        private Board $board,
+        private string $userId,
+        private string $boardId,
         private string $name,
     )
     {
     }
 
-    public function getBoard(): Board
+    public function getUserId(): string
     {
-        return $this->board;
+        return $this->userId;
+    }
+
+    public function getBoardId(): string
+    {
+        return $this->boardId;
     }
 
     public function getName(): string

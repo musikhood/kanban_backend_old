@@ -52,4 +52,14 @@ readonly class UserService implements UserServiceInterface
             $user->getRoles()
         );
     }
+
+    public function findUserEntity(string $userId): User
+    {
+        $findUserQuery = new FindUserQuery($userId);
+
+        /** @var User $user */
+        $user = $this->queryBus->handle($findUserQuery);
+
+        return $user;
+    }
 }
