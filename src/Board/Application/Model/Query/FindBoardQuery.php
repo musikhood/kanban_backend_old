@@ -3,19 +3,20 @@
 namespace App\Board\Application\Model\Query;
 
 use App\Shared\Application\Cqrs\QueryInterface;
+use App\User\Domain\Entity\User;
 
 readonly class FindBoardQuery implements QueryInterface
 {
     public function __construct(
         private string $boardId,
-        private string $userId
+        private User $user
     )
     {
     }
 
-    public function getUserId(): string
+    public function getUser(): User
     {
-        return $this->userId;
+        return $this->user;
     }
 
     public function getBoardId(): string

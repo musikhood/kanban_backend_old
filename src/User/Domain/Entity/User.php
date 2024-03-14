@@ -3,8 +3,9 @@
 namespace App\User\Domain\Entity;
 
 use App\Shared\Domain\Aggregate\AggregateRoot;
-use App\Shared\Domain\Entity\UserId;
 use App\User\Domain\Event\UserCreatedEvent;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
@@ -14,12 +15,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 final class User extends AggregateRoot implements UserInterface, PasswordAuthenticatedUserInterface
 {
     private string $password;
+    private Collection $boards;
+
     public function __construct(
         private readonly string $id,
         private string $email,
         private array $roles = []
     )
     {
+        $this->boards = new ArrayCollection();
     }
 
     public function id(): UserId
@@ -64,6 +68,10 @@ final class User extends AggregateRoot implements UserInterface, PasswordAuthent
         $this->password = $password;
     }
 
+    public function boards(): Collection
+    {
+        return $this->boards;
+    }
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here

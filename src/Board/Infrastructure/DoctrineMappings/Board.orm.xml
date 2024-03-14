@@ -14,7 +14,14 @@
             </cascade>
         </one-to-many>
 
-        <embedded name="userId" class="App\Shared\Domain\Entity\UserId"  use-column-prefix="false" />
+        <many-to-one
+            field="user"
+            target-entity="App\User\Domain\Entity\User"
+            inversed-by="boards"
+        >
+            <join-column nullable="false" />
+        </many-to-one>
+
         <embedded name="name" class="App\Board\Domain\Entity\BoardName"  use-column-prefix="false" />
     </entity>
 

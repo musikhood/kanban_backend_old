@@ -12,13 +12,6 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-          Shared:
-            type: xml
-            is_bundle: false
-            dir: '%kernel.project_dir%/src/Shared/Infrastructure/DoctrineMappings'
-            prefix: 'App\Shared\Domain\Entity'
-            alias: Shared
-
           Board:
               type: xml
               is_bundle: false

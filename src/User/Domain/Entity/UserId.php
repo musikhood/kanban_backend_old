@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Domain\Entity;
+namespace App\User\Domain\Entity;
 
 use App\Shared\Domain\ValueObject\UuidValueObject;
 

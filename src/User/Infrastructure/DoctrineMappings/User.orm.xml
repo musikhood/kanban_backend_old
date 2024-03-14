@@ -7,6 +7,13 @@
     <entity name="App\User\Domain\Entity\User" table="users" repository-class="App\User\Infrastructure\Repository\UserRepository">
         <id name="id" type="guid" column="id" length="36" />
 
+        <one-to-many field="boards" target-entity="App\Board\Domain\Entity\Board" mapped-by="user">
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
         <field name="roles" type="json" column="roles" />
         <field name="email" column="email" />
         <field name="password" column="password" length="180" />

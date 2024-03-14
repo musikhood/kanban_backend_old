@@ -40,7 +40,7 @@ readonly class BoardService implements BoardServiceInterface
 
         $findBoardQuery = new FindBoardQuery(
             $boardId,
-            $this->user->id()->uuid()
+            $this->user
         );
 
         /** @var Board $board */
@@ -67,7 +67,7 @@ readonly class BoardService implements BoardServiceInterface
     {
         $createBoardCommand = new CreateBoardCommand(
             $boardName,
-            $this->user->id()->uuid()
+            $this->user
         );
 
         $this->commandBus->dispatch($createBoardCommand);
@@ -81,7 +81,7 @@ readonly class BoardService implements BoardServiceInterface
     {
         $findBoardQuery = new FindBoardQuery(
             $boardId,
-            $this->user->id()->uuid()
+            $this->user
         );
 
         /** @var Board $board */

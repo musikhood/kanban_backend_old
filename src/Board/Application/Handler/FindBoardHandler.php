@@ -27,7 +27,7 @@ readonly class FindBoardHandler implements QueryHandlerInterface
         $board = $this->boardRepository->findOneBy(
             [
                 'id' => $findBoardQuery->getBoardId(),
-                'userId.uuid' => $findBoardQuery->getUserId()
+                'user' => $findBoardQuery->getUser()
             ]
         );
 

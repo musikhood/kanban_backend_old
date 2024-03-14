@@ -5,7 +5,7 @@ namespace App\Board\Domain\Entity;
 use App\Board\Domain\Event\BoardCreatedEvent;
 use App\Board\Domain\Event\ColumnCreatedEvent;
 use App\Shared\Domain\Aggregate\AggregateRoot;
-use App\Shared\Domain\Entity\UserId;
+use App\User\Domain\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
@@ -15,8 +15,8 @@ class Board extends AggregateRoot implements JsonSerializable
     private Collection $columns;
     public function __construct(
         private readonly string $id,
-        private BoardName        $name,
-        private UserId           $userId
+        private BoardName       $name,
+        private User            $user
     )
     {
         $this->columns = new ArrayCollection();
@@ -37,14 +37,14 @@ class Board extends AggregateRoot implements JsonSerializable
         $this->name = $name;
     }
 
-    public function user(): UserId
+    public function user(): User
     {
-        return $this->userId;
+        return $this->user;
     }
 
-    public function updateUser(UserId $user): void
+    public function updateUser(User $user): void
     {
-        $this->userId = $user;
+        $this->user = $user;
     }
 
     public function columns(): Collection
@@ -73,10 +73,10 @@ class Board extends AggregateRoot implements JsonSerializable
     }
     public static function create(
         BoardId $boardId,
-        UserId $userId,
+        User $user,
         BoardName $name
     ): self {
-        $board = new self($boardId->uuid(), $name, $userId);
+        $board = new self($boardId->uuid(), $name, $user);
 
         $board->recordDomainEvent(new BoardCreatedEvent($name));
 
