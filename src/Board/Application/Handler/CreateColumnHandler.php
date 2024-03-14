@@ -2,16 +2,13 @@
 
 namespace App\Board\Application\Handler;
 
-use App\Board\Application\Exception\BoardNotFoundException;
 use App\Board\Application\Model\Command\CreateColumnCommand;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\Board;
 use App\Board\Domain\Entity\ColumnId;
 use App\Board\Domain\Entity\ColumnName;
-use App\Board\Domain\RepositoryPort\BoardRepositoryInterface;
 use App\Board\Domain\RepositoryPort\ColumnRepositoryInterface;
 use App\Shared\Application\Cqrs\CommandHandlerInterface;
-use App\User\Application\Port\UserServiceInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -23,7 +20,6 @@ readonly class CreateColumnHandler implements CommandHandlerInterface
         private ColumnRepositoryInterface $columnRepository,
         private EventDispatcherInterface $eventDispatcher,
         private BoardServiceInterface $boardService,
-        private UserServiceInterface $userService
     )
     {
     }

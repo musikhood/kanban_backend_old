@@ -25,13 +25,8 @@ readonly class ExceptionListener
     {
         $exception = $event->getThrowable();
 
-        if(
-            (
-                $exception instanceof HttpException ||
-                $exception instanceof HandlerFailedException
-            ) &&
-            $exception->getPrevious()
-        ){
+        while(($exception instanceof HttpException || $exception instanceof HandlerFailedException) && $exception->getPrevious())
+        {
             $exception = $exception->getPrevious();
         }
 

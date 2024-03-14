@@ -12,7 +12,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-final class User extends AggregateRoot implements UserInterface, PasswordAuthenticatedUserInterface
+class User extends AggregateRoot implements UserInterface, PasswordAuthenticatedUserInterface
 {
     private string $password;
     private Collection $boards;
