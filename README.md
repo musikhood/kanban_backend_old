@@ -79,6 +79,7 @@ Zalety:
  - Niezmienniczość: Wartości obiektów są zazwyczaj niemutowalne, co zapewnia spójność danych.
  - Prostota: Wartości obiektów mogą uprościć strukturę danych poprzez wyraźne określenie ich roli i funkcji.
  - Reużywalność: Wartości obiektów można łatwo wykorzystać w różnych częściach aplikacji.
+
 Wady:
  - Dodatkowy poziom abstrakcji: Używanie wartości obiektów może zwiększyć poziom abstrakcji, co może być trudne do zrozumienia dla początkujących programistów.
  - Potencjalne problemy z identyfikacją: Wartości obiektów nie posiadają identyfikatorów, co może być problematyczne w przypadku konieczności odniesienia się do nich w kontekście bazy danych czy mapowania ORM.
@@ -101,6 +102,7 @@ Zalety:
  - Oddzielenie struktury bazy danych od kodu: Mapowanie przez XML pozwala na oddzielenie konfiguracji struktury bazy danych od kodu aplikacji, co ułatwia zarządzanie bazą danych.
  - Możliwość łatwej zmiany konfiguracji: Dzięki XML, konfiguracja struktury bazy danych może być łatwo zmieniana bez konieczności ingerencji w kod aplikacji.
  - Lepsza czytelność: Niektórzy programiści uważają, że mapowanie przez XML jest czytelniejsze od mapowania w PHP-owych adnotacjach.
+
 Wady:
  - Dodatkowy krok w procesie rozwoju: Korzystanie z mapowania przez XML wymaga dodatkowego kroku w procesie rozwoju aplikacji, co może zwiększyć czas potrzebny na rozwój.
  - Możliwość popełnienia błędów: Ręczne tworzenie plików XML może prowadzić do popełnienia błędów, które mogą być trudne do zlokalizowania. (Można to zautomatyzować więć można naprawić tą wadę)
