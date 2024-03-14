@@ -133,6 +133,7 @@ Architektura CQRS każe nam dzielić rodzaje zapytań do bazy na dwie akcje:
 
 Zapytania te wysyłamy synchronicznie lub asynchronicznie przez messengera,
 i w odpowiadających im handlerach wykonujemy przypisane im zadania.
+W zapytaniach nie można załączać Obiektów doctrine.
 
 Dzięki temu mamy dobrze oddzielone operacje na bazie danych i mamy odpowiednie miejsce 
 gdzie wykonują się na niej operacje, przez co łatwiej będzie znaleźć błędy
