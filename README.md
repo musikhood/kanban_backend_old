@@ -49,6 +49,16 @@ bezpośrednio Agregata który jest zagnieżdżony w relacji z rootem
 przykład RootAgregat: Board/Domain/Entity/Board
 przykład Agregata w relacji z Rootem: Board/Domain/Entity/Column
 
+Zalety:
+ - Wysoka spójność danych: Agregaty pozwalają na gromadzenie powiązanych obiektów w jednym miejscu, co ułatwia zarządzanie spójnością danych.
+ - Izolacja logiczna: Agregaty mogą zawierać reguły biznesowe oraz logiczne operacje, co prowadzi do izolacji i uproszczenia zarządzania kodem.
+ - Wyższy poziom abstrakcji: Dzięki agregatom można łatwiej reprezentować złożone struktury danych, co prowadzi do bardziej zrozumiałego i utrzymanego kodu.
+
+Wady:
+ - Złożoność: Agregaty mogą wprowadzać dodatkową złożoność do projektu, zwłaszcza gdy struktura danych jest skomplikowana.
+ - Potencjalna nadmierna rozbudowa: Nadmiernie skomplikowane agregaty mogą prowadzić do nadmiernego zawiłego kodu i trudności w utrzymaniu.
+ - Możliwe trudności z testowaniem: Złożone agregaty mogą być trudniejsze do testowania, co może wpłynąć na jakość testów jednostkowych.
+
 #### VO (Value Object)
 
 VO jest to prosty obiekt, który reprezentuje zmierzoną, wyliczoną lub opisaną wartość.
@@ -65,6 +75,14 @@ przykład zastosowania VO: Board/Domain/Entity/Board
 
 przykład zastosowania VO jako ID: Board/Domain/Entity/Board linijka: 17, 25
 
+Zalety:
+ - Niezmienniczość: Wartości obiektów są zazwyczaj niemutowalne, co zapewnia spójność danych.
+ - Prostota: Wartości obiektów mogą uprościć strukturę danych poprzez wyraźne określenie ich roli i funkcji.
+ - Reużywalność: Wartości obiektów można łatwo wykorzystać w różnych częściach aplikacji.
+Wady:
+ - Dodatkowy poziom abstrakcji: Używanie wartości obiektów może zwiększyć poziom abstrakcji, co może być trudne do zrozumienia dla początkujących programistów.
+ - Potencjalne problemy z identyfikacją: Wartości obiektów nie posiadają identyfikatorów, co może być problematyczne w przypadku konieczności odniesienia się do nich w kontekście bazy danych czy mapowania ORM.
+
 ### Warstwa Infrastruktury
 
 #### Główne zasady:
@@ -76,6 +94,17 @@ przykład: port -> Board/Domain/RepositoryPort/BoardRepositoryInterface
 adapter -> Board/Infrastructure/Repository/BoardRepository
 3. Mamy dostęp tylko do warstwy **Domenowej**.
 
+
+#### Mapowanie XML
+
+Zalety:
+ - Oddzielenie struktury bazy danych od kodu: Mapowanie przez XML pozwala na oddzielenie konfiguracji struktury bazy danych od kodu aplikacji, co ułatwia zarządzanie bazą danych.
+ - Możliwość łatwej zmiany konfiguracji: Dzięki XML, konfiguracja struktury bazy danych może być łatwo zmieniana bez konieczności ingerencji w kod aplikacji.
+ - Lepsza czytelność: Niektórzy programiści uważają, że mapowanie przez XML jest czytelniejsze od mapowania w PHP-owych adnotacjach.
+Wady:
+ - Dodatkowy krok w procesie rozwoju: Korzystanie z mapowania przez XML wymaga dodatkowego kroku w procesie rozwoju aplikacji, co może zwiększyć czas potrzebny na rozwój.
+ - Możliwość popełnienia błędów: Ręczne tworzenie plików XML może prowadzić do popełnienia błędów, które mogą być trudne do zlokalizowania. (Można to zautomatyzować więć można naprawić tą wadę)
+ - Mniejsza elastyczność: XML może być mniej elastyczny niż mapowanie za pomocą adnotacji PHP, szczególnie w przypadku bardziej skomplikowanych konfiguracji.
 
 ## Hexagonalna
 
