@@ -13,7 +13,7 @@ Każda Domena jest dzielona na warstwy:
 - Infrastruktury
 
 Jedynymi wyjątkowymi Domenami są **Shared, User**.
-W Shared trzymamy różnego rodzaju interfejsy oraz globalne klasy do użytku w każdej Domenie
+W Shared trzymamy różnego rodzaju interfejsy oraz globalne klasy do użytku w każdej Domenie.
 W User trzymamy wszystko co jest związane z Użytkownikiem, w głównej mierze zachowuje się jak każda
 inna Domena, ale jako jedyna pozwala na robienie z nią relacji w repozytorium między Domenami.
 
@@ -23,15 +23,18 @@ inna Domena, ale jako jedyna pozwala na robienie z nią relacji w repozytorium m
 1. W tej warstwie skupiamy się na implementacji aplikacji i integracji
 z zewnętrznymi komponentami np. **Baza danych**.
 2. Obsługujemy tutaj komunikację API
-3. Mamy dostęp tylko do warstwy **Domenowej**.
+3. Trzymamy tutaj query, commandy i handlery dla CQRS i przeprowadzamy operacje na obiektach domenowych
+4. Trzymamy tutaj DTO dla requestów przychodzących i wychodzących z API
+5. Mamy dostęp tylko do warstwy **Domenowej**.
 
 ### Warstwa Domenowa
 
 #### Główne zasady:
-1. W tej warstwie skupiamy sie tworzeniu Agregatów (Podobna zasada jak w Entity)
-2. Tworzymy Interfejsy dla warstwy **Infrastruktury**
-3. Tworzymy metody do operacji na bazie danych
-4. Mamy dostęp tylko do warstwy **Infrastruktury**
+1. W tej warstwie skupiamy sie tworzeniu Agregatów oraz VO (ValueObject) (Podobna zasada jak w Entity)
+2. Tworzymy Porty (Interfejsy) dla warstwy **Infrastruktury**
+3. Tworzymy metody do operacji na bazie danych (w Agregatach i VO)
+4. Trzymamy tutaj eventy Domenowe (np. po stworzeniu obiektu w bazie jest wysyłany event który można przechwycić w innej lub tej samej Domenie)
+5. Mamy dostęp tylko do warstwy **Infrastruktury**
 
 #### Agregaty
 
@@ -130,6 +133,10 @@ i w odpowiadających im handlerach wykonujemy przypisane im zadania.
 
 Dzięki temu mamy dobrze oddzielone operacje na bazie danych i mamy odpowiednie miejsce 
 gdzie wykonują się na niej operacje, przez co łatwiej będzie znaleźć błędy
+
+przykład Query: Board/Application/Model/Query/FindBoardQuery
+przykład handlera Query: Board/Application/Handler/FindBoardHandler
+przykład użycia Query: Board/Application/Service/BoardService linijka: 38
 
 
 # Przykład Drogi Dla Requesta Z API
