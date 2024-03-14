@@ -10,10 +10,8 @@ use App\Board\Application\Model\Command\CreateColumnCommand;
 use App\Board\Application\Model\Query\FindBoardQuery;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\Board;
-use App\Shared\Application\Bus\BusInterface;
 use App\Shared\Application\Bus\CommandBusInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
-use App\User\Application\Port\UserServiceInterface;
 use App\User\Domain\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 use Throwable;
@@ -24,7 +22,6 @@ readonly class BoardService implements BoardServiceInterface
     public function __construct(
         private CommandBusInterface $commandBus,
         private QueryBusInterface $queryBus,
-        private UserServiceInterface $userService,
         private Security $security
     ) {
         /** @var User $user */
@@ -48,13 +45,9 @@ readonly class BoardService implements BoardServiceInterface
 
         $columns = $board->columns();
 
-        $user = $this->userService->findUser(
-            $board->user()->uuid()
-        );
-
         return new FindBoardResponseDto(
             $board->id()->uuid(),
-            $user->getEmail(),
+            $this->user->email(),
             $board->name()->value(),
             $columns->toArray()
         );
