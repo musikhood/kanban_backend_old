@@ -9,5 +9,5 @@ use SensitiveParameter;
 interface UserServiceInterface
 {
     public function createUser(string $name, array $roles, #[SensitiveParameter] string $password): CreateUserResponseDto;
-    public function findUser(string $name): FindUserResponseDto;
+    public function findUser(string $userId): FindUserResponseDto;
 }

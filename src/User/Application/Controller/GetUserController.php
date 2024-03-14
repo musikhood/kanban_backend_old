@@ -22,12 +22,10 @@ class GetUserController extends AbstractController
     /**
      * @throws Throwable
      */
-    #[Route('/api/user', name: 'app_get_user', methods: ['GET'])]
-    public function index(#[MapQueryString] FindUserRequestDto $findUserRequestDto): JsonResponse
+    #[Route('/api/user/{userId}', name: 'app_get_user', methods: ['GET'])]
+    public function index(string $userId): JsonResponse
     {
-        $user = $this->userService->findUser(
-            $findUserRequestDto->getUserId()
-        );
+        $user = $this->userService->findUser($userId);
 
         $response = $this->normalizer->normalize($user);
 
