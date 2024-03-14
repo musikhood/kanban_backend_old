@@ -2,7 +2,6 @@
 
 namespace App\User\Application\Service;
 
-use App\Shared\Application\Bus\BusInterface;
 use App\Shared\Application\Bus\CommandBusInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
 use App\User\Application\Dto\CreateUserResponseDto;
@@ -23,9 +22,6 @@ readonly class UserService implements UserServiceInterface
     {
     }
 
-    /**
-     * @throws Throwable
-     */
     public function createUser(string $name, array $roles, #[SensitiveParameter] string $password): CreateUserResponseDto
     {
         $createUserCommand = new CreateUserCommand(
