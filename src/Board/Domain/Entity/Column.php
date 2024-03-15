@@ -12,16 +12,12 @@ class Column implements JsonSerializable
 {
     use HasUuid;
 
-    public function __construct(
-        #[ORM\ManyToOne(inversedBy: 'columns')]
-        #[ORM\JoinColumn(nullable: false)]
-        private ?Board $board = null,
+    #[ORM\ManyToOne(inversedBy: 'columns')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Board $board = null;
 
-        #[ORM\Embedded(class: ColumnName::class, columnPrefix: false)]
-        private ?ColumnName $columnName = null
-    )
-    {
-    }
+    #[ORM\Embedded(class: ColumnName::class, columnPrefix: false)]
+    private ?ColumnName $columnName = null;
 
     public function getColumnName(): ?ColumnName
     {

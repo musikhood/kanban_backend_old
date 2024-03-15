@@ -13,24 +13,22 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
-//#[ORM\Table(name: 'board')]
+#[ORM\Table(name: 'board')]
 #[ORM\Entity(repositoryClass: BoardRepository::class)]
 class Board extends AggregateRoot implements JsonSerializable
 {
-
     use HasUuid;
-
     #[ORM\OneToMany(targetEntity: Column::class, mappedBy: 'board', orphanRemoval: true)]
     private Collection $columns;
 
-    public function __construct(
-        #[ORM\ManyToOne(inversedBy: 'boards')]
-        #[ORM\JoinColumn(nullable: false)]
-        private ?User $user = null,
+    #[ORM\ManyToOne(inversedBy: 'boards')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
-         #[ORM\Embedded(class: BoardName::class, columnPrefix: false)]
-        private ?BoardName $boardName = null
-    )
+     #[ORM\Embedded(class: BoardName::class, columnPrefix: false)]
+    private ?BoardName $boardName = null;
+
+    public function __construct()
     {
         $this->columns = new ArrayCollection();
     }
@@ -58,26 +56,27 @@ class Board extends AggregateRoot implements JsonSerializable
     }
 
     public static function create(
-        User $user,
-        BoardName $name
+        User      $user,
+        BoardName $boardName
     ): self {
-        $board = new self($user, $name);
+        $board = new self();
+        $board->setUser($user);
+        $board->setBoardName($boardName);
 
-        $board->recordDomainEvent(new BoardCreatedEvent($name));
+        $board->recordDomainEvent(new BoardCreatedEvent($boardName));
 
         return $board;
     }
 
     public static function createColumn(
-        Board     $board,
-        ColumnName $name
+        Board      $board,
+        ColumnName $columnName
     ): Column {
-        $column = new Column(
-            $board,
-            $name
-        );
+        $column = new Column();
+        $column->setBoard($board);
+        $column->setColumnName($columnName);
 
-        $board->recordDomainEvent(new ColumnCreatedEvent($name));
+        $board->recordDomainEvent(new ColumnCreatedEvent($columnName));
 
         return $column;
     }

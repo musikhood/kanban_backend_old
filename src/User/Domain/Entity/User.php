@@ -28,12 +28,13 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
     #[ORM\OneToMany(targetEntity: Board::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $boards;
 
-    public function __construct(
-        #[ORM\Column(length: 180)]
-        private ?string $email = null,
+    #[ORM\Column(length: 180)]
+    private ?string $email = null;
 
-        #[ORM\Column]
-        private array $roles = []
+    #[ORM\Column]
+    private array $roles = [];
+
+    public function __construct(
     ){
         $this->boards = new ArrayCollection();
     }
@@ -122,7 +123,9 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         ]);
         $hasher = new UserPasswordHasher($passwordHasherFactory);
 
-        $user = new self($email, $roles);
+        $user = new self();
+        $user->setEmail($email);
+        $user->setRoles($roles);
 
         $hashedPassword = $hasher->hashPassword(
             $user,
