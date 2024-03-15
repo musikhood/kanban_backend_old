@@ -32,7 +32,7 @@ class PostColumnController extends AbstractController
         $user = $this->getUser();
 
         $response = $this->boardService->addColumn(
-            $user->id()->uuid(),
+            $user->getId(),
             $createColumnRequestDto->getBoardId(),
             $createColumnRequestDto->getName()
         );

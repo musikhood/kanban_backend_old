@@ -7,24 +7,25 @@ doctrine:
 
         profiling_collect_backtrace: '%kernel.debug%'
         use_savepoints: true
+
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
           Board:
-              type: xml
+              type: attribute
               is_bundle: false
-              dir: '%kernel.project_dir%/src/Board/Infrastructure/DoctrineMappings'
+              dir: '%kernel.project_dir%/src/Board/Domain/Entity'
               prefix: 'App\Board\Domain\Entity'
               alias: Board
 
           User:
-            type: xml
-            is_bundle: false
-            dir: '%kernel.project_dir%/src/User/Infrastructure/DoctrineMappings'
-            prefix: 'App\User\Domain\Entity'
-            alias: User
+              type: attribute
+              is_bundle: false
+              dir: '%kernel.project_dir%/src/User/Domain/Entity'
+              prefix: 'App\User\Domain\Entity'
+              alias: User
 
 when@test:
     doctrine:

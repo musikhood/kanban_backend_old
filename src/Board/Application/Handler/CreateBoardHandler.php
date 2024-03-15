@@ -9,7 +9,6 @@ use App\Board\Domain\Entity\BoardName;
 use App\Board\Domain\RepositoryPort\BoardRepositoryInterface;
 use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use App\User\Application\Port\UserServiceInterface;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -30,7 +29,6 @@ readonly class CreateBoardHandler implements CommandHandlerInterface
         $user = $this->userService->findUserEntity($createBoardCommand->getUserId());
 
         $board = Board::create(
-            new BoardId(Uuid::uuid4()->toString()),
             $user,
             new BoardName($createBoardCommand->getName())
         );

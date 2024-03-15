@@ -2,40 +2,56 @@
 
 namespace App\Board\Domain\Entity;
 
+use App\Board\Infrastructure\Repository\ColumnRepository;
+use App\Shared\Domain\Trait\HasUuid;
+use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
-
+#[ORM\Table(name: 'board_column')]
+#[ORM\Entity(repositoryClass: ColumnRepository::class)]
 class Column implements JsonSerializable
 {
+    use HasUuid;
+
     public function __construct(
-        private readonly string $id,
-        private readonly Board  $board,
-        private ColumnName      $name
+        #[ORM\ManyToOne(inversedBy: 'columns')]
+        #[ORM\JoinColumn(nullable: false)]
+        private ?Board $board = null,
+
+        #[ORM\Embedded(class: ColumnName::class, columnPrefix: false)]
+        private ?ColumnName $columnName = null
     )
     {
     }
 
-    public function id(): ColumnId
+    public function getColumnName(): ?ColumnName
     {
-        return new ColumnId($this->id);
-    }
-    public function name(): ColumnName
-    {
-        return $this->name;
-    }
-    public function rename(ColumnName $name): void{
-        $this->name = $name;
+        return $this->columnName;
     }
 
-    public function board(): Board
+    public function setColumnName(?ColumnName $columnName): static
+    {
+        $this->columnName = $columnName;
+
+        return $this;
+    }
+
+    public function getBoard(): ?Board
     {
         return $this->board;
+    }
+
+    public function setBoard(?Board $board): static
+    {
+        $this->board = $board;
+
+        return $this;
     }
 
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id()->uuid(),
-            'name' => $this->name()->value(),
+            'id' => $this->getId(),
+            'name' => $this->getColumnName()->value(),
         ];
     }
 }

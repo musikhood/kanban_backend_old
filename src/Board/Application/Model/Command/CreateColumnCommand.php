@@ -2,7 +2,6 @@
 
 namespace App\Board\Application\Model\Command;
 
-use App\Board\Domain\Entity\Board;
 use App\Shared\Application\Cqrs\CommandInterface;
 
 readonly class CreateColumnCommand implements CommandInterface

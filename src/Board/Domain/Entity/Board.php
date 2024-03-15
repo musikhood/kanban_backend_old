@@ -4,65 +4,75 @@ namespace App\Board\Domain\Entity;
 
 use App\Board\Domain\Event\BoardCreatedEvent;
 use App\Board\Domain\Event\ColumnCreatedEvent;
+use App\Board\Infrastructure\Repository\BoardRepository;
 use App\Shared\Domain\Aggregate\AggregateRoot;
+use App\Shared\Domain\Trait\HasUuid;
 use App\User\Domain\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
+//#[ORM\Table(name: 'board')]
+#[ORM\Entity(repositoryClass: BoardRepository::class)]
 class Board extends AggregateRoot implements JsonSerializable
 {
+
+    use HasUuid;
+
+    #[ORM\OneToMany(targetEntity: Column::class, mappedBy: 'board', orphanRemoval: true)]
     private Collection $columns;
+
     public function __construct(
-        private readonly string $id,
-        private BoardName       $name,
-        private User            $user
+        #[ORM\ManyToOne(inversedBy: 'boards')]
+        #[ORM\JoinColumn(nullable: false)]
+        private ?User $user = null,
+
+         #[ORM\Embedded(class: BoardName::class, columnPrefix: false)]
+        private ?BoardName $boardName = null
     )
     {
         $this->columns = new ArrayCollection();
     }
 
-    public function id(): BoardId
+    public function getBoardName(): ?BoardName
     {
-        return new BoardId($this->id);
+        return $this->boardName;
     }
 
-    public function name(): BoardName
+    public function setBoardName(?BoardName $boardName): void
     {
-        return $this->name;
+        $this->boardName = $boardName;
     }
 
-    public function rename(BoardName $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function user(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function updateUser(User $user): void
+    public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
     }
 
-    public function columns(): Collection
-    {
-        return $this->columns;
-    }
+    public static function create(
+        User $user,
+        BoardName $name
+    ): self {
+        $board = new self($user, $name);
 
-    public function addColumn(Column $column): void{
-        $this->columns->add($column);
+        $board->recordDomainEvent(new BoardCreatedEvent($name));
+
+        return $board;
     }
 
     public static function createColumn(
-        Board $board,
-        ColumnId $columnId,
+        Board     $board,
         ColumnName $name
     ): Column {
         $column = new Column(
-            $columnId->uuid(),
             $board,
             $name
         );
@@ -71,25 +81,44 @@ class Board extends AggregateRoot implements JsonSerializable
 
         return $column;
     }
-    public static function create(
-        BoardId $boardId,
-        User $user,
-        BoardName $name
-    ): self {
-        $board = new self($boardId->uuid(), $name, $user);
-
-        $board->recordDomainEvent(new BoardCreatedEvent($name));
-
-        return $board;
-    }
 
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id()->uuid(),
-            'userId' => $this->user()->uuid(),
-            'name' => $this->name()->value(),
-            'columns' => $this->columns()
+            'id' => $this->getId(),
+            'userId' => $this->getUser()->getId(),
+            'name' => $this->getBoardName()->value(),
+            'columns' => $this->getColumns()
         ];
+    }
+
+    /**
+     * @return Collection<int, Column>
+     */
+    public function getColumns(): Collection
+    {
+        return $this->columns;
+    }
+
+    public function addColumn(Column $column): static
+    {
+        if (!$this->columns->contains($column)) {
+            $this->columns->add($column);
+            $column->setBoard($this);
+        }
+
+        return $this;
+    }
+
+    public function removeColumn(Column $column): static
+    {
+        if ($this->columns->removeElement($column)) {
+            // set the owning side to null (unless already changed)
+            if ($column->getBoard() === $this) {
+                $column->setBoard(null);
+            }
+        }
+
+        return $this;
     }
 }

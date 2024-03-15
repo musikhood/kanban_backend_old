@@ -25,12 +25,12 @@ readonly class BoardService implements BoardServiceInterface
 
         $board = $this->findBoardEntity($userId, $boardId);
 
-        $columns = $board->columns();
+        $columns = $board->getColumns();
 
         return new FindBoardResponseDto(
-            $board->id()->uuid(),
-            $board->user()->email(),
-            $board->name()->value(),
+            $board->getId(),
+            $board->getUser()->getEmail(),
+            $board->getBoardName()->value(),
             $columns->toArray()
         );
     }

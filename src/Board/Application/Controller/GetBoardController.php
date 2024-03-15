@@ -27,7 +27,7 @@ class GetBoardController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        $board = $this->boardService->findBoard($user->id()->uuid(), $boardId);
+        $board = $this->boardService->findBoard($user->getId(), $boardId);
 
         $response = $this->normalizer->normalize($board);
 

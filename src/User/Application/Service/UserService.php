@@ -11,7 +11,6 @@ use App\User\Application\Model\Query\FindUserQuery;
 use App\User\Application\Port\UserServiceInterface;
 use App\User\Domain\Entity\User;
 use SensitiveParameter;
-use Throwable;
 
 readonly class UserService implements UserServiceInterface
 {
@@ -41,8 +40,8 @@ readonly class UserService implements UserServiceInterface
         $user = $this->findUserEntity($userId);
 
         return new FindUserResponseDto(
-            $user->id(),
-            $user->email(),
+            $user->getId(),
+            $user->getEmail(),
             $user->getRoles()
         );
     }

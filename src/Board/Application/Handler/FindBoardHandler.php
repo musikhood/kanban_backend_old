@@ -34,7 +34,7 @@ readonly class FindBoardHandler implements QueryHandlerInterface
             throw new BoardNotFoundException();
         }
 
-        if($board->user()->id()->uuid() !== $findBoardQuery->getUserId()){
+        if($board->getUser()->getId()->toString() !== $findBoardQuery->getUserId()){
             throw new PermissionDeniedException();
         }
 
