@@ -17,9 +17,15 @@ use SimpleXMLElement;
 class CreateXmlMappingCommand extends Command
 {
     private SimpleXMLElement $xml;
+    private string $entityContent;
+    private string $repositoryContent;
+    private string $repositoryPortContent;
     public function __construct(?string $name = null)
     {
         $this->xml = new SimpleXMLElement('<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"></doctrine-mapping>');
+        $this->entityContent = "<?php \n\n";
+        $this->repositoryContent = "<?php \n\n";
+        $this->repositoryPortContent = "<?php \n\n";
 
         parent::__construct($name);
     }
@@ -49,10 +55,11 @@ class CreateXmlMappingCommand extends Command
             return Command::FAILURE;
         };
 
-        $entityPath = 'App\\'.$domain.'\\Domain\\Entity\\'.$tableName;
-        $repositoryPath = 'App\\'.$domain.'\\Infrastructure\\Repository\\'.$tableName.'Repository';
-        $repositoryPortPath = 'App\\'.$domain.'\\Domain\\RepositoryPort\\'.$tableName.'RepositoryInterface';
+        $entityPath = "App\\$domain\\Domain\\Entity\\$tableName";
+        $this->entityContent .= "namespace App\\$domain\\Domain\\Entity; \n";
+        $this->entityContent .= "class $tableName\n{\n}";
 
+        $repositoryPath = "App\\$domain\\Infrastructure\\Repository\\$tableName"."Repository";
 
         $question = new ChoiceQuestion('Choose type of mapping ', ['entity','embeddable'], 0);
         $typeOfMapping = $helper->ask($input, $output, $question);
@@ -63,6 +70,9 @@ class CreateXmlMappingCommand extends Command
             $object->addAttribute('name', $entityPath);
 
         } else {
+            $this->generateRepositoryFile($tableName, $domain);
+            $this->generateRepositoryPortFile($tableName, $domain);
+
             $object = $this->xml->addChild('entity');
             $object->addAttribute('name', $entityPath);
             $object->addAttribute('table', $tableName);
@@ -91,7 +101,7 @@ class CreateXmlMappingCommand extends Command
                 $question = new Question('Enter VO name: ');
                 $voName = $helper->ask($input, $output, $question);
 
-                $embedded->addAttribute('class', 'App\\'.$domain.'\\Domain\\Entity\\'.$voName);
+                $embedded->addAttribute('class', "App\\$domain\\Domain\\Entity\\$voName");
                 $embedded->addAttribute('use-column-prefix', 'false');
             } else {
                 $field = $object->addChild('field');
@@ -122,8 +132,14 @@ class CreateXmlMappingCommand extends Command
         $xmlString = $doc->saveXML();
 
 
-        file_put_contents('./src/'.$domain.'/Infrastructure/DoctrineMappings/'.$tableName.'.orm.xml', $xmlString);
-        // Zapisz $xmlString do pliku, np. do config/doctrine/{TableName}.orm.xml
+        file_put_contents("./src/$domain/Infrastructure/DoctrineMappings/$tableName.orm.xml", $xmlString);
+        file_put_contents("./src/$domain/Domain/Entity/$tableName.php", $this->entityContent);
+
+        if($typeOfMapping === 'entity'){
+            file_put_contents("./src/$domain/Infrastructure/Repository/$tableName"."Repository.php", $this->repositoryContent);
+            file_put_contents("./src/$domain/Domain/RepositoryPort/$tableName"."RepositoryInterface.php", $this->repositoryPortContent);
+        }
+
 
         $io->success("XML mapping for table '$tableName' has been successfully generated.");
 
@@ -154,5 +170,52 @@ class CreateXmlMappingCommand extends Command
         };
 
         return false;
+    }
+
+    private function generateRepositoryFile(string $tableName, string $domain): void
+    {
+        $this->repositoryContent .= "namespace App\\$domain\\Infrastructure\\Repository; \n";
+        $this->repositoryContent .= '
+use App\\'.$domain.'\Domain\Entity\\'.$tableName.';
+use App\\'.$domain.'\Domain\RepositoryPort\\'.$tableName.'RepositoryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @extends ServiceEntityRepository<Board>
+ *
+ * @method '.$tableName.'|null find($id, $lockMode = null, $lockVersion = null)
+ * @method '.$tableName.'|null findOneBy(array $criteria, array $orderBy = null)
+ * @method '.$tableName.'[]    findAll()
+ * @method '.$tableName.'[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class '.$tableName.'Repository extends ServiceEntityRepository implements '.$tableName.'RepositoryInterface
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, '.$tableName.'::class);
+    }
+
+    public function save('.$tableName.' $'.Utils::toCamelCase($tableName).'): void
+    {
+        $em = $this->getEntityManager();
+        $em->persist($'.Utils::toCamelCase($tableName).');
+        $em->flush();
+    }
+}
+';
+    }
+    private function generateRepositoryPortFile(string $tableName, string $domain): void{
+        $this->repositoryPortContent .= "namespace App\\$domain\\Domain\\RepositoryPort; \n";
+        $this->repositoryPortContent .= '
+use App\\'.$domain.'\Domain\Entity\\'.$tableName.';
+
+interface '.$tableName.'RepositoryInterface
+{
+    public function findOneBy(array $criteria, array $orderBy = null);
+
+    public function save('.$tableName.' $'.Utils::toCamelCase($tableName).'): void;
+}';
+
     }
 }
