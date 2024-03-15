@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="App\Board\Domain\Entity\Test" table="Test" repository-class="App\Board\Infrastructure\Repository\TestRepository">
+    <id name="id" type="guid" column="id"/>
+    <embedded name="name" class="App\Board\Domain\Entity\TestName" use-column-prefix="false"/>
+    <field name="age" type="integer" column="age"/>
+    <field name="email" type="string" column="email"/>
+    <field name="createdAt" type="datetime" column="created_at"/>
+  </entity>
+</doctrine-mapping>

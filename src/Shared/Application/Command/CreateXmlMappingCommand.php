@@ -6,8 +6,6 @@ use App\Shared\Utils;
 use DOMDocument;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Completion\CompletionInput;
-use Symfony\Component\Console\Completion\CompletionSuggestions;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
@@ -18,6 +16,14 @@ use SimpleXMLElement;
 #[AsCommand(name: 'app:generate-xml-mapping', description: 'Generates Doctrine XML mapping for a table.')]
 class CreateXmlMappingCommand extends Command
 {
+    private SimpleXMLElement $xml;
+    public function __construct(?string $name = null)
+    {
+        $this->xml = new SimpleXMLElement('<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"></doctrine-mapping>');
+
+        parent::__construct($name);
+    }
+
     protected function configure(): void
     {
         $this->setHelp('This command allows you to generate a Doctrine XML mapping file for your database table.');
@@ -30,13 +36,12 @@ class CreateXmlMappingCommand extends Command
 
         $domains = $this->getAvailableDomains();
 
-
         $question = new ChoiceQuestion('Please enter the name of the Domain: ', $domains, 0);
-
         $domain = $helper->ask($input, $output, $question);
 
         $question = new Question('Please enter the name of the table: ');
-        $tableName = $helper->ask($input, $output, $question);
+        $tableName = ucwords($helper->ask($input, $output, $question));
+
 
         if($this->checkIfMappingExist($domain, $tableName)){
             $io->error("Table '$tableName' already exists!!!");
@@ -44,10 +49,30 @@ class CreateXmlMappingCommand extends Command
             return Command::FAILURE;
         };
 
-        $xml = new SimpleXMLElement('<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"></doctrine-mapping>');
-        $entity = $xml->addChild('entity');
-        $entity->addAttribute('name', $tableName);
-        $entity->addAttribute('table', $tableName);
+        $entityPath = 'App\\'.$domain.'\\Domain\\Entity\\'.$tableName;
+        $repositoryPath = 'App\\'.$domain.'\\Infrastructure\\Repository\\'.$tableName.'Repository';
+        $repositoryPortPath = 'App\\'.$domain.'\\Domain\\RepositoryPort\\'.$tableName.'RepositoryInterface';
+
+
+        $question = new ChoiceQuestion('Choose type of mapping ', ['entity','embeddable'], 0);
+        $typeOfMapping = $helper->ask($input, $output, $question);
+
+
+        if ($typeOfMapping === 'embeddable'){
+            $object = $this->xml->addChild('embeddable');
+            $object->addAttribute('name', $entityPath);
+
+        } else {
+            $object = $this->xml->addChild('entity');
+            $object->addAttribute('name', $entityPath);
+            $object->addAttribute('table', $tableName);
+            $object->addAttribute('repository-class', $repositoryPath);
+
+            $id = $object->addChild('id');
+            $id->addAttribute('name','id');
+            $id->addAttribute('type','guid');
+            $id->addAttribute('column','id');
+        }
 
         while (true) {
             $columnName = $helper->ask($input, $output, new Question('Enter column name (or leave empty to finish): '));
@@ -56,18 +81,36 @@ class CreateXmlMappingCommand extends Command
             }
 
             $question = new Question('Enter column type: ');
-            $question->setAutocompleterValues(['string', 'integer', 'decimal', 'datetime']);
-
+            $question->setAutocompleterValues(['string', 'integer', 'decimal', 'datetime', 'embedded']);
             $type = $helper->ask($input, $output, $question);
-            $field = $entity->addChild('field');
-            $field->addAttribute('name', $columnName);
-            $field->addAttribute('type', $type);
-            $field->addAttribute('column', Utils::toSnakeCase($columnName));
 
-            // Tutaj można dodać więcej pytań dotyczących atrybutów kolumny, np. długość, nullable itp.
+             if ($type === 'embedded'){
+                $embedded = $object->addChild('embedded');
+                $embedded->addAttribute('name', $columnName);
+
+                $question = new Question('Enter VO name: ');
+                $voName = $helper->ask($input, $output, $question);
+
+                $embedded->addAttribute('class', 'App\\'.$domain.'\\Domain\\Entity\\'.$voName);
+                $embedded->addAttribute('use-column-prefix', 'false');
+            } else {
+                $field = $object->addChild('field');
+
+                if ($typeOfMapping === 'embeddable'){
+                    $question = new Question('Value name in VO: ');
+                    $name = $helper->ask($input, $output, $question);
+                    $field->addAttribute('name', $name);
+                } else {
+                    $field->addAttribute('name', $columnName);
+                }
+
+                $field->addAttribute('type', $type);
+                $field->addAttribute('column', Utils::toSnakeCase($columnName));
+            }
+
         }
 
-        $xmlString = $xml->asXML();
+        $xmlString = $this->xml->asXML();
 
         $doc = new DOMDocument();
 
@@ -76,10 +119,10 @@ class CreateXmlMappingCommand extends Command
 
         $doc->loadXML($xmlString);
 
-        $string = $doc->saveXML();
+        $xmlString = $doc->saveXML();
 
 
-        file_put_contents('./src/'.$domain.'/Infrastructure/DoctrineMappings/'.$tableName.'.orm.xml', $string);
+        file_put_contents('./src/'.$domain.'/Infrastructure/DoctrineMappings/'.$tableName.'.orm.xml', $xmlString);
         // Zapisz $xmlString do pliku, np. do config/doctrine/{TableName}.orm.xml
 
         $io->success("XML mapping for table '$tableName' has been successfully generated.");
