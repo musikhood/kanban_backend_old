@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+  <entity name="test" table="test">
+    <field name="column" type="int"/>
+  </entity>
+</doctrine-mapping>
