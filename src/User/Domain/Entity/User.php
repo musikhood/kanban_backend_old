@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use SensitiveParameter;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -34,8 +35,7 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
     #[ORM\Column]
     private array $roles = [];
 
-    public function __construct(
-    ){
+    public function __construct(){
         $this->boards = new ArrayCollection();
     }
 
@@ -109,7 +109,7 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         // $this->plainPassword = null;
     }
 
-    public static function registerUser(string $email, string $password, array $roles): self
+    public static function registerUser(string $email, #[SensitiveParameter] string $password, array $roles): self
     {
         $passwordHasherFactory = new PasswordHasherFactory([
             // auto hasher with default options for the User class (and children)
@@ -134,8 +134,6 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         $user->setPassword($hashedPassword);
 
         $user->recordDomainEvent(new UserCreatedEvent($email));
-        // Nie tworzymy tutaj hasła, bo trzeba będzie je zahashować.
-        // Nie możemy zrobić tego w tym miejscu, bo musimy wstrzyknąć serwis do hashowania
 
         return $user;
     }
@@ -148,25 +146,4 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         return $this->boards;
     }
 
-    public function addBoard(Board $board): static
-    {
-        if (!$this->boards->contains($board)) {
-            $this->boards->add($board);
-            $board->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBoard(Board $board): static
-    {
-        if ($this->boards->removeElement($board)) {
-            // set the owning side to null (unless already changed)
-            if ($board->getUser() === $this) {
-                $board->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 }
