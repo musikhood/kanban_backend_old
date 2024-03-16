@@ -13,3 +13,11 @@ deptrac:
   ruleset:
     Shared:
       - Vendor
+      - UserDomain
+
+    UserRelations:
+      - BoardDomain
+
+    SharedApplicationData:
+      - UserApplication
+      - BoardApplication

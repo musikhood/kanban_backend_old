@@ -23,13 +23,17 @@ deptrac:
       UserDomain:
         - UserInfrastructure
         - +Shared
+        - +SharedApplicationData
+        - +UserRelations
 
       #User/Application ma dostęp do warstwy Domenowej
       UserApplication:
         - UserDomain
         - +Shared
+        - +SharedApplicationData
 
       #User/Infrastructure ma dostęp do warstwy Domenowej
       UserInfrastructure:
         - UserDomain
         - +Shared
+        - +SharedApplicationData

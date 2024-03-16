@@ -17,11 +17,14 @@ deptrac:
       BoardDomain:
         - BoardInfrastructure
         - +Shared
+        - +SharedApplicationData
 
       BoardApplication:
         - BoardDomain
         - +Shared
+        - +SharedApplicationData
 
       BoardInfrastructure:
         - BoardDomain
         - +Shared
+        - +SharedApplicationData
