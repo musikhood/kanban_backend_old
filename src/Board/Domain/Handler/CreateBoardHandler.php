@@ -5,7 +5,7 @@ namespace App\Board\Domain\Handler;
 use App\Board\Domain\Entity\Board;
 use App\Board\Domain\Entity\BoardName;
 use App\Board\Domain\Model\Command\CreateBoardCommand;
-use App\Board\Domain\RepositoryPort\BoardRepositoryInterface;
+use App\Board\Infrastructure\Port\BoardRepositoryInterface;
 use App\Shared\Domain\Cqrs\CommandHandlerInterface;
 use App\User\Application\Port\UserServiceInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

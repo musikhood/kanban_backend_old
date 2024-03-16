@@ -3,7 +3,7 @@
 namespace App\Board\Infrastructure\Repository;
 
 use App\Board\Domain\Entity\Board;
-use App\Board\Domain\RepositoryPort\BoardRepositoryInterface;
+use App\Board\Infrastructure\Port\BoardRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

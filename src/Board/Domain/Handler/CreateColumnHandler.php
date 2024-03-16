@@ -6,7 +6,7 @@ use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\Board;
 use App\Board\Domain\Entity\ColumnName;
 use App\Board\Domain\Model\Command\CreateColumnCommand;
-use App\Board\Domain\RepositoryPort\ColumnRepositoryInterface;
+use App\Board\Infrastructure\Port\ColumnRepositoryInterface;
 use App\Shared\Domain\Cqrs\CommandHandlerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;

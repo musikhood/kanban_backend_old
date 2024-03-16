@@ -6,7 +6,7 @@ use App\Board\Domain\Entity\Board;
 use App\Board\Domain\Exception\BoardNotFoundException;
 use App\Board\Domain\Exception\PermissionDeniedException;
 use App\Board\Domain\Model\Query\FindBoardQuery;
-use App\Board\Domain\RepositoryPort\BoardRepositoryInterface;
+use App\Board\Infrastructure\Port\BoardRepositoryInterface;
 use App\Shared\Domain\Cqrs\QueryHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

@@ -6,7 +6,7 @@ use App\Shared\Domain\Cqrs\QueryHandlerInterface;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Exception\UserNotFoundException;
 use App\User\Domain\Model\Query\FindUserQuery;
-use App\User\Domain\RepositoryPort\UserRepositoryInterface;
+use App\User\Infrastructure\Port\UserRepositoryInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
