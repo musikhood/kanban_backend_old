@@ -8,6 +8,7 @@ use App\Board\Application\Dto\CreateColumnResponseDto;
 use App\Board\Application\Dto\FindBoardResponseDto;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\Board;
+use App\Board\Domain\Entity\Column;
 use App\Board\Domain\Model\Command\CreateBoardCommand;
 use App\Board\Domain\Model\Command\CreateColumnCommand;
 use App\Board\Domain\Model\Query\FindBoardQuery;
@@ -26,15 +27,8 @@ readonly class BoardService implements BoardServiceInterface
 
         $board = $this->findBoardEntity($userId, $boardId);
 
-        $columnsEntity = $board->getColumns();
-        $columns = [];
-
-        foreach ($columnsEntity as $columnEntity){
-            $columns[] = new ColumnDto(
-                $columnEntity->getId(),
-                $columnEntity->getColumnName()->value()
-            );
-        }
+        $columnsEntity = $board->getColumns()->toArray();
+        $columns = $this->mapColumnEntityToDto($columnsEntity);
 
         return new FindBoardResponseDto(
             $board->getId(),
@@ -43,7 +37,6 @@ readonly class BoardService implements BoardServiceInterface
             $columns
         );
     }
-
     public function findBoardEntity(string $userId, string $boardId): Board
     {
         $findBoardQuery = new FindBoardQuery(
@@ -56,7 +49,6 @@ readonly class BoardService implements BoardServiceInterface
 
         return $board;
     }
-    
     public function createBoard(string $userId, string $boardName): CreateBoardResponseDto
     {
         $createBoardCommand = new CreateBoardCommand(
@@ -70,7 +62,6 @@ readonly class BoardService implements BoardServiceInterface
             'Board created successfully'
         );
     }
-
     public function addColumn(string $userId, string $boardId, string $columnName): CreateColumnResponseDto
     {
         $createColumnCommand = new CreateColumnCommand(
@@ -85,5 +76,22 @@ readonly class BoardService implements BoardServiceInterface
             'Column created successfully'
         );
 
+    }
+
+    /**
+     * @param array<Column> $columnsEntity
+     * @return array<ColumnDto>
+     */
+    private function mapColumnEntityToDto(array $columnsEntity): array{
+        $columns = [];
+
+        foreach ($columnsEntity as $columnEntity){
+            $columns[] = new ColumnDto(
+                $columnEntity->getId(),
+                $columnEntity->getColumnName()->value()
+            );
+        }
+
+        return $columns;
     }
 }
