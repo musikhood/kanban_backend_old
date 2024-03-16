@@ -2,7 +2,7 @@
 
 namespace App\Shared\Application\Bus;
 
-use App\Shared\Application\Cqrs\CommandInterface;
+use App\Shared\Domain\Cqrs\CommandInterface;
 
 interface CommandBusInterface
 {

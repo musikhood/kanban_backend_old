@@ -5,3 +5,6 @@ board_entity:
 user_entity:
 	@test $(name)
 	php bin/console make:user '\App\User\Domain\Entity\$(name)'
+
+deptrac:
+	vendor/bin/deptrac --report-uncovered

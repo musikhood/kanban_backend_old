@@ -2,9 +2,7 @@
 
 namespace App\Board\Application\Controller;
 
-use App\Board\Application\Dto\CreateBoardRequestDto;
 use App\Board\Application\Dto\CreateColumnRequestDto;
-use App\Board\Application\Model\Command\CreateBoardCommand;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\User\Domain\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

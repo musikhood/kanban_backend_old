@@ -5,11 +5,11 @@ namespace App\Board\Application\Service;
 use App\Board\Application\Dto\CreateBoardResponseDto;
 use App\Board\Application\Dto\CreateColumnResponseDto;
 use App\Board\Application\Dto\FindBoardResponseDto;
-use App\Board\Application\Model\Command\CreateBoardCommand;
-use App\Board\Application\Model\Command\CreateColumnCommand;
-use App\Board\Application\Model\Query\FindBoardQuery;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\Board;
+use App\Board\Domain\Model\Command\CreateBoardCommand;
+use App\Board\Domain\Model\Command\CreateColumnCommand;
+use App\Board\Domain\Model\Query\FindBoardQuery;
 use App\Shared\Application\Bus\CommandBusInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
 
