@@ -2,8 +2,6 @@
 
 namespace App\Board\Application\Dto;
 
-use Symfony\Component\Serializer\Attribute\MaxDepth;
-
 readonly class FindBoardResponseDto
 {
     public function __construct(

@@ -2,6 +2,7 @@
 
 namespace App\Board\Application\Service;
 
+use App\Board\Application\Dto\ColumnDto;
 use App\Board\Application\Dto\CreateBoardResponseDto;
 use App\Board\Application\Dto\CreateColumnResponseDto;
 use App\Board\Application\Dto\FindBoardResponseDto;
@@ -25,13 +26,21 @@ readonly class BoardService implements BoardServiceInterface
 
         $board = $this->findBoardEntity($userId, $boardId);
 
-        $columns = $board->getColumns();
+        $columnsEntity = $board->getColumns();
+        $columns = [];
+
+        foreach ($columnsEntity as $columnEntity){
+            $columns[] = new ColumnDto(
+                $columnEntity->getId(),
+                $columnEntity->getColumnName()->value()
+            );
+        }
 
         return new FindBoardResponseDto(
             $board->getId(),
             $board->getUser()->getEmail(),
             $board->getBoardName()->value(),
-            $columns->toArray()
+            $columns
         );
     }
 
