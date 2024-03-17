@@ -5,6 +5,7 @@ namespace App\Board\Application\Controller;
 use App\Board\Application\Dto\UpdateColumnRequestDto;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\BoardId;
+use App\Board\Domain\Entity\ColumnColor;
 use App\Board\Domain\Entity\ColumnId;
 use App\Board\Domain\Entity\ColumnName;
 use App\User\Domain\Entity\User;
@@ -37,7 +38,8 @@ class UpdateColumnController extends AbstractController
             $user->id(),
             new BoardId($boardId),
             new ColumnId($columnId),
-            new ColumnName($updateColumnRequestDto->getName())
+            new ColumnName($updateColumnRequestDto->getName()),
+            new ColumnColor($updateColumnRequestDto->getColor())
         );
 
         $response = $this->normalizer->normalize($response);

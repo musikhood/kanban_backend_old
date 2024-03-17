@@ -6,7 +6,8 @@ class Column
     public function __construct(
         private readonly ColumnId $id,
         private readonly Board    $board,
-        private ColumnName        $name
+        private ColumnName        $name,
+        private ColumnColor       $color
     )
     {
     }
@@ -26,5 +27,15 @@ class Column
     public function board(): Board
     {
         return $this->board;
+    }
+
+    public function color(): ColumnColor
+    {
+        return $this->color;
+    }
+
+    public function updateColor(ColumnColor $color): void
+    {
+        $this->color = $color;
     }
 }

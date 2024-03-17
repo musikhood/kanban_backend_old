@@ -3,6 +3,7 @@
 namespace App\Board\Domain\Model\Command;
 
 use App\Board\Domain\Entity\BoardId;
+use App\Board\Domain\Entity\ColumnColor;
 use App\Board\Domain\Entity\ColumnId;
 use App\Board\Domain\Entity\ColumnName;
 use App\Shared\Domain\Cqrs\CommandInterface;
@@ -14,9 +15,15 @@ readonly class UpdateColumnCommand implements CommandInterface
         private UserId $userId,
         private BoardId $boardId,
         private ColumnId $columnId,
-        private ColumnName $columnName
+        private ColumnName $columnName,
+        private ColumnColor $columnColor
     )
     {
+    }
+
+    public function getColumnColor(): ColumnColor
+    {
+        return $this->columnColor;
     }
 
     public function getUserId(): UserId

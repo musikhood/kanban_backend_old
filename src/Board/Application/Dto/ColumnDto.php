@@ -6,9 +6,21 @@ readonly class ColumnDto
 {
     public function __construct(
         private string $id,
-        private string $name
+        private string $name,
+        private string $color,
+        private array $colorRgb
     )
     {
+    }
+
+    public function getColorRgb(): array
+    {
+        return $this->colorRgb;
+    }
+
+    public function getColor(): string
+    {
+        return $this->color;
     }
 
     public function getId(): string

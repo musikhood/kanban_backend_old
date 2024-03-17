@@ -71,7 +71,7 @@ class Board extends AggregateRoot
     /**
      * @throws ColumnNotFoundException
      */
-    public function changeColumn(ColumnId $columnId, ColumnName $columnName): Column{
+    public function changeColumn(ColumnId $columnId, ColumnName $columnName, ColumnColor $columnColor): Column{
         $column = $this->getColumn($columnId);
 
         if (!$column){
@@ -79,6 +79,7 @@ class Board extends AggregateRoot
         }
 
         $column->rename($columnName);
+        $column->updateColor($columnColor);
 
         return $column;
     }
@@ -86,12 +87,14 @@ class Board extends AggregateRoot
     public static function createColumn(
         Board $board,
         ColumnId $columnId,
-        ColumnName $name
+        ColumnName $columnName,
+        ColumnColor $columnColor
     ): Column {
         $column = new Column(
             $columnId,
             $board,
-            $name
+            $columnName,
+            $columnColor
         );
 
         $board->recordDomainEvent(new ColumnCreatedEvent($name));

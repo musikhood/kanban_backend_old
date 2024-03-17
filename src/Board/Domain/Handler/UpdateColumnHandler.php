@@ -36,7 +36,8 @@ readonly class UpdateColumnHandler implements CommandHandlerInterface
 
         $column = $board->changeColumn(
             $updateColumnCommand->getColumnId(),
-            $updateColumnCommand->getColumnName()
+            $updateColumnCommand->getColumnName(),
+            $updateColumnCommand->getColumnColor()
         );
 
         $this->columnRepository->save($column);

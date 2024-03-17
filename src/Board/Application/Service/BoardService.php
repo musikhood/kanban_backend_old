@@ -14,6 +14,7 @@ use App\Board\Domain\Entity\Board;
 use App\Board\Domain\Entity\BoardId;
 use App\Board\Domain\Entity\BoardName;
 use App\Board\Domain\Entity\Column;
+use App\Board\Domain\Entity\ColumnColor;
 use App\Board\Domain\Entity\ColumnId;
 use App\Board\Domain\Entity\ColumnName;
 use App\Board\Domain\Model\Command\CreateBoardCommand;
@@ -107,12 +108,13 @@ readonly class BoardService implements BoardServiceInterface
             'Board updated successfully'
         );
     }
-    public function addColumn(UserId $userId, BoardId $boardId, ColumnName $columnName): CreateColumnResponseDto
+    public function addColumn(UserId $userId, BoardId $boardId, ColumnName $columnName, ColumnColor $columnColor): CreateColumnResponseDto
     {
         $createColumnCommand = new CreateColumnCommand(
             $userId,
             $boardId,
-            $columnName
+            $columnName,
+            $columnColor
         );
 
         $this->commandBus->dispatch($createColumnCommand);
@@ -123,13 +125,14 @@ readonly class BoardService implements BoardServiceInterface
 
     }
 
-    public function updateColumn(UserId $userId, BoardId $boardId, ColumnId $columnId, ColumnName $columnName): UpdateColumnResponseDto
+    public function updateColumn(UserId $userId, BoardId $boardId, ColumnId $columnId, ColumnName $columnName, ColumnColor $columnColor): UpdateColumnResponseDto
     {
         $updateColumnCommand = new UpdateColumnCommand(
             $userId,
             $boardId,
             $columnId,
-            $columnName
+            $columnName,
+            $columnColor
         );
 
         $this->commandBus->dispatch($updateColumnCommand);
@@ -149,7 +152,9 @@ readonly class BoardService implements BoardServiceInterface
         foreach ($columns as $item){
             $columnsDto[] = new ColumnDto(
                 $item->id()->value(),
-                $item->name()->value()
+                $item->name()->value(),
+                $item->color()->value(),
+                $item->color()->hexToRgb()
             );
         }
 

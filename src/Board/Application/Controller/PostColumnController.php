@@ -5,6 +5,7 @@ namespace App\Board\Application\Controller;
 use App\Board\Application\Dto\CreateColumnRequestDto;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\BoardId;
+use App\Board\Domain\Entity\ColumnColor;
 use App\Board\Domain\Entity\ColumnName;
 use App\User\Domain\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,7 +35,8 @@ class PostColumnController extends AbstractController
         $response = $this->boardService->addColumn(
             $user->id(),
             new BoardId($boardId),
-            new ColumnName($createColumnRequestDto->getName())
+            new ColumnName($createColumnRequestDto->getName()),
+            new ColumnColor($createColumnRequestDto->getColor())
         );
 
         $response = $this->normalizer->normalize($response);

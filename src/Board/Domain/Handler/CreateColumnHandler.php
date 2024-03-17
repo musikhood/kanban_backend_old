@@ -38,7 +38,8 @@ readonly class CreateColumnHandler implements CommandHandlerInterface
         $column = Board::createColumn(
             $board,
             new ColumnId(Uuid::uuid4()->toString()),
-            $createColumnCommand->getName()
+            $createColumnCommand->getName(),
+            $createColumnCommand->getColor()
         );
 
         $board->addColumn($column);

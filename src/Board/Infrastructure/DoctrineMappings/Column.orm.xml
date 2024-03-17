@@ -16,6 +16,7 @@
         </many-to-one>
 
         <embedded name="name" class="App\Board\Domain\Entity\ColumnName"  use-column-prefix="false" />
+        <embedded name="color" class="App\Board\Domain\Entity\ColumnColor"  use-column-prefix="false" />
     </entity>
 
 </doctrine-mapping>
