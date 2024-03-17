@@ -3,6 +3,7 @@
 namespace App\Board\Application\Controller;
 
 use App\Board\Application\Port\BoardServiceInterface;
+use App\Board\Domain\Entity\BoardId;
 use App\User\Domain\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,7 +28,10 @@ class GetBoardController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        $board = $this->boardService->findBoard($user->id()->value(), $boardId);
+        $board = $this->boardService->findBoard(
+            $user->id(),
+            new BoardId($boardId)
+        );
 
         $response = $this->normalizer->normalize($board);
 

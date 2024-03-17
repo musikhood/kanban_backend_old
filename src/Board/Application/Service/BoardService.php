@@ -26,7 +26,7 @@ readonly class BoardService implements BoardServiceInterface
         private QueryBusInterface $queryBus,
     ) {
     }
-    public function findBoard(string $userId, string $boardId): FindBoardResponseDto
+    public function findBoard(UserId $userId, BoardId $boardId): FindBoardResponseDto
     {
 
         $board = $this->findBoardEntity($userId, $boardId);
@@ -51,11 +51,11 @@ readonly class BoardService implements BoardServiceInterface
         );
     }
 
-    public function findBoardEntity(string $userId, string $boardId): Board
+    public function findBoardEntity(UserId $userId, BoardId $boardId): Board
     {
         $findBoardQuery = new FindBoardQuery(
-            new BoardId($boardId),
-            new UserId($userId)
+            $boardId,
+            $userId
         );
 
         /** @var Board $board */
@@ -64,11 +64,11 @@ readonly class BoardService implements BoardServiceInterface
         return $board;
     }
     
-    public function createBoard(string $userId, string $boardName): CreateBoardResponseDto
+    public function createBoard(UserId $userId, BoardName $boardName): CreateBoardResponseDto
     {
         $createBoardCommand = new CreateBoardCommand(
-            new BoardName($boardName),
-            new UserId($userId)
+            $boardName,
+            $userId
         );
 
         $this->commandBus->dispatch($createBoardCommand);
@@ -78,12 +78,12 @@ readonly class BoardService implements BoardServiceInterface
         );
     }
 
-    public function addColumn(string $userId, string $boardId, string $columnName): CreateColumnResponseDto
+    public function addColumn(UserId $userId, BoardId $boardId, ColumnName $columnName): CreateColumnResponseDto
     {
         $createColumnCommand = new CreateColumnCommand(
-            new UserId($userId),
-            new BoardId($boardId),
-            new ColumnName($columnName)
+            $userId,
+            $boardId,
+            $columnName
         );
 
         $this->commandBus->dispatch($createColumnCommand);

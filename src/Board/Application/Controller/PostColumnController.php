@@ -2,10 +2,10 @@
 
 namespace App\Board\Application\Controller;
 
-use App\Board\Application\Dto\CreateBoardRequestDto;
 use App\Board\Application\Dto\CreateColumnRequestDto;
-use App\Board\Application\Model\Command\CreateBoardCommand;
 use App\Board\Application\Port\BoardServiceInterface;
+use App\Board\Domain\Entity\BoardId;
+use App\Board\Domain\Entity\ColumnName;
 use App\User\Domain\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,9 +32,9 @@ class PostColumnController extends AbstractController
         $user = $this->getUser();
 
         $response = $this->boardService->addColumn(
-            $user->id()->value(),
-            $boardId,
-            $createColumnRequestDto->getName()
+            $user->id(),
+            new BoardId($boardId),
+            new ColumnName($createColumnRequestDto->getName())
         );
 
         $response = $this->normalizer->normalize($response);

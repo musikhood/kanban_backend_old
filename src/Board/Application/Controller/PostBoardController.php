@@ -3,8 +3,8 @@
 namespace App\Board\Application\Controller;
 
 use App\Board\Application\Dto\CreateBoardRequestDto;
-use App\Board\Application\Model\Command\CreateBoardCommand;
 use App\Board\Application\Port\BoardServiceInterface;
+use App\Board\Domain\Entity\BoardName;
 use App\User\Domain\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,8 +31,8 @@ class PostBoardController extends AbstractController
         $user = $this->getUser();
 
         $response = $this->boardService->createBoard(
-            $user->id()->value(),
-            $createBoardRequestDto->getName()
+            $user->id(),
+            new BoardName($createBoardRequestDto->getName())
         );
 
         $response = $this->normalizer->normalize($response);

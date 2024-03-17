@@ -2,6 +2,7 @@
 
 namespace App\User\Application\Controller;
 
+use App\Shared\Domain\ValueObject\UserId;
 use App\User\Application\Dto\FindUserRequestDto;
 use App\User\Application\Port\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +26,9 @@ class GetUserController extends AbstractController
     #[Route('/api/user/{userId}', name: 'app_get_user', methods: ['GET'])]
     public function index(string $userId): JsonResponse
     {
-        $user = $this->userService->findUser($userId);
+        $user = $this->userService->findUser(
+            new UserId($userId)
+        );
 
         $response = $this->normalizer->normalize($user);
 

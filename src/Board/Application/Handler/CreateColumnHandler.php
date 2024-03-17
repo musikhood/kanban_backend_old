@@ -6,7 +6,6 @@ use App\Board\Application\Model\Command\CreateColumnCommand;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\Board;
 use App\Board\Domain\Entity\ColumnId;
-use App\Board\Domain\Entity\ColumnName;
 use App\Board\Domain\RepositoryPort\ColumnRepositoryInterface;
 use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use Ramsey\Uuid\Uuid;
@@ -28,8 +27,8 @@ readonly class CreateColumnHandler implements CommandHandlerInterface
     {
 
         $board = $this->boardService->findBoardEntity(
-            $createColumnCommand->getUserId()->value(),
-            $createColumnCommand->getBoardId()->value()
+            $createColumnCommand->getUserId(),
+            $createColumnCommand->getBoardId()
         );
 
         $column = Board::createColumn(

@@ -16,27 +16,21 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User extends AggregateRoot implements UserInterface, PasswordAuthenticatedUserInterface
 {
     private string $password;
-    private Collection $boards;
-
     public function __construct(
         private readonly UserId $id,
         private string          $email,
         private array           $roles = []
     )
     {
-        $this->boards = new ArrayCollection();
     }
-
     public function id(): UserId
     {
         return $this->id;
     }
-
     public function email(): string
     {
         return $this->email;
     }
-
     public function updateEmail(string $email): void
     {
         $this->email = $email;
@@ -53,37 +47,23 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
 
         return array_unique($roles);
     }
-
     public function updateRoles(array $roles): void
     {
         $this->roles = $roles;
     }
-
     public function getPassword(): string
     {
         return $this->password;
     }
-
     public function updatePassword(string $password): void
     {
         $this->password = $password;
-    }
-
-    public function boards(): Collection
-    {
-        return $this->boards;
     }
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-
-    public function toArray(): array
-    {
-        return get_object_vars($this);
-    }
-
     public static function registerUser(UserId $userId, string $email, string $password, array $roles): self
     {
         $passwordHasherFactory = new PasswordHasherFactory([

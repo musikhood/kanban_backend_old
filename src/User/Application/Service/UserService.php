@@ -4,6 +4,7 @@ namespace App\User\Application\Service;
 
 use App\Shared\Application\Bus\CommandBusInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
+use App\Shared\Domain\ValueObject\UserId;
 use App\User\Application\Dto\CreateUserResponseDto;
 use App\User\Application\Dto\FindUserResponseDto;
 use App\User\Application\Model\Command\CreateUserCommand;
@@ -35,7 +36,7 @@ readonly class UserService implements UserServiceInterface
         return new CreateUserResponseDto('User created successfully');
     }
 
-    public function findUser(string $userId): FindUserResponseDto
+    public function findUser(UserId $userId): FindUserResponseDto
     {
 
         $user = $this->findUserEntity($userId);
@@ -47,7 +48,7 @@ readonly class UserService implements UserServiceInterface
         );
     }
 
-    public function findUserEntity(string $userId): User
+    public function findUserEntity(UserId $userId): User
     {
         $findUserQuery = new FindUserQuery($userId);
 
