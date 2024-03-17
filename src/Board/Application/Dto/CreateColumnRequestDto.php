@@ -9,6 +9,10 @@ readonly class CreateColumnRequestDto
         #[Assert\NotBlank]
         private string $name,
 
+        #[Assert\CssColor(
+            formats: Assert\CssColor::HEX_LONG,
+            message: 'The accent color must be a 6-character hexadecimal color.',
+        )]
         private string $color
     )
     {

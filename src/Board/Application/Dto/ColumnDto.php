@@ -8,12 +8,12 @@ readonly class ColumnDto
         private string $id,
         private string $name,
         private string $color,
-        private array $colorRgb
+        private string $colorRgb
     )
     {
     }
 
-    public function getColorRgb(): array
+    public function getColorRgb(): string
     {
         return $this->colorRgb;
     }
