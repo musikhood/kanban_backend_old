@@ -26,7 +26,7 @@ readonly class UpdateColumnHandler implements CommandHandlerInterface
      */
     public function __invoke(UpdateColumnCommand $updateColumnCommand): void
     {
-        $board = $this->boardService->findBoardEntity(
+        $board = $this->boardService->findSingleBoardEntity(
             $updateColumnCommand->getUserId(),
             $updateColumnCommand->getBoardId()
         );

@@ -26,7 +26,7 @@ readonly class CreateColumnHandler implements CommandHandlerInterface
     public function __invoke(CreateColumnCommand $createColumnCommand): void
     {
 
-        $board = $this->boardService->findBoardEntity(
+        $board = $this->boardService->findSingleBoardEntity(
             $createColumnCommand->getUserId(),
             $createColumnCommand->getBoardId()
         );

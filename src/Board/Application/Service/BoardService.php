@@ -6,6 +6,7 @@ use App\Board\Application\Dto\ColumnDto;
 use App\Board\Application\Dto\CreateBoardResponseDto;
 use App\Board\Application\Dto\CreateColumnResponseDto;
 use App\Board\Application\Dto\FindBoardResponseDto;
+use App\Board\Application\Dto\FindSingleBoardResponseDto;
 use App\Board\Application\Dto\UpdateColumnResponseDto;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\Board;
@@ -18,6 +19,7 @@ use App\Board\Domain\Model\Command\CreateBoardCommand;
 use App\Board\Domain\Model\Command\CreateColumnCommand;
 use App\Board\Domain\Model\Command\UpdateColumnCommand;
 use App\Board\Domain\Model\Query\FindBoardQuery;
+use App\Board\Domain\Model\Query\FindSingleBoardQuery;
 use App\Shared\Application\Bus\CommandBusInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
 use App\Shared\Domain\ValueObject\UserId;
@@ -29,24 +31,41 @@ readonly class BoardService implements BoardServiceInterface
         private QueryBusInterface $queryBus,
     ) {
     }
-    public function findBoard(UserId $userId, BoardId $boardId): FindBoardResponseDto
+
+    public function findBoard(UserId $userId): FindBoardResponseDto
     {
+        $findBoardQuery = new FindBoardQuery(
+            $userId
+        );
 
-        $board = $this->findBoardEntity($userId, $boardId);
+        $boardsEntity = $this->queryBus->handle($findBoardQuery);
 
-        $columnsEntity = $board->columns();
+        $boards = [];
 
-        $columns = [];
+        /** @var Board $board */
+        foreach ($boardsEntity as $board){
+            $columns = $this->mapColumnsArrayToDtoArray($board->columns()->toArray());
 
-        /** @var Column $item */
-        foreach ($columnsEntity as $item){
-            $columns[] = new ColumnDto(
-                $item->id()->value(),
-                $item->name()->value()
+            $boards[] = new FindSingleBoardResponseDto(
+                $board->id()->value(),
+                $board->userId()->value(),
+                $board->name()->value(),
+                $columns
             );
         }
 
-        return new FindBoardResponseDto(
+        return new FindBoardResponseDto($boards);
+    }
+    public function findSingleBoard(UserId $userId, BoardId $boardId): FindSingleBoardResponseDto
+    {
+
+        $board = $this->findSingleBoardEntity($userId, $boardId);
+
+        $columnsEntity = $board->columns();
+
+        $columns = $this->mapColumnsArrayToDtoArray($columnsEntity->toArray());
+
+        return new FindSingleBoardResponseDto(
             $board->id()->value(),
             $board->userId()->value(),
             $board->name()->value(),
@@ -54,9 +73,9 @@ readonly class BoardService implements BoardServiceInterface
         );
     }
 
-    public function findBoardEntity(UserId $userId, BoardId $boardId): Board
+    public function findSingleBoardEntity(UserId $userId, BoardId $boardId): Board
     {
-        $findBoardQuery = new FindBoardQuery(
+        $findBoardQuery = new FindSingleBoardQuery(
             $boardId,
             $userId
         );
@@ -111,5 +130,22 @@ readonly class BoardService implements BoardServiceInterface
         return new UpdateColumnResponseDto(
             'Column updated successfully'
         );
+    }
+
+    /**
+     * @param array<Column> $columns
+     * @return array<ColumnDto>
+     */
+    private function mapColumnsArrayToDtoArray(array $columns): array{
+        $columnsDto = [];
+
+        foreach ($columns as $item){
+            $columnsDto[] = new ColumnDto(
+                $item->id()->value(),
+                $item->name()->value()
+            );
+        }
+
+        return $columnsDto;
     }
 }

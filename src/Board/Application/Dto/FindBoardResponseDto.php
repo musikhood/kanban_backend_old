@@ -2,36 +2,17 @@
 
 namespace App\Board\Application\Dto;
 
-use Symfony\Component\Serializer\Attribute\MaxDepth;
-
 readonly class FindBoardResponseDto
 {
+    /** @param array<FindSingleBoardResponseDto> $boards */
     public function __construct(
-        private string $id,
-        private string $user,
-        private string $name,
-        private array $columns
+        private array $boards
     )
     {
     }
 
-    public function getId(): string
+    public function getBoards(): array
     {
-        return $this->id;
-    }
-
-    public function getUser(): string
-    {
-        return $this->user;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function getColumns(): array
-    {
-        return $this->columns;
+        return $this->boards;
     }
 }
