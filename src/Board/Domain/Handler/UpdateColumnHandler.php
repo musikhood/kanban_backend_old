@@ -2,10 +2,12 @@
 
 namespace App\Board\Domain\Handler;
 
-use App\Board\Application\Port\BoardServiceInterface;
+use App\Board\Domain\Entity\Board;
 use App\Board\Domain\Exception\ColumnNotFoundException;
 use App\Board\Domain\Model\Command\UpdateColumnCommand;
+use App\Board\Domain\Model\Query\FindSingleBoardQuery;
 use App\Board\Domain\RepositoryPort\ColumnRepositoryInterface;
+use App\Shared\Application\Bus\QueryBusInterface;
 use App\Shared\Domain\Cqrs\CommandHandlerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -14,9 +16,9 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 readonly class UpdateColumnHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private BoardServiceInterface $boardService,
         private ColumnRepositoryInterface $columnRepository,
-        private EventDispatcherInterface $eventDispatcher
+        private EventDispatcherInterface $eventDispatcher,
+        private QueryBusInterface $queryBus
     )
     {
     }
@@ -26,10 +28,13 @@ readonly class UpdateColumnHandler implements CommandHandlerInterface
      */
     public function __invoke(UpdateColumnCommand $updateColumnCommand): void
     {
-        $board = $this->boardService->findSingleBoardEntity(
-            $updateColumnCommand->getUserId(),
-            $updateColumnCommand->getBoardId()
+        $findBoardQuery = new FindSingleBoardQuery(
+            $updateColumnCommand->getBoardId(),
+            $updateColumnCommand->getUserId()
         );
+
+        /** @var Board $board */
+        $board = $this->queryBus->handle($findBoardQuery);
 
         $column = $board->changeColumn(
             $updateColumnCommand->getColumnId(),

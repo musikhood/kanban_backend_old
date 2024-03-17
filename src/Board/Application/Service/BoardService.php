@@ -59,7 +59,13 @@ readonly class BoardService implements BoardServiceInterface
     public function findSingleBoard(UserId $userId, BoardId $boardId): FindSingleBoardResponseDto
     {
 
-        $board = $this->findSingleBoardEntity($userId, $boardId);
+        $findBoardQuery = new FindSingleBoardQuery(
+            $boardId,
+            $userId
+        );
+
+        /** @var Board $board */
+        $board = $this->queryBus->handle($findBoardQuery);
 
         $columnsEntity = $board->columns();
 
@@ -72,20 +78,6 @@ readonly class BoardService implements BoardServiceInterface
             $columns
         );
     }
-
-    public function findSingleBoardEntity(UserId $userId, BoardId $boardId): Board
-    {
-        $findBoardQuery = new FindSingleBoardQuery(
-            $boardId,
-            $userId
-        );
-
-        /** @var Board $board */
-        $board = $this->queryBus->handle($findBoardQuery);
-
-        return $board;
-    }
-    
     public function createBoard(UserId $userId, BoardName $boardName): CreateBoardResponseDto
     {
         $createBoardCommand = new CreateBoardCommand(

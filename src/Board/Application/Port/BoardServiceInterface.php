@@ -18,7 +18,6 @@ interface BoardServiceInterface
 {
     public function findBoard(UserId $userId): FindBoardResponseDto;
     public function findSingleBoard(UserId $userId, BoardId $boardId): FindSingleBoardResponseDto;
-    public function findSingleBoardEntity(UserId $userId, BoardId $boardId): Board;
     public function createBoard(UserId $userId, BoardName $boardName): CreateBoardResponseDto;
     public function addColumn(UserId $userId, BoardId $boardId, ColumnName $columnName): CreateColumnResponseDto;
     public function updateColumn(UserId $userId, BoardId $boardId, ColumnId $columnId, ColumnName $columnName): UpdateColumnResponseDto;
