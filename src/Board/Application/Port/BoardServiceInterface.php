@@ -6,6 +6,7 @@ use App\Board\Application\Dto\CreateBoardResponseDto;
 use App\Board\Application\Dto\CreateColumnResponseDto;
 use App\Board\Application\Dto\FindBoardResponseDto;
 use App\Board\Application\Dto\FindSingleBoardResponseDto;
+use App\Board\Application\Dto\UpdateBoardResponseDto;
 use App\Board\Application\Dto\UpdateColumnResponseDto;
 use App\Board\Domain\Entity\Board;
 use App\Board\Domain\Entity\BoardId;
@@ -19,6 +20,7 @@ interface BoardServiceInterface
     public function findBoard(UserId $userId): FindBoardResponseDto;
     public function findSingleBoard(UserId $userId, BoardId $boardId): FindSingleBoardResponseDto;
     public function createBoard(UserId $userId, BoardName $boardName): CreateBoardResponseDto;
+    public function updateBoard(UserId $userId, BoardId $boardId, BoardName $boardName): UpdateBoardResponseDto;
     public function addColumn(UserId $userId, BoardId $boardId, ColumnName $columnName): CreateColumnResponseDto;
     public function updateColumn(UserId $userId, BoardId $boardId, ColumnId $columnId, ColumnName $columnName): UpdateColumnResponseDto;
 }

@@ -80,8 +80,6 @@ class Board extends AggregateRoot
 
         $column->rename($columnName);
 
-        $this->recordDomainEvent(new ColumnUpdatedEvent($columnName));
-
         return $column;
     }
 

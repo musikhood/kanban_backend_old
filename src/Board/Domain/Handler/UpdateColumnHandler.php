@@ -9,7 +9,6 @@ use App\Board\Domain\Model\Query\FindSingleBoardQuery;
 use App\Board\Domain\RepositoryPort\ColumnRepositoryInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
 use App\Shared\Domain\Cqrs\CommandHandlerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -17,7 +16,6 @@ readonly class UpdateColumnHandler implements CommandHandlerInterface
 {
     public function __construct(
         private ColumnRepositoryInterface $columnRepository,
-        private EventDispatcherInterface $eventDispatcher,
         private QueryBusInterface $queryBus
     )
     {
@@ -42,9 +40,5 @@ readonly class UpdateColumnHandler implements CommandHandlerInterface
         );
 
         $this->columnRepository->save($column);
-
-        foreach ($board->pullDomainEvents() as $domainEvent) {
-            $this->eventDispatcher->dispatch($domainEvent);
-        }
     }
 }

@@ -7,6 +7,7 @@ use App\Board\Application\Dto\CreateBoardResponseDto;
 use App\Board\Application\Dto\CreateColumnResponseDto;
 use App\Board\Application\Dto\FindBoardResponseDto;
 use App\Board\Application\Dto\FindSingleBoardResponseDto;
+use App\Board\Application\Dto\UpdateBoardResponseDto;
 use App\Board\Application\Dto\UpdateColumnResponseDto;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\Board;
@@ -17,6 +18,7 @@ use App\Board\Domain\Entity\ColumnId;
 use App\Board\Domain\Entity\ColumnName;
 use App\Board\Domain\Model\Command\CreateBoardCommand;
 use App\Board\Domain\Model\Command\CreateColumnCommand;
+use App\Board\Domain\Model\Command\UpdateBoardCommand;
 use App\Board\Domain\Model\Command\UpdateColumnCommand;
 use App\Board\Domain\Model\Query\FindBoardQuery;
 use App\Board\Domain\Model\Query\FindSingleBoardQuery;
@@ -91,7 +93,20 @@ readonly class BoardService implements BoardServiceInterface
             'Board created successfully'
         );
     }
+    public function updateBoard(UserId $userId, BoardId $boardId, BoardName $boardName): UpdateBoardResponseDto
+    {
+        $updateBoardCommand = new UpdateBoardCommand(
+            $userId,
+            $boardId,
+            $boardName
+        );
 
+        $this->commandBus->dispatch($updateBoardCommand);
+
+        return new UpdateBoardResponseDto(
+            'Board updated successfully'
+        );
+    }
     public function addColumn(UserId $userId, BoardId $boardId, ColumnName $columnName): CreateColumnResponseDto
     {
         $createColumnCommand = new CreateColumnCommand(
