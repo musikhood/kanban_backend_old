@@ -4,7 +4,6 @@ namespace App\User\Application\Controller;
 
 use App\Shared\Application\Bus\BusInterface;
 use App\User\Application\Dto\CreateUserRequestDto;
-use App\User\Application\Model\Command\CreateUserCommand;
 use App\User\Application\Port\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

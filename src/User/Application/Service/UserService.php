@@ -7,12 +7,11 @@ use App\Shared\Application\Bus\QueryBusInterface;
 use App\Shared\Domain\ValueObject\UserId;
 use App\User\Application\Dto\CreateUserResponseDto;
 use App\User\Application\Dto\FindUserResponseDto;
-use App\User\Application\Model\Command\CreateUserCommand;
-use App\User\Application\Model\Query\FindUserQuery;
 use App\User\Application\Port\UserServiceInterface;
 use App\User\Domain\Entity\User;
+use App\User\Domain\Model\Command\CreateUserCommand;
+use App\User\Domain\Model\Query\FindUserQuery;
 use SensitiveParameter;
-use Throwable;
 
 readonly class UserService implements UserServiceInterface
 {
