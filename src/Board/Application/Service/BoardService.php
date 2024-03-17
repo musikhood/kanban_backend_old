@@ -6,14 +6,17 @@ use App\Board\Application\Dto\ColumnDto;
 use App\Board\Application\Dto\CreateBoardResponseDto;
 use App\Board\Application\Dto\CreateColumnResponseDto;
 use App\Board\Application\Dto\FindBoardResponseDto;
+use App\Board\Application\Dto\UpdateColumnResponseDto;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\Board;
 use App\Board\Domain\Entity\BoardId;
 use App\Board\Domain\Entity\BoardName;
 use App\Board\Domain\Entity\Column;
+use App\Board\Domain\Entity\ColumnId;
 use App\Board\Domain\Entity\ColumnName;
 use App\Board\Domain\Model\Command\CreateBoardCommand;
 use App\Board\Domain\Model\Command\CreateColumnCommand;
+use App\Board\Domain\Model\Command\UpdateColumnCommand;
 use App\Board\Domain\Model\Query\FindBoardQuery;
 use App\Shared\Application\Bus\CommandBusInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
@@ -92,5 +95,21 @@ readonly class BoardService implements BoardServiceInterface
             'Column created successfully'
         );
 
+    }
+
+    public function updateColumn(UserId $userId, BoardId $boardId, ColumnId $columnId, ColumnName $columnName): UpdateColumnResponseDto
+    {
+        $updateColumnCommand = new UpdateColumnCommand(
+            $userId,
+            $boardId,
+            $columnId,
+            $columnName
+        );
+
+        $this->commandBus->dispatch($updateColumnCommand);
+
+        return new UpdateColumnResponseDto(
+            'Column updated successfully'
+        );
     }
 }

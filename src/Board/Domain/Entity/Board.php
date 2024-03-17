@@ -4,6 +4,8 @@ namespace App\Board\Domain\Entity;
 
 use App\Board\Domain\Event\BoardCreatedEvent;
 use App\Board\Domain\Event\ColumnCreatedEvent;
+use App\Board\Domain\Event\ColumnUpdatedEvent;
+use App\Board\Domain\Exception\ColumnNotFoundException;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\Shared\Domain\ValueObject\UserId;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -53,6 +55,34 @@ class Board extends AggregateRoot
 
     public function addColumn(Column $column): void{
         $this->columns->add($column);
+    }
+
+    public function getColumn(ColumnId $columnId): ?Column {
+        /** @var Column $column */
+        foreach ($this->columns() as $column){
+            if($column->id()->value() === $columnId->value()){
+                return $column;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @throws ColumnNotFoundException
+     */
+    public function changeColumn(ColumnId $columnId, ColumnName $columnName): Column{
+        $column = $this->getColumn($columnId);
+
+        if (!$column){
+            throw new ColumnNotFoundException();
+        }
+
+        $column->rename($columnName);
+
+        $this->recordDomainEvent(new ColumnUpdatedEvent($columnName));
+
+        return $column;
     }
 
     public static function createColumn(
