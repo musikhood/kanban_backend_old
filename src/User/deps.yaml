@@ -4,7 +4,12 @@ deptrac:
       - name: UserDomain
         collectors:
           - type: className
-            regex: App\\User\\Domain\\.*
+            regex: (App\\User\\Domain\\(?!Entity\\User)).*
+
+      - name: UserEntity
+        collectors:
+          - type: className
+            regex: App\\User\\Domain\\Entity\\User
 
         # Warstwa Aplikacji
       - name: UserApplication
@@ -23,6 +28,11 @@ deptrac:
       UserDomain:
         - UserInfrastructure
         - +Shared
+
+      UserEntity:
+        - UserDomain
+        - Shared
+        - Vendor
 
       #User/Application ma dostęp do warstwy Domenowej
       UserApplication:

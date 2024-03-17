@@ -13,3 +13,4 @@ deptrac:
   ruleset:
     Shared:
       - Vendor
+      - UserEntity
