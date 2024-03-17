@@ -2,6 +2,7 @@
 
 namespace App\Board\Application\Service;
 
+use App\Board\Application\Dto\ColumnDto;
 use App\Board\Application\Dto\CreateBoardResponseDto;
 use App\Board\Application\Dto\CreateColumnResponseDto;
 use App\Board\Application\Dto\FindBoardResponseDto;
@@ -10,8 +11,13 @@ use App\Board\Application\Model\Command\CreateColumnCommand;
 use App\Board\Application\Model\Query\FindBoardQuery;
 use App\Board\Application\Port\BoardServiceInterface;
 use App\Board\Domain\Entity\Board;
+use App\Board\Domain\Entity\BoardId;
+use App\Board\Domain\Entity\BoardName;
+use App\Board\Domain\Entity\Column;
+use App\Board\Domain\Entity\ColumnName;
 use App\Shared\Application\Bus\CommandBusInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
+use App\Shared\Domain\ValueObject\UserId;
 
 readonly class BoardService implements BoardServiceInterface
 {
@@ -25,21 +31,31 @@ readonly class BoardService implements BoardServiceInterface
 
         $board = $this->findBoardEntity($userId, $boardId);
 
-        $columns = $board->columns();
+        $columnsEntity = $board->columns();
+
+        $columns = [];
+
+        /** @var Column $item */
+        foreach ($columnsEntity as $item){
+            $columns[] = new ColumnDto(
+                $item->id()->value(),
+                $item->name()->value()
+            );
+        }
 
         return new FindBoardResponseDto(
-            $board->id()->uuid(),
-            $board->user()->email(),
+            $board->id()->value(),
+            $board->userId()->value(),
             $board->name()->value(),
-            $columns->toArray()
+            $columns
         );
     }
 
     public function findBoardEntity(string $userId, string $boardId): Board
     {
         $findBoardQuery = new FindBoardQuery(
-            $boardId,
-            $userId
+            new BoardId($boardId),
+            new UserId($userId)
         );
 
         /** @var Board $board */
@@ -51,8 +67,8 @@ readonly class BoardService implements BoardServiceInterface
     public function createBoard(string $userId, string $boardName): CreateBoardResponseDto
     {
         $createBoardCommand = new CreateBoardCommand(
-            $boardName,
-            $userId
+            new BoardName($boardName),
+            new UserId($userId)
         );
 
         $this->commandBus->dispatch($createBoardCommand);
@@ -65,9 +81,9 @@ readonly class BoardService implements BoardServiceInterface
     public function addColumn(string $userId, string $boardId, string $columnName): CreateColumnResponseDto
     {
         $createColumnCommand = new CreateColumnCommand(
-            $userId,
-            $boardId,
-            $columnName
+            new UserId($userId),
+            new BoardId($boardId),
+            new ColumnName($columnName)
         );
 
         $this->commandBus->dispatch($createColumnCommand);

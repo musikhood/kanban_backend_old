@@ -3,6 +3,7 @@
 namespace App\User\Domain\Entity;
 
 use App\Shared\Domain\Aggregate\AggregateRoot;
+use App\Shared\Domain\ValueObject\UserId;
 use App\User\Domain\Event\UserCreatedEvent;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,9 +19,9 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
     private Collection $boards;
 
     public function __construct(
-        private readonly string $id,
-        private string $email,
-        private array $roles = []
+        private readonly UserId $id,
+        private string          $email,
+        private array           $roles = []
     )
     {
         $this->boards = new ArrayCollection();
@@ -28,7 +29,7 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
 
     public function id(): UserId
     {
-        return new UserId($this->id);
+        return $this->id;
     }
 
     public function email(): string
@@ -83,7 +84,7 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         return get_object_vars($this);
     }
 
-    public static function registerUser(string $email, string $password, array $roles): self
+    public static function registerUser(UserId $userId, string $email, string $password, array $roles): self
     {
         $passwordHasherFactory = new PasswordHasherFactory([
             // auto hasher with default options for the User class (and children)
@@ -97,7 +98,6 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         ]);
         $hasher = new UserPasswordHasher($passwordHasherFactory);
 
-        $userId = Uuid::uuid4()->toString();
         $user = new self($userId, $email, $roles);
 
         $hashedPassword = $hasher->hashPassword(

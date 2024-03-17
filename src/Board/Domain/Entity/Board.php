@@ -5,18 +5,17 @@ namespace App\Board\Domain\Entity;
 use App\Board\Domain\Event\BoardCreatedEvent;
 use App\Board\Domain\Event\ColumnCreatedEvent;
 use App\Shared\Domain\Aggregate\AggregateRoot;
-use App\User\Domain\Entity\User;
+use App\Shared\Domain\ValueObject\UserId;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use JsonSerializable;
 
-class Board extends AggregateRoot implements JsonSerializable
+class Board extends AggregateRoot
 {
     private Collection $columns;
     public function __construct(
-        private readonly string $id,
-        private BoardName       $name,
-        private User            $user
+        private readonly BoardId $id,
+        private BoardName        $name,
+        private UserId           $userId
     )
     {
         $this->columns = new ArrayCollection();
@@ -24,7 +23,7 @@ class Board extends AggregateRoot implements JsonSerializable
 
     public function id(): BoardId
     {
-        return new BoardId($this->id);
+        return $this->id;
     }
 
     public function name(): BoardName
@@ -37,14 +36,14 @@ class Board extends AggregateRoot implements JsonSerializable
         $this->name = $name;
     }
 
-    public function user(): User
+    public function userId(): UserId
     {
-        return $this->user;
+        return $this->userId;
     }
 
-    public function updateUser(User $user): void
+    public function updateUser(UserId $userId): void
     {
-        $this->user = $user;
+        $this->userId = $userId;
     }
 
     public function columns(): Collection
@@ -62,7 +61,7 @@ class Board extends AggregateRoot implements JsonSerializable
         ColumnName $name
     ): Column {
         $column = new Column(
-            $columnId->uuid(),
+            $columnId,
             $board,
             $name
         );
@@ -73,23 +72,13 @@ class Board extends AggregateRoot implements JsonSerializable
     }
     public static function create(
         BoardId $boardId,
-        User $user,
+        UserId $userId,
         BoardName $name
     ): self {
-        $board = new self($boardId->uuid(), $name, $user);
+        $board = new self($boardId, $name, $userId);
 
         $board->recordDomainEvent(new BoardCreatedEvent($name));
 
         return $board;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id()->uuid(),
-            'userId' => $this->user()->uuid(),
-            'name' => $this->name()->value(),
-            'columns' => $this->columns()
-        ];
     }
 }

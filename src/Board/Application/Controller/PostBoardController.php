@@ -31,7 +31,7 @@ class PostBoardController extends AbstractController
         $user = $this->getUser();
 
         $response = $this->boardService->createBoard(
-            $user->id()->uuid(),
+            $user->id()->value(),
             $createBoardRequestDto->getName()
         );
 

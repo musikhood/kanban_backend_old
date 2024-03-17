@@ -28,14 +28,14 @@ readonly class CreateColumnHandler implements CommandHandlerInterface
     {
 
         $board = $this->boardService->findBoardEntity(
-            $createColumnCommand->getUserId(),
-            $createColumnCommand->getBoardId()
+            $createColumnCommand->getUserId()->value(),
+            $createColumnCommand->getBoardId()->value()
         );
 
         $column = Board::createColumn(
             $board,
             new ColumnId(Uuid::uuid4()->toString()),
-            new ColumnName($createColumnCommand->getName())
+            $createColumnCommand->getName()
         );
 
         $board->addColumn($column);

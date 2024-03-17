@@ -2,9 +2,9 @@
 
 namespace App\Board\Domain\Entity;
 
-use App\Shared\Domain\ValueObject\UuidValueObject;
+use App\Shared\Domain\ValueObject\Uuid;
 
-class ColumnId extends UuidValueObject
+class ColumnId extends Uuid
 {
 
 }

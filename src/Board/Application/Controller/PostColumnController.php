@@ -25,15 +25,15 @@ class PostColumnController extends AbstractController
     /**
      * @throws Throwable
      */
-    #[Route('/api/board/column', name: 'app_post_board_column', methods: ['POST'])]
-    public function index(#[MapRequestPayload] CreateColumnRequestDto $createColumnRequestDto): JsonResponse
+    #[Route('/api/board/{boardId}/column', name: 'app_post_board_column', methods: ['POST'])]
+    public function index(string $boardId, #[MapRequestPayload] CreateColumnRequestDto $createColumnRequestDto): JsonResponse
     {
         /** @var User $user */
         $user = $this->getUser();
 
         $response = $this->boardService->addColumn(
-            $user->id()->uuid(),
-            $createColumnRequestDto->getBoardId(),
+            $user->id()->value(),
+            $boardId,
             $createColumnRequestDto->getName()
         );
 

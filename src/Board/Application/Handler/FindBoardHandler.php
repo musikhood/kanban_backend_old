@@ -6,6 +6,7 @@ use App\Board\Application\Exception\BoardNotFoundException;
 use App\Board\Application\Exception\PermissionDeniedException;
 use App\Board\Application\Model\Query\FindBoardQuery;
 use App\Board\Domain\Entity\Board;
+use App\Board\Domain\Entity\BoardId;
 use App\Board\Domain\RepositoryPort\BoardRepositoryInterface;
 use App\Shared\Application\Cqrs\QueryHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -34,7 +35,7 @@ readonly class FindBoardHandler implements QueryHandlerInterface
             throw new BoardNotFoundException();
         }
 
-        if($board->user()->id()->uuid() !== $findBoardQuery->getUserId()){
+        if($board->userId()->value() !== $findBoardQuery->getUserId()->value()){
             throw new PermissionDeniedException();
         }
 

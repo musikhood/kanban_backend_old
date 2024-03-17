@@ -6,11 +6,11 @@ use InvalidArgumentException;
 use Ramsey\Uuid\Uuid as RamseyUuid;
 use Stringable;
 
-abstract class UuidValueObject implements Stringable
+abstract class Uuid implements Stringable
 {
-    final public function __construct(protected string $uuid)
+    final public function __construct(protected string $value)
     {
-        $this->ensureIsValidUuid($uuid);
+        $this->ensureIsValidUuid($value);
     }
 
     final public static function random(): self
@@ -18,19 +18,19 @@ abstract class UuidValueObject implements Stringable
         return new static(RamseyUuid::uuid4()->toString());
     }
 
-    final public function uuid(): string
+    final public function value(): string
     {
-        return $this->uuid;
+        return $this->value;
     }
 
     final public function equals(self $other): bool
     {
-        return $this->uuid() === $other->uuid();
+        return $this->value() === $other->value();
     }
 
     public function __toString(): string
     {
-        return $this->uuid();
+        return $this->value();
     }
 
     private function ensureIsValidUuid(string $id): void

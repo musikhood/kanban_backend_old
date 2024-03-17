@@ -1,15 +1,19 @@
 <?php
 
 namespace App\Board\Application\Dto;
-use Symfony\Component\Validator\Constraints as Assert;
 
-readonly class CreateColumnRequestDto
+readonly class ColumnDto
 {
     public function __construct(
-        #[Assert\NotBlank]
+        private string $id,
         private string $name
     )
     {
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     public function getName(): string

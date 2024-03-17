@@ -1,22 +1,19 @@
 <?php
 
 namespace App\Board\Domain\Entity;
-
-use JsonSerializable;
-
-class Column implements JsonSerializable
+class Column
 {
     public function __construct(
-        private readonly string $id,
-        private readonly Board  $board,
-        private ColumnName      $name
+        private readonly ColumnId $id,
+        private readonly Board    $board,
+        private ColumnName        $name
     )
     {
     }
 
     public function id(): ColumnId
     {
-        return new ColumnId($this->id);
+        return $this->id;
     }
     public function name(): ColumnName
     {
@@ -29,13 +26,5 @@ class Column implements JsonSerializable
     public function board(): Board
     {
         return $this->board;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id()->uuid(),
-            'name' => $this->name()->value(),
-        ];
     }
 }
