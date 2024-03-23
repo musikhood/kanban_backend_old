@@ -2,9 +2,9 @@
 
 namespace App\Account\Domain\Entity;
 
+use App\Account\Domain\Event\UserCreatedEvent;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\Shared\Domain\ValueObject\UserId;
-use App\User\Domain\Event\UserCreatedEvent;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;

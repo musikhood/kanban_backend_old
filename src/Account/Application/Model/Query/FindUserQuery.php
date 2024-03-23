@@ -3,7 +3,6 @@
 namespace App\Account\Application\Model\Query;
 
 use App\Shared\Domain\Cqrs\QueryInterface;
-use App\Shared\Domain\ValueObject\UserId;
 
 readonly class FindUserQuery implements QueryInterface
 {

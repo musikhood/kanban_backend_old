@@ -4,8 +4,6 @@ namespace App\Account\Application\Controller;
 
 use App\Account\Application\Model\Query\FindUserQuery;
 use App\Shared\Application\Bus\QueryBusInterface;
-use App\Shared\Domain\ValueObject\UserId;
-use App\User\Application\Port\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;

@@ -3,7 +3,6 @@
 namespace App\Account\Domain\Event;
 
 use App\Shared\Domain\Event\DomainEventInterface;
-use App\User\Domain\Entity\UserEmail;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class UserCreatedEvent extends Event implements DomainEventInterface

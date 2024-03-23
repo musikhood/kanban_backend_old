@@ -2,7 +2,7 @@
 
 namespace App\Account\Infrastructure\Repository;
 
-use App\User\Domain\Entity\RefreshToken;
+use App\Account\Domain\Entity\RefreshToken;
 use App\Account\Domain\Repository\RefreshTokenRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Gesdinet\JWTRefreshTokenBundle\Doctrine\RefreshTokenRepositoryInterface as JwtRefreshTokenRepositoryInterface;
