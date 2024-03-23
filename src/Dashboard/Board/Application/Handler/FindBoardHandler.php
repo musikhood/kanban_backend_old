@@ -2,36 +2,28 @@
 
 namespace App\Dashboard\Board\Application\Handler;
 
-use App\Dashboard\Board\Application\Dto\MultipleBoardsDto;
 use App\Dashboard\Board\Application\Dto\BoardDto;
-use App\Dashboard\Board\Application\Model\Query\FindBoardQuery;
+use App\Dashboard\Board\Application\Model\Query\FindSingleBoardQuery;
 use App\Dashboard\Board\Application\Service\BoardServiceInterface;
-use App\Dashboard\Board\Domain\Entity\Board;
-use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
-use App\Shared\Application\Cqrs\CommandHandlerInterface;
+use App\Shared\Application\Cqrs\QueryHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-readonly class FindBoardHandler implements CommandHandlerInterface
+readonly class FindBoardHandler implements QueryHandlerInterface
 {
     public function __construct(
-        private BoardRepositoryInterface $boardRepository,
         private BoardServiceInterface $boardService
     )
     {
     }
 
-    public function __invoke(FindBoardQuery $findBoardQuery): MultipleBoardsDto
+    public function __invoke(FindSingleBoardQuery $findBoardQuery): BoardDto
     {
-        $boardsEntity =  $this->boardRepository->findBy(['userId'=>$findBoardQuery->getUserId()]);
+        $board = $this->boardService->findBoardEntity(
+            $findBoardQuery->getUserId(),
+            $findBoardQuery->getBoardId()
+        );
 
-        $boards = [];
-
-        /** @var Board $board */
-        foreach ($boardsEntity as $board){
-            $boards[] = $this->boardService->mapBoardEntityToDto($board);
-        }
-
-        return new MultipleBoardsDto($boards);
+        return $this->boardService->mapBoardEntityToDto($board);
     }
 }
