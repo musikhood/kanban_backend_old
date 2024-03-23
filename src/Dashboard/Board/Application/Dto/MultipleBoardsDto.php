@@ -2,7 +2,7 @@
 
 namespace App\Dashboard\Board\Application\Dto;
 
-readonly class MultipleBoardsDto
+readonly class MultipleBoardsDto implements \JsonSerializable
 {
     /** @param array<BoardDto> $boards */
     public function __construct(
@@ -14,5 +14,12 @@ readonly class MultipleBoardsDto
     public function boards(): array
     {
         return $this->boards;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'boards' => $this->boards
+        ];
     }
 }
