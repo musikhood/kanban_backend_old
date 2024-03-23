@@ -21,14 +21,14 @@ class GetAccountController extends AbstractController
     /**
      * @throws Throwable
      */
-    #[Route('/api/user/{userId}', name: 'app_get_user', methods: ['GET'])]
-    public function index(string $userId): JsonResponse
+    #[Route('/api/account/{accountId}', name: 'app_get_account', methods: ['GET'])]
+    public function index(string $accountId): JsonResponse
     {
-        $findUserQuery = new FindAccountQuery(
-            $userId
+        $findAccountQuery = new FindAccountQuery(
+            $accountId
         );
 
-        $response = $this->queryBus->handle($findUserQuery);
+        $response = $this->queryBus->handle($findAccountQuery);
 
         $response = $this->normalizer->normalize($response);
 

@@ -17,6 +17,6 @@ class AccountNotFoundException extends CustomException
 
     public function errorMessage(): string
     {
-        return 'User Not Found';
+        return 'Account Not Found';
     }
 }

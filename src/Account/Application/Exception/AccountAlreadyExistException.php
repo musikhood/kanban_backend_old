@@ -16,6 +16,6 @@ class AccountAlreadyExistException extends CustomException
 
     public function errorMessage(): string
     {
-        return 'User Already Exist';
+        return 'Account Already Exist';
     }
 }

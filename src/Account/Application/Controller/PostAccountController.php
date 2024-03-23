@@ -21,17 +21,17 @@ class PostAccountController extends AbstractController
     /**
      * @throws Throwable
      */
-    #[Route('/user', name: 'app_post_user', methods: ['POST'])]
-    public function index(#[MapRequestPayload] CreateAccountRequestDto $createUserRequestDto): JsonResponse
+    #[Route('/account', name: 'app_post_account', methods: ['POST'])]
+    public function index(#[MapRequestPayload] CreateAccountRequestDto $createAccountRequestDto): JsonResponse
     {
-        $createUserCommand = new CreateAccountCommand(
-            $createUserRequestDto->getEmail(),
-            $createUserRequestDto->getRoles(),
-            $createUserRequestDto->getPassword()
+        $createAccountCommand = new CreateAccountCommand(
+            $createAccountRequestDto->getEmail(),
+            $createAccountRequestDto->getRoles(),
+            $createAccountRequestDto->getPassword()
         );
 
-        $this->commandBus->dispatch($createUserCommand);
+        $this->commandBus->dispatch($createAccountCommand);
 
-        return new JsonResponse(['message'=>'User created successfully']);
+        return new JsonResponse(['message'=>'Account created successfully']);
     }
 }
