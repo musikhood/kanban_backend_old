@@ -11,7 +11,7 @@ use App\Account\Domain\Entity\Account;
  * @method Account[]    findAll()
  * @method Account[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-interface UserRepositoryInterface
+interface AccountRepositoryInterface
 {
     public function save(Account $user): void;
 }

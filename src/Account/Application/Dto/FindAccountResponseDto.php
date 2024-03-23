@@ -2,7 +2,7 @@
 
 namespace App\Account\Application\Dto;
 
-readonly class FindUserResponseDto
+readonly class FindAccountResponseDto
 {
     public function __construct(
         private string $id,

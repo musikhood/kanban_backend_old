@@ -2,7 +2,7 @@
 
 namespace App\Account\Domain\Entity;
 
-use App\Account\Domain\Event\UserCreatedEvent;
+use App\Account\Domain\Event\AccountCreatedEvent;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
@@ -82,7 +82,7 @@ class Account extends AggregateRoot implements UserInterface, PasswordAuthentica
         );
         $account->updatePassword($hashedPassword);
 
-        $account->recordDomainEvent(new UserCreatedEvent($email));
+        $account->recordDomainEvent(new AccountCreatedEvent($email));
         // Nie tworzymy tutaj hasła, bo trzeba będzie je zahashować.
         // Nie możemy zrobić tego w tym miejscu, bo musimy wstrzyknąć serwis do hashowania
 

@@ -3,14 +3,14 @@
 namespace App\Account\Infrastructure\Repository;
 
 use App\Account\Domain\Entity\Account;
-use App\Account\Domain\Repository\UserRepositoryInterface;
+use App\Account\Domain\Repository\AccountRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
-class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserRepositoryInterface
+class AccountRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, AccountRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

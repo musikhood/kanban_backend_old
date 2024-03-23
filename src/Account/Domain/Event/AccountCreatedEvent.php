@@ -5,7 +5,7 @@ namespace App\Account\Domain\Event;
 use App\Shared\Domain\Event\DomainEventInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class UserCreatedEvent extends Event implements DomainEventInterface
+class AccountCreatedEvent extends Event implements DomainEventInterface
 {
     private \DateTimeImmutable $occur;
     public function __construct(
