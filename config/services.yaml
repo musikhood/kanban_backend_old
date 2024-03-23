@@ -20,6 +20,11 @@ services:
             - '../src/Board/Domain/Entity/'
             - '../src/Kernel.php'
 
+    App\Shared\Infrastructure\Redis\RedisClient:
+      arguments:
+        - '%env(REDIS_HOST)%'
+        - '%env(REDIS_PORT)%'
+
     App\Shared\Domain\EventListener\ExceptionListener:
         tags:
           - { name: kernel.event_listener, event: kernel.exception, method: onException }

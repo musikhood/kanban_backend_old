@@ -3,6 +3,7 @@
 namespace App\Dashboard\Board\Application\Controller;
 
 use App\Dashboard\Board\Application\Model\Query\FindBoardQuery;
+use App\Dashboard\Board\Application\Service\BoardRedisInterface;
 use App\Dashboard\Board\Domain\Entity\BoardId;
 use App\Dashboard\Shared\Application\Service\DashboardServiceInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
@@ -18,6 +19,7 @@ class FindBoardController extends AbstractController
         private readonly DashboardServiceInterface $dashboardService,
         private readonly QueryBusInterface $queryBus,
         private readonly NormalizerInterface $normalizer,
+        private readonly BoardRedisInterface $boardRedis
     ) {
     }
 
@@ -34,7 +36,10 @@ class FindBoardController extends AbstractController
             $user->id()
         );
 
-        $board = $this->queryBus->handle($findBoardQuery);
+        $board = $this->boardRedis->get(
+            $boardId,
+            fn () => $this->queryBus->handle($findBoardQuery)
+        );
 
         $response = $this->normalizer->normalize($board);
 

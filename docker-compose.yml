@@ -62,6 +62,15 @@ services:
     networks:
       - kanban
 
+  redis:
+    container_name: kanban_redis
+    image: arm64v8/redis
+    restart: on-failure
+    ports:
+      - '6379:6379'
+    networks:
+      - kanban
+
 networks:
   kanban:
     driver: bridge

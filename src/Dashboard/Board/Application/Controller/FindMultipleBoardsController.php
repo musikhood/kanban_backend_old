@@ -3,6 +3,7 @@
 namespace App\Dashboard\Board\Application\Controller;
 
 use App\Dashboard\Board\Application\Model\Query\FindMultipleBoardsQuery;
+use App\Dashboard\Board\Application\Service\BoardRedisInterface;
 use App\Dashboard\Shared\Application\Service\DashboardServiceInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +18,8 @@ class FindMultipleBoardsController extends AbstractController
     public function __construct(
         private readonly DashboardServiceInterface $dashboardService,
         private readonly QueryBusInterface $queryBus,
-        private readonly NormalizerInterface $normalizer
+        private readonly NormalizerInterface $normalizer,
+        private readonly BoardRedisInterface $boardRedis
     )
     {
     }
@@ -33,7 +35,10 @@ class FindMultipleBoardsController extends AbstractController
             $user->id()
         );
 
-        $boards = $this->queryBus->handle($findMultipleBoardsQuery);
+        $boards = $this->boardRedis->get(
+            $user->id(),
+            fn () => $this->queryBus->handle($findMultipleBoardsQuery)
+        );
 
         $response = $this->normalizer->normalize($boards);
 

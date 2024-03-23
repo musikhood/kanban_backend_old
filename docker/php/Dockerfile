@@ -2,6 +2,8 @@ FROM arm64v8/php:8.2-fpm
 
 RUN apt update
 RUN apt install -y libicu-dev zip libzip-dev
+RUN pecl install redis
+RUN docker-php-ext-enable redis
 RUN docker-php-ext-install intl opcache pdo_mysql zip
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
