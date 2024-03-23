@@ -23,7 +23,7 @@ readonly class FindUserHandler implements QueryHandlerInterface
      */
     public function __invoke(FindUserQuery $findUserQuery): UserDto
     {
-        $user = $this->userRepository->findOneBy(['accountId' => $findUserQuery->getAccountId()]);
+        $user = $this->userRepository->findOneByAccountId($findUserQuery->getAccountId());
 
         if (!$user){
             throw new UserNotFoundException();

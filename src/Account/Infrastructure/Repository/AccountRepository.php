@@ -3,6 +3,7 @@
 namespace App\Account\Infrastructure\Repository;
 
 use App\Account\Domain\Entity\Account;
+use App\Account\Domain\Entity\AccountId;
 use App\Account\Domain\Repository\AccountRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -36,5 +37,12 @@ class AccountRepository extends ServiceEntityRepository implements PasswordUpgra
         $em = $this->getEntityManager();
         $em->persist($user);
         $em->flush();
+    }
+
+    public function findOneById(AccountId $accountId): ?Account
+    {
+        return $this->findOneBy([
+            'id' => $accountId
+        ]);
     }
 }

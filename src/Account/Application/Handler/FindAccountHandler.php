@@ -25,7 +25,7 @@ readonly class FindAccountHandler implements QueryHandlerInterface
     public function __invoke(FindAccountQuery $findAccountQuery): AccountDto
     {
         $id = new AccountId($findAccountQuery->getAccountId());
-        $account = $this->accountRepository->findOneBy(['id'=>$id]);
+        $account = $this->accountRepository->findOneById($id);
 
         if (!$account){
             throw new AccountNotFoundException();
