@@ -3,7 +3,6 @@
 namespace App\Dashboard\Board\Application\Handler;
 
 use App\Dashboard\Board\Application\Dto\MultipleBoardsDto;
-use App\Dashboard\Board\Application\Dto\BoardDto;
 use App\Dashboard\Board\Application\Model\Query\FindMultipleBoardsQuery;
 use App\Dashboard\Board\Application\Service\BoardServiceInterface;
 use App\Dashboard\Board\Domain\Entity\Board;
@@ -23,7 +22,7 @@ readonly class FindMultipleBoardsHandler implements CommandHandlerInterface
 
     public function __invoke(FindMultipleBoardsQuery $findBoardQuery): MultipleBoardsDto
     {
-        $boardsEntity =  $this->boardRepository->findBy(['userId'=>$findBoardQuery->getUserId()]);
+        $boardsEntity =  $this->boardRepository->findByUserId($findBoardQuery->getUserId());
 
         $boards = [];
 

@@ -25,9 +25,7 @@ readonly class BoardService implements BoardServiceInterface
      */
     public function findBoardEntity(UserId $userId, BoardId $boardId): Board
     {
-        $board = $this->boardRepository->findOneBy([
-            'id' => $boardId
-        ]);
+        $board = $this->boardRepository->findOneById($boardId);
 
         if (!$board){
             throw new BoardNotFoundException();

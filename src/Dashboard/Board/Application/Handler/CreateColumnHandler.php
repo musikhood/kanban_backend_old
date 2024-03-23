@@ -6,7 +6,6 @@ use App\Dashboard\Board\Application\Model\Command\CreateColumnCommand;
 use App\Dashboard\Board\Application\Service\BoardServiceInterface;
 use App\Dashboard\Board\Domain\Entity\Column;
 use App\Dashboard\Board\Domain\Entity\ColumnId;
-use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
 use App\Dashboard\Board\Domain\Repository\ColumnRepositoryInterface;
 use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use Ramsey\Uuid\Uuid;
@@ -16,7 +15,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 readonly class CreateColumnHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private BoardRepositoryInterface $boardRepository,
         private ColumnRepositoryInterface $columnRepository,
         private BoardServiceInterface $boardService
     )

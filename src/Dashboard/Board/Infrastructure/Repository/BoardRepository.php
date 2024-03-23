@@ -3,7 +3,9 @@
 namespace App\Dashboard\Board\Infrastructure\Repository;
 
 use App\Dashboard\Board\Domain\Entity\Board;
+use App\Dashboard\Board\Domain\Entity\BoardId;
 use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
+use App\Dashboard\User\Domain\Entity\UserId;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,5 +21,19 @@ class BoardRepository extends ServiceEntityRepository implements BoardRepository
         $em = $this->getEntityManager();
         $em->persist($board);
         $em->flush();
+    }
+
+    public function findByUserId(UserId $userId): array
+    {
+        return $this->findBy([
+            'userId' => $userId,
+        ]);
+    }
+
+    public function findOneById(BoardId $boardId): ?Board
+    {
+        return $this->findOneBy([
+            'id' => $boardId,
+        ]);
     }
 }
