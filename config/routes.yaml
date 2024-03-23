@@ -1,13 +1,13 @@
 board_controller:
     resource:
-        path: ../src/Board/Application/Controller/
-        namespace: App\Board\Application\Controller
+        path: ../src/Dashboard/Board/Application/Controller/
+        namespace: App\Dashboard\Board\Application\Controller
     type: attribute
 
-user_controller:
+account_controller:
     resource:
-        path: ../src/User/Application/Controller/
-        namespace: App\User\Application\Controller
+        path: ../src/Account/Application/Controller/
+        namespace: App\Account\Application\Controller
     type: attribute
 
 api_login_check:

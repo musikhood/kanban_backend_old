@@ -8,9 +8,10 @@ doctrine:
         profiling_collect_backtrace: '%kernel.debug%'
         use_savepoints: true
         types:
-            user_id: App\User\Infrastructure\DoctrineMappings\UserIdType
-            board_id: App\Board\Infrastructure\DoctrineMappings\BoardIdType
-            column_id: App\Board\Infrastructure\DoctrineMappings\ColumnIdType
+            account_id: App\Account\Infrastructure\DoctrineMappings\AccountIdType
+            user_id: App\Dashboard\User\Infrastructure\DoctrineMappings\UserIdType
+            board_id: App\Dashboard\Board\Infrastructure\DoctrineMappings\BoardIdType
+            column_id: App\Dashboard\Board\Infrastructure\DoctrineMappings\ColumnIdType
 
     orm:
         auto_generate_proxy_classes: true
@@ -20,16 +21,23 @@ doctrine:
           Board:
               type: xml
               is_bundle: false
-              dir: '%kernel.project_dir%/src/Board/Infrastructure/DoctrineMappings'
-              prefix: 'App\Board\Domain\Entity'
+              dir: '%kernel.project_dir%/src/Dashboard/Board/Infrastructure/DoctrineMappings'
+              prefix: 'App\Dashboard\Board\Domain\Entity'
               alias: Board
 
+          Account:
+              type: xml
+              is_bundle: false
+              dir: '%kernel.project_dir%/src/Account/Infrastructure/DoctrineMappings'
+              prefix: 'App\Account\Domain\Entity'
+              alias: Account
+
           User:
-            type: xml
-            is_bundle: false
-            dir: '%kernel.project_dir%/src/User/Infrastructure/DoctrineMappings'
-            prefix: 'App\User\Domain\Entity'
-            alias: User
+              type: xml
+              is_bundle: false
+              dir: '%kernel.project_dir%/src/Dashboard/User/Infrastructure/DoctrineMappings'
+              prefix: 'App\Dashboard\User\Domain\Entity'
+              alias: User
 
 when@test:
     doctrine:
