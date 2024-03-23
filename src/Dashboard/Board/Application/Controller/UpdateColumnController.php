@@ -8,6 +8,7 @@ use App\Dashboard\Board\Domain\Entity\BoardId;
 use App\Dashboard\Board\Domain\Entity\ColumnColor;
 use App\Dashboard\Board\Domain\Entity\ColumnId;
 use App\Dashboard\Board\Domain\Entity\ColumnName;
+use App\Dashboard\Board\Domain\Redis\BoardRedisInterface;
 use App\Dashboard\Shared\Application\Service\DashboardServiceInterface;
 use App\Shared\Application\Bus\CommandBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,8 @@ class UpdateColumnController extends AbstractController
 {
     public function __construct(
         private readonly CommandBusInterface $commandBus,
-        private readonly DashboardServiceInterface $dashboardService
+        private readonly DashboardServiceInterface $dashboardService,
+        private readonly BoardRedisInterface $boardRedis
     )
     {
     }
@@ -38,6 +40,8 @@ class UpdateColumnController extends AbstractController
         );
 
         $this->commandBus->dispatch($updateColumnCommand);
+
+        $this->boardRedis->clearCache();
 
         return new JsonResponse(['message'=>'Column Updated Successfully']);
     }

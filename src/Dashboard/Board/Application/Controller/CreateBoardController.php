@@ -5,6 +5,7 @@ namespace App\Dashboard\Board\Application\Controller;
 use App\Dashboard\Board\Application\Dto\CreateBoardRequestDto;
 use App\Dashboard\Board\Application\Model\Command\CreateBoardCommand;
 use App\Dashboard\Board\Domain\Entity\BoardName;
+use App\Dashboard\Board\Domain\Redis\BoardRedisInterface;
 use App\Dashboard\Shared\Application\Service\DashboardServiceInterface;
 use App\Shared\Application\Bus\CommandBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,6 +19,7 @@ class CreateBoardController extends AbstractController
     public function __construct(
         private readonly DashboardServiceInterface $dashboardService,
         private readonly CommandBusInterface $commandBus,
+        private readonly BoardRedisInterface $boardRedis
     ) {
     }
 
@@ -35,6 +37,8 @@ class CreateBoardController extends AbstractController
         );
 
         $this->commandBus->dispatch($createBoardCommand);
+
+        $this->boardRedis->clearCache();
 
         return new JsonResponse(['message'=>'Board created successfully']);
     }

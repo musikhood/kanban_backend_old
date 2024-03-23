@@ -7,6 +7,7 @@ use App\Dashboard\Board\Application\Model\Command\CreateColumnCommand;
 use App\Dashboard\Board\Domain\Entity\BoardId;
 use App\Dashboard\Board\Domain\Entity\ColumnColor;
 use App\Dashboard\Board\Domain\Entity\ColumnName;
+use App\Dashboard\Board\Domain\Redis\BoardRedisInterface;
 use App\Dashboard\Shared\Application\Service\DashboardServiceInterface;
 use App\Shared\Application\Bus\CommandBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,6 +21,7 @@ class CreateColumnController extends AbstractController
     public function __construct(
         private readonly DashboardServiceInterface $dashboardService,
         private readonly CommandBusInterface $commandBus,
+        private readonly BoardRedisInterface $boardRedis
     ) {
     }
 
@@ -39,6 +41,8 @@ class CreateColumnController extends AbstractController
         );
 
         $this->commandBus->dispatch($createColumnCommand);
+
+        $this->boardRedis->clearCache();
 
         return new JsonResponse(['message'=>'Column Created Successfully']);
     }

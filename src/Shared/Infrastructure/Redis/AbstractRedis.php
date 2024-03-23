@@ -44,4 +44,14 @@ abstract class AbstractRedis
 
         return $data;
     }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function clearCache(): void
+    {
+        $this->cache->invalidateTags([
+            $this->getCacheTag()
+        ]);
+    }
 }
