@@ -11,8 +11,14 @@ readonly class FindSingleBoardResponseDto implements \JsonSerializable
         private BoardId $id,
         private UserId $userId,
         private BoardName $boardName,
+        private array $columns
     )
     {
+    }
+
+    public function getColumns(): array
+    {
+        return $this->columns;
     }
 
     public function getId(): BoardId
@@ -20,7 +26,7 @@ readonly class FindSingleBoardResponseDto implements \JsonSerializable
         return $this->id;
     }
 
-    public function getUser(): UserId
+    public function getUserId(): UserId
     {
         return $this->userId;
     }
@@ -35,7 +41,8 @@ readonly class FindSingleBoardResponseDto implements \JsonSerializable
         return [
             'id'=>$this->id->value(),
             'userId'=>$this->userId->value(),
-            'boardName'=>$this->boardName->value()
+            'boardName'=>$this->boardName->value(),
+            'columns' => $this->columns
         ];
     }
 }

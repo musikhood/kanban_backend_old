@@ -24,10 +24,6 @@ readonly class FindSingleBoardHandler implements QueryHandlerInterface
             $findBoardQuery->getBoardId()
         );
 
-        return new FindSingleBoardResponseDto(
-            $board->id(),
-            $board->userId(),
-            $board->name()
-        );
+        return $this->boardService->mapBoardEntityToDto($board);
     }
 }

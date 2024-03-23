@@ -5,6 +5,7 @@ namespace App\Dashboard\Board\Application\Handler;
 use App\Dashboard\Board\Application\Dto\FindBoardResponseDto;
 use App\Dashboard\Board\Application\Dto\FindSingleBoardResponseDto;
 use App\Dashboard\Board\Application\Model\Query\FindBoardQuery;
+use App\Dashboard\Board\Application\Service\BoardServiceInterface;
 use App\Dashboard\Board\Domain\Entity\Board;
 use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
 use App\Shared\Domain\Cqrs\CommandHandlerInterface;
@@ -14,7 +15,8 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 readonly class FindBoardHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private BoardRepositoryInterface $boardRepository
+        private BoardRepositoryInterface $boardRepository,
+        private BoardServiceInterface $boardService
     )
     {
     }
@@ -27,11 +29,7 @@ readonly class FindBoardHandler implements CommandHandlerInterface
 
         /** @var Board $board */
         foreach ($boardsEntity as $board){
-            $boards[] = new FindSingleBoardResponseDto(
-                $board->id(),
-                $board->userId(),
-                $board->name(),
-            );
+            $boards[] = $this->boardService->mapBoardEntityToDto($board);
         }
 
         return new FindBoardResponseDto($boards);
