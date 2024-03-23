@@ -4,5 +4,5 @@ namespace App\Dashboard\Board\Application\Service;
 
 interface BoardRedisInterface
 {
-    public function get(string $sid, $callback): mixed;
+    public function getDataFromCache(string $sid, $callback): mixed;
 }

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Throwable;
 
 class FindMultipleBoardsController extends AbstractController
 {
@@ -25,7 +26,7 @@ class FindMultipleBoardsController extends AbstractController
     }
 
     /**
-     * @throws ExceptionInterface
+     * @throws Throwable
      */
     #[Route('/api/board', name: 'app_get_multiple_boards', methods: ['GET'])]
     public function index(): Response{
@@ -34,8 +35,8 @@ class FindMultipleBoardsController extends AbstractController
         $findMultipleBoardsQuery = new FindMultipleBoardsQuery(
             $user->id()
         );
-
-        $boards = $this->boardRedis->get(
+        
+        $boards = $this->boardRedis->getDataFromCache(
             $user->id(),
             fn () => $this->queryBus->handle($findMultipleBoardsQuery)
         );

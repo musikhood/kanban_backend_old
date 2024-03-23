@@ -36,7 +36,7 @@ class FindBoardController extends AbstractController
             $user->id()
         );
 
-        $board = $this->boardRedis->get(
+        $board = $this->boardRedis->getDataFromCache(
             $boardId,
             fn () => $this->queryBus->handle($findBoardQuery)
         );
