@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Dashboard\User\Domain\EventSubscriber;
+namespace App\Dashboard\User\Application\EventSubscriber;
 
 use App\Account\Domain\Event\AccountCreatedEvent;
 use App\Dashboard\User\Application\Model\Command\CreateUserCommand;
 use App\Shared\Application\Bus\CommandBusInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class OnAccountCreated implements EventSubscriberInterface
+readonly class OnAccountCreated implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly CommandBusInterface $commandBus
+        private CommandBusInterface $commandBus
     )
     {
     }
