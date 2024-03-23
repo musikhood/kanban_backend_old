@@ -3,6 +3,7 @@
 namespace App\Dashboard\Board\Domain\Handler;
 
 use App\Dashboard\Board\Domain\Entity\Board;
+use App\Dashboard\Board\Domain\Entity\Column;
 use App\Dashboard\Board\Domain\Entity\ColumnId;
 use App\Dashboard\Board\Domain\Model\Command\CreateColumnCommand;
 use App\Dashboard\Board\Domain\Model\Query\FindSingleBoardQuery;
@@ -18,7 +19,6 @@ readonly class CreateColumnHandler implements CommandHandlerInterface
 {
     public function __construct(
         private ColumnRepositoryInterface $columnRepository,
-        private EventDispatcherInterface $eventDispatcher,
         private QueryBusInterface $queryBus
     )
     {
@@ -35,7 +35,7 @@ readonly class CreateColumnHandler implements CommandHandlerInterface
         /** @var Board $board */
         $board = $this->queryBus->handle($findBoardQuery);
 
-        $column = Board::createColumn(
+        $column = Column::createColumn(
             $board,
             new ColumnId(Uuid::uuid4()->toString()),
             $createColumnCommand->getName(),
@@ -45,9 +45,5 @@ readonly class CreateColumnHandler implements CommandHandlerInterface
         $board->addColumn($column);
 
         $this->columnRepository->save($column);
-
-        foreach ($board->pullDomainEvents() as $domainEvent) {
-            $this->eventDispatcher->dispatch($domainEvent);
-        }
     }
 }

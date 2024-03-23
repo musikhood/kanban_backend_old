@@ -39,4 +39,18 @@ class Column
     {
         $this->color = $color;
     }
+
+    public static function createColumn(
+        Board $board,
+        ColumnId $columnId,
+        ColumnName $columnName,
+        ColumnColor $columnColor
+    ): Column {
+        return new Column(
+            $columnId,
+            $board,
+            $columnName,
+            $columnColor
+        );
+    }
 }

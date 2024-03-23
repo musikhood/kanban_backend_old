@@ -2,11 +2,9 @@
 
 namespace App\Dashboard\Board\Domain\Entity;
 
-use App\Account\Domain\Entity\AccountId;
-use App\Board\Domain\Event\ColumnUpdatedEvent;
 use App\Dashboard\Board\Domain\Event\BoardCreatedEvent;
-use App\Dashboard\Board\Domain\Event\ColumnCreatedEvent;
 use App\Dashboard\Board\Domain\Exception\ColumnNotFoundException;
+use App\Dashboard\User\Domain\Entity\UserId;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,7 +15,7 @@ class Board extends AggregateRoot
     public function __construct(
         private readonly BoardId $id,
         private BoardName        $name,
-        private AccountId $userId
+        private UserId $userId
     )
     {
         $this->columns = new ArrayCollection();
@@ -38,12 +36,12 @@ class Board extends AggregateRoot
         $this->name = $name;
     }
 
-    public function userId(): AccountId
+    public function userId(): UserId
     {
         return $this->userId;
     }
 
-    public function updateUser(AccountId $userId): void
+    public function updateUser(UserId $userId): void
     {
         $this->userId = $userId;
     }
@@ -84,26 +82,9 @@ class Board extends AggregateRoot
         return $column;
     }
 
-    public static function createColumn(
-        Board $board,
-        ColumnId $columnId,
-        ColumnName $columnName,
-        ColumnColor $columnColor
-    ): Column {
-        $column = new Column(
-            $columnId,
-            $board,
-            $columnName,
-            $columnColor
-        );
-
-        $board->recordDomainEvent(new ColumnCreatedEvent($name));
-
-        return $column;
-    }
     public static function create(
         BoardId   $boardId,
-        AccountId $userId,
+        UserId $userId,
         BoardName $name
     ): self {
         $board = new self($boardId, $name, $userId);

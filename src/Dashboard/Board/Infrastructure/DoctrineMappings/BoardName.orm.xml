@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <embeddable name="App\Board\Domain\Entity\BoardName">
+    <embeddable name="App\Dashboard\Board\Domain\Entity\BoardName">
         <field name="value" column="name" />
     </embeddable>
 </doctrine-mapping>

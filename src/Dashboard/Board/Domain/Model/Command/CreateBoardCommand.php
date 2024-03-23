@@ -2,20 +2,20 @@
 
 namespace App\Dashboard\Board\Domain\Model\Command;
 
-use App\Account\Domain\Entity\AccountId;
 use App\Dashboard\Board\Domain\Entity\BoardName;
+use App\Dashboard\User\Domain\Entity\UserId;
 use App\Shared\Domain\Cqrs\CommandInterface;
 
 readonly class CreateBoardCommand implements CommandInterface
 {
     public function __construct(
         private BoardName $name,
-        private AccountId $userId
+        private UserId $userId
     )
     {
     }
 
-    public function getUserId(): AccountId
+    public function getUserId(): UserId
     {
         return $this->userId;
     }

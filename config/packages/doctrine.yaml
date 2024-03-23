@@ -10,8 +10,8 @@ doctrine:
         types:
             account_id: App\Account\Infrastructure\DoctrineMappings\AccountIdType
             user_id: App\Dashboard\User\Infrastructure\DoctrineMappings\UserIdType
-            board_id: App\Board\Infrastructure\DoctrineMappings\BoardIdType
-            column_id: App\Board\Infrastructure\DoctrineMappings\ColumnIdType
+            board_id: App\Dashboard\Board\Infrastructure\DoctrineMappings\BoardIdType
+            column_id: App\Dashboard\Board\Infrastructure\DoctrineMappings\ColumnIdType
 
     orm:
         auto_generate_proxy_classes: true
