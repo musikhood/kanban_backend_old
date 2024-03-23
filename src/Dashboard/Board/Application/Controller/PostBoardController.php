@@ -31,7 +31,7 @@ class PostBoardController extends AbstractController
 
         $createBoardCommand = new CreateBoardCommand(
             new BoardName($createBoardRequestDto->getName()),
-            $user->getId()
+            $user->id()
         );
 
         $this->commandBus->dispatch($createBoardCommand);

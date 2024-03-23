@@ -12,7 +12,7 @@ readonly class UserDto implements \JsonSerializable
     {
     }
 
-    public function getId(): UserId
+    public function id(): UserId
     {
         return $this->id;
     }

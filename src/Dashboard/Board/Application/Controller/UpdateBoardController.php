@@ -29,7 +29,7 @@ class UpdateBoardController extends AbstractController
         $user = $this->dashboardService->findUser();
 
         $updateBoardCommand = new UpdateBoardCommand(
-            $user->getId(),
+            $user->id(),
             new BoardId($boardId),
             new BoardName($updateBoardRequestDto->getName())
         );

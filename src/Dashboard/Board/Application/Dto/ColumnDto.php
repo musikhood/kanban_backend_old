@@ -2,7 +2,7 @@
 
 namespace App\Dashboard\Board\Application\Dto;
 
-readonly class ColumnDto
+readonly class ColumnDto implements \JsonSerializable
 {
     public function __construct(
         private string $id,
@@ -13,23 +13,35 @@ readonly class ColumnDto
     {
     }
 
-    public function getColorRgb(): string
+    public function colorRgb(): string
     {
         return $this->colorRgb;
     }
 
-    public function getColor(): string
+    public function color(): string
     {
         return $this->color;
     }
 
-    public function getId(): string
+    public function id(): string
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function name(): string
     {
         return $this->name;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'color' => [
+                'hex' => $this->color,
+                'rgb' => $this->colorRgb
+            ]
+        ];
     }
 }

@@ -30,7 +30,7 @@ class UpdateColumnController extends AbstractController
         $user = $this->dashboardService->findUser();
 
         $updateColumnCommand = new UpdateColumnCommand(
-            $user->getId(),
+            $user->id(),
             new BoardId($boardId),
             new ColumnId($columnId),
             new ColumnName($updateColumnRequestDto->getName()),

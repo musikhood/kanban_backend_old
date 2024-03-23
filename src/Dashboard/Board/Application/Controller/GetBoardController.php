@@ -31,7 +31,7 @@ class GetBoardController extends AbstractController
 
         $findSingleBoardQuery = new FindSingleBoardQuery(
             new BoardId($boardId),
-            $user->getId()
+            $user->id()
         );
 
         $board = $this->queryBus->handle($findSingleBoardQuery);

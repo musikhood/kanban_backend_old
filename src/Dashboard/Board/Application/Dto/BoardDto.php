@@ -16,22 +16,22 @@ readonly class BoardDto implements \JsonSerializable
     {
     }
 
-    public function getColumns(): array
+    public function columns(): array
     {
         return $this->columns;
     }
 
-    public function getId(): BoardId
+    public function id(): BoardId
     {
         return $this->id;
     }
 
-    public function getUserId(): UserId
+    public function userId(): UserId
     {
         return $this->userId;
     }
 
-    public function getBoardName(): BoardName
+    public function boardName(): BoardName
     {
         return $this->boardName;
     }

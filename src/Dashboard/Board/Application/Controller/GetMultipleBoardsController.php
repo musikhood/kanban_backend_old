@@ -30,7 +30,7 @@ class GetMultipleBoardsController extends AbstractController
         $user =  $this->dashboardService->findUser();
 
         $findMultipleBoardsQuery = new FindMultipleBoardsQuery(
-            $user->getId()
+            $user->id()
         );
 
         $boards = $this->queryBus->handle($findMultipleBoardsQuery);

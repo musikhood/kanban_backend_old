@@ -11,7 +11,7 @@ readonly class MultipleBoardsDto
     {
     }
 
-    public function getBoards(): array
+    public function boards(): array
     {
         return $this->boards;
     }

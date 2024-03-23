@@ -32,7 +32,7 @@ class PostColumnController extends AbstractController
         $user = $this->dashboardService->findUser();
 
         $createColumnCommand = new CreateColumnCommand(
-            $user->getId(),
+            $user->id(),
             new BoardId($boardId),
             new ColumnName($createColumnRequestDto->getName()),
             new ColumnColor($createColumnRequestDto->getColor())
