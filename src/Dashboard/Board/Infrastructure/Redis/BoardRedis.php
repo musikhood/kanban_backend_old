@@ -2,8 +2,9 @@
 
 namespace App\Dashboard\Board\Infrastructure\Redis;
 
-use App\Dashboard\Board\Application\Service\BoardRedisInterface;
+use App\Dashboard\Board\Domain\Redis\BoardRedisInterface;
 use App\Shared\Infrastructure\Redis\AbstractRedis;
+
 class BoardRedis extends AbstractRedis implements BoardRedisInterface
 {
     protected function getCachePrefix(): string

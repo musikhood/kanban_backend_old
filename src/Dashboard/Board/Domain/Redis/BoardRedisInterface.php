@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dashboard\Board\Application\Service;
+namespace App\Dashboard\Board\Domain\Redis;
 
 interface BoardRedisInterface
 {
