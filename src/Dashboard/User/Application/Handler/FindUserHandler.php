@@ -2,7 +2,7 @@
 
 namespace App\Dashboard\User\Application\Handler;
 
-use App\Dashboard\User\Application\Dto\FindUserResponseDto;
+use App\Dashboard\User\Application\Dto\UserDto;
 use App\Dashboard\User\Application\Model\Query\FindUserQuery;
 use App\Dashboard\User\Domain\Exception\UserNotFoundException;
 use App\Dashboard\User\Domain\Repository\UserRepositoryInterface;
@@ -21,7 +21,7 @@ readonly class FindUserHandler implements QueryHandlerInterface
     /**
      * @throws UserNotFoundException
      */
-    public function __invoke(FindUserQuery $findUserQuery): FindUserResponseDto
+    public function __invoke(FindUserQuery $findUserQuery): UserDto
     {
         $user = $this->userRepository->findOneBy(['accountId' => $findUserQuery->getAccountId()]);
 
@@ -29,7 +29,7 @@ readonly class FindUserHandler implements QueryHandlerInterface
             throw new UserNotFoundException();
         }
 
-        return new FindUserResponseDto(
+        return new UserDto(
             $user->id()
         );
     }

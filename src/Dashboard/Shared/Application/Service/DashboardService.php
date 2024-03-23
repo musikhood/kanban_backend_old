@@ -3,7 +3,7 @@
 namespace App\Dashboard\Shared\Application\Service;
 
 use App\Account\Domain\Entity\AccountId;
-use App\Dashboard\User\Application\Dto\FindUserResponseDto;
+use App\Dashboard\User\Application\Dto\UserDto;
 use App\Dashboard\User\Application\Model\Query\FindUserQuery;
 use App\Shared\Application\Bus\QueryBusInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -17,7 +17,7 @@ readonly class DashboardService implements DashboardServiceInterface
     {
     }
 
-    public function findUser(): FindUserResponseDto
+    public function findUser(): UserDto
     {
         $account = $this->security->getUser()->getAggregate();
 
@@ -25,7 +25,7 @@ readonly class DashboardService implements DashboardServiceInterface
             $account->id()
         );
 
-        /** @var FindUserResponseDto $userDto */
+        /** @var UserDto $userDto */
         $userDto = $this->queryBus->handle($findUserQuery);
 
         return $userDto;

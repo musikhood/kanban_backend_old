@@ -4,7 +4,7 @@ namespace App\Account\Application\Dto;
 
 use App\Account\Domain\Entity\AccountId;
 
-readonly class FindAccountResponseDto implements \JsonSerializable
+readonly class AccountDto implements \JsonSerializable
 {
     public function __construct(
         private AccountId $id,

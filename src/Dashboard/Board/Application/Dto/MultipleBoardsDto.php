@@ -2,9 +2,9 @@
 
 namespace App\Dashboard\Board\Application\Dto;
 
-readonly class FindBoardResponseDto
+readonly class MultipleBoardsDto
 {
-    /** @param array<FindSingleBoardResponseDto> $boards */
+    /** @param array<BoardDto> $boards */
     public function __construct(
         private array $boards
     )

@@ -5,7 +5,7 @@ use App\Dashboard\Board\Domain\Entity\BoardId;
 use App\Dashboard\Board\Domain\Entity\BoardName;
 use App\Dashboard\User\Domain\Entity\UserId;
 
-readonly class FindSingleBoardResponseDto implements \JsonSerializable
+readonly class BoardDto implements \JsonSerializable
 {
     public function __construct(
         private BoardId $id,

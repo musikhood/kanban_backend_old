@@ -4,7 +4,7 @@ namespace App\Dashboard\User\Application\Dto;
 
 use App\Dashboard\User\Domain\Entity\UserId;
 
-readonly class FindUserResponseDto implements \JsonSerializable
+readonly class UserDto implements \JsonSerializable
 {
     public function __construct(
         private UserId $id

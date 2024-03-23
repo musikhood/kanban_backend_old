@@ -2,7 +2,7 @@
 
 namespace App\Dashboard\Board\Application\Handler;
 
-use App\Dashboard\Board\Application\Dto\FindSingleBoardResponseDto;
+use App\Dashboard\Board\Application\Dto\BoardDto;
 use App\Dashboard\Board\Application\Model\Query\FindSingleBoardQuery;
 use App\Dashboard\Board\Application\Service\BoardServiceInterface;
 use App\Shared\Application\Cqrs\QueryHandlerInterface;
@@ -17,7 +17,7 @@ readonly class FindSingleBoardHandler implements QueryHandlerInterface
     {
     }
 
-    public function __invoke(FindSingleBoardQuery $findBoardQuery): FindSingleBoardResponseDto
+    public function __invoke(FindSingleBoardQuery $findBoardQuery): BoardDto
     {
         $board = $this->boardService->findBoardEntity(
             $findBoardQuery->getUserId(),

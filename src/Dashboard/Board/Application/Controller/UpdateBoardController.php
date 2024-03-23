@@ -36,6 +36,6 @@ class UpdateBoardController extends AbstractController
 
         $this->commandBus->dispatch($updateBoardCommand);
 
-        return new JsonResponse(['Board Updated Successfully']);
+        return new JsonResponse(['message'=>'Board Updated Successfully']);
     }
 }

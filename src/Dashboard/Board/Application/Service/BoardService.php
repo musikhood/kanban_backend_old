@@ -3,7 +3,7 @@
 namespace App\Dashboard\Board\Application\Service;
 
 use App\Dashboard\Board\Application\Dto\ColumnDto;
-use App\Dashboard\Board\Application\Dto\FindSingleBoardResponseDto;
+use App\Dashboard\Board\Application\Dto\BoardDto;
 use App\Dashboard\Board\Application\Exception\PermissionDeniedException;
 use App\Dashboard\Board\Domain\Entity\Board;
 use App\Dashboard\Board\Domain\Entity\BoardId;
@@ -40,7 +40,7 @@ readonly class BoardService implements BoardServiceInterface
         return $board;
     }
 
-    public function mapBoardEntityToDto(Board $board): FindSingleBoardResponseDto
+    public function mapBoardEntityToDto(Board $board): BoardDto
     {
         $columns = $board->columns();
 
@@ -55,7 +55,7 @@ readonly class BoardService implements BoardServiceInterface
             );
         }
 
-        return new FindSingleBoardResponseDto(
+        return new BoardDto(
             $board->id(),
             $board->userId(),
             $board->name(),
