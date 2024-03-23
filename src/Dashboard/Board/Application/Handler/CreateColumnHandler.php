@@ -3,6 +3,7 @@
 namespace App\Dashboard\Board\Application\Handler;
 
 use App\Dashboard\Board\Application\Model\Command\CreateColumnCommand;
+use App\Dashboard\Board\Application\Service\BoardServiceInterface;
 use App\Dashboard\Board\Domain\Entity\Column;
 use App\Dashboard\Board\Domain\Entity\ColumnId;
 use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
@@ -17,16 +18,17 @@ readonly class CreateColumnHandler implements CommandHandlerInterface
     public function __construct(
         private BoardRepositoryInterface $boardRepository,
         private ColumnRepositoryInterface $columnRepository,
+        private BoardServiceInterface $boardService
     )
     {
     }
 
     public function __invoke(CreateColumnCommand $createColumnCommand): void
     {
-        $board = $this->boardRepository->findOneBy([
-            'id' => $createColumnCommand->getBoardId(),
-            'userId' => $createColumnCommand->getUserId()
-        ]);
+        $board = $this->boardService->findBoardEntity(
+            $createColumnCommand->getUserId(),
+            $createColumnCommand->getBoardId()
+        );
 
         $column = Column::createColumn(
             $board,
