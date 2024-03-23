@@ -27,11 +27,11 @@ class GetBoardController extends AbstractController
     #[Route('/api/board/{boardId}', name: 'app_get_board', methods: ['GET'])]
     public function index(string $boardId): JsonResponse
     {
-        $userDto = $this->dashboardService->findUser();
+        $user = $this->dashboardService->findUser();
 
         $findSingleBoardQuery = new FindSingleBoardQuery(
             new BoardId($boardId),
-            $userDto->getId()
+            $user->getId()
         );
 
         $board = $this->queryBus->handle($findSingleBoardQuery);

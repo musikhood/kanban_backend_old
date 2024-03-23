@@ -27,10 +27,10 @@ class UpdateColumnController extends AbstractController
 
     #[Route('/api/board/{boardId}/column/{columnId}', name: 'app_put_board_column', methods: ['PUT'])]
     public function index(string $boardId, string $columnId,  #[MapRequestPayload] UpdateColumnRequestDto $updateColumnRequestDto): Response{
-        $userDto = $this->dashboardService->findUser();
+        $user = $this->dashboardService->findUser();
 
         $updateColumnCommand = new UpdateColumnCommand(
-            $userDto->getId(),
+            $user->getId(),
             new BoardId($boardId),
             new ColumnId($columnId),
             new ColumnName($updateColumnRequestDto->getName()),

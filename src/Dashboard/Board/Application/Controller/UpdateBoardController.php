@@ -26,10 +26,10 @@ class UpdateBoardController extends AbstractController
     #[Route('/api/board/{boardId}', name: 'app_put_board', methods: ['PUT'])]
     public function index(string $boardId, #[MapRequestPayload] UpdateBoardRequestDto $updateBoardRequestDto): Response
     {
-        $userDto = $this->dashboardService->findUser();
+        $user = $this->dashboardService->findUser();
 
         $updateBoardCommand = new UpdateBoardCommand(
-            $userDto->getId(),
+            $user->getId(),
             new BoardId($boardId),
             new BoardName($updateBoardRequestDto->getName())
         );

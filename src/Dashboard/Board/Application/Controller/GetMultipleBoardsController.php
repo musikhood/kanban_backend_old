@@ -27,10 +27,10 @@ class GetMultipleBoardsController extends AbstractController
      */
     #[Route('/api/board', name: 'app_get_multiple_boards', methods: ['GET'])]
     public function index(): Response{
-        $userDto =  $this->dashboardService->findUser();
+        $user =  $this->dashboardService->findUser();
 
         $findMultipleBoardsQuery = new FindMultipleBoardsQuery(
-            $userDto->getId()
+            $user->getId()
         );
 
         $boards = $this->queryBus->handle($findMultipleBoardsQuery);

@@ -27,11 +27,11 @@ class PostBoardController extends AbstractController
     #[Route('/api/board', name: 'app_post_board', methods: ['POST'])]
     public function index(#[MapRequestPayload] CreateBoardRequestDto $createBoardRequestDto): JsonResponse
     {
-        $userDto = $this->dashboardService->findUser();
+        $user = $this->dashboardService->findUser();
 
         $createBoardCommand = new CreateBoardCommand(
             new BoardName($createBoardRequestDto->getName()),
-            $userDto->getId()
+            $user->getId()
         );
 
         $this->commandBus->dispatch($createBoardCommand);

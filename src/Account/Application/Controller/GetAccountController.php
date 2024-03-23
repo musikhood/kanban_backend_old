@@ -28,9 +28,9 @@ class GetAccountController extends AbstractController
             $accountId
         );
 
-        $response = $this->queryBus->handle($findAccountQuery);
+        $account = $this->queryBus->handle($findAccountQuery);
 
-        $response = $this->normalizer->normalize($response);
+        $response = $this->normalizer->normalize($account);
 
         return new JsonResponse($response);
     }

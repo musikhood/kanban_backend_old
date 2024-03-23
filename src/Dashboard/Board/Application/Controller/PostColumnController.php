@@ -29,10 +29,10 @@ class PostColumnController extends AbstractController
     #[Route('/api/board/{boardId}/column', name: 'app_post_board_column', methods: ['POST'])]
     public function index(string $boardId, #[MapRequestPayload] CreateColumnRequestDto $createColumnRequestDto): JsonResponse
     {
-        $userDto = $this->dashboardService->findUser();
+        $user = $this->dashboardService->findUser();
 
         $createColumnCommand = new CreateColumnCommand(
-            $userDto->getId(),
+            $user->getId(),
             new BoardId($boardId),
             new ColumnName($createColumnRequestDto->getName()),
             new ColumnColor($createColumnRequestDto->getColor())
