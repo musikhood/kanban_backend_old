@@ -28,7 +28,7 @@ readonly class AccountAdapter implements UserInterface, PasswordAuthenticatedUse
         return $this->account->email();
     }
 
-    public function getAggregate(): Account
+    public function getAccount(): Account
     {
         return $this->account;
     }

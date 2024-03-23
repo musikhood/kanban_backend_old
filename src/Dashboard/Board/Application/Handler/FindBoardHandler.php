@@ -3,7 +3,7 @@
 namespace App\Dashboard\Board\Application\Handler;
 
 use App\Dashboard\Board\Application\Dto\BoardDto;
-use App\Dashboard\Board\Application\Model\Query\FindSingleBoardQuery;
+use App\Dashboard\Board\Application\Model\Query\FindBoardQuery;
 use App\Dashboard\Board\Application\Service\BoardServiceInterface;
 use App\Shared\Application\Cqrs\QueryHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -17,7 +17,7 @@ readonly class FindBoardHandler implements QueryHandlerInterface
     {
     }
 
-    public function __invoke(FindSingleBoardQuery $findBoardQuery): BoardDto
+    public function __invoke(FindBoardQuery $findBoardQuery): BoardDto
     {
         $board = $this->boardService->findBoardEntity(
             $findBoardQuery->getUserId(),

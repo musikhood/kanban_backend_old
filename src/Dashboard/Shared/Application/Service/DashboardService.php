@@ -3,6 +3,7 @@
 namespace App\Dashboard\Shared\Application\Service;
 
 use App\Account\Domain\Entity\AccountId;
+use App\Account\Infrastructure\Security\AccountAdapter;
 use App\Dashboard\User\Application\Dto\UserDto;
 use App\Dashboard\User\Application\Model\Query\FindUserQuery;
 use App\Shared\Application\Bus\QueryBusInterface;
@@ -19,7 +20,10 @@ readonly class DashboardService implements DashboardServiceInterface
 
     public function findUser(): UserDto
     {
-        $account = $this->security->getUser()->getAggregate();
+        /** @var AccountAdapter $userInterface */
+        $userInterface = $this->security->getUser();
+
+        $account = $userInterface->getAccount();
 
         $findUserQuery = new FindUserQuery(
             $account->id()

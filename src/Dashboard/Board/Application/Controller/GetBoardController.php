@@ -2,7 +2,7 @@
 
 namespace App\Dashboard\Board\Application\Controller;
 
-use App\Dashboard\Board\Application\Model\Query\FindSingleBoardQuery;
+use App\Dashboard\Board\Application\Model\Query\FindBoardQuery;
 use App\Dashboard\Board\Domain\Entity\BoardId;
 use App\Dashboard\Shared\Application\Service\DashboardServiceInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
@@ -29,7 +29,7 @@ class GetBoardController extends AbstractController
     {
         $user = $this->dashboardService->findUser();
 
-        $findSingleBoardQuery = new FindSingleBoardQuery(
+        $findSingleBoardQuery = new FindBoardQuery(
             new BoardId($boardId),
             $user->id()
         );
