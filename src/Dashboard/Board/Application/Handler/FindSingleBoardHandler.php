@@ -2,6 +2,7 @@
 
 namespace App\Dashboard\Board\Application\Handler;
 
+use App\Dashboard\Board\Application\Dto\FindSingleBoardResponseDto;
 use App\Dashboard\Board\Application\Exception\PermissionDeniedException;
 use App\Dashboard\Board\Application\Model\Query\FindSingleBoardQuery;
 use App\Dashboard\Board\Domain\Exception\BoardNotFoundException;
@@ -22,9 +23,9 @@ readonly class FindSingleBoardHandler implements QueryHandlerInterface
      * @throws BoardNotFoundException
      * @throws PermissionDeniedException
      */
-    public function __invoke(FindSingleBoardQuery $findBoardQuery): FindSingleBoardQuery
+    public function __invoke(FindSingleBoardQuery $findBoardQuery): FindSingleBoardResponseDto
     {
-        $board = $this->boardRepository->findBy([
+        $board = $this->boardRepository->findOneBy([
             'id' => $findBoardQuery->getBoardId()
         ]);
 
@@ -36,6 +37,10 @@ readonly class FindSingleBoardHandler implements QueryHandlerInterface
             throw new PermissionDeniedException();
         }
 
-        return $board;
+        return new FindSingleBoardResponseDto(
+            $board->id(),
+            $board->userId(),
+            $board->name()
+        );
     }
 }

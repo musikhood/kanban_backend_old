@@ -19,7 +19,6 @@ readonly class FindBoardHandler implements CommandHandlerInterface
     {
     }
 
-    /** @return array<Board> */
     public function __invoke(FindBoardQuery $findBoardQuery): FindBoardResponseDto
     {
         $boardsEntity =  $this->boardRepository->findBy(['userId'=>$findBoardQuery->getUserId()]);

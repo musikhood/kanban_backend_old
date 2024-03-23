@@ -2,13 +2,8 @@
 
 namespace App\Dashboard\Board\Application\Controller;
 
-use App\Account\Domain\Entity\Account;
-use App\Account\Infrastructure\Security\AccountAdapter;
 use App\Dashboard\Board\Application\Model\Query\FindBoardQuery;
-use App\Dashboard\Board\Application\Port\BoardServiceInterface;
-use App\Dashboard\User\Application\Dto\FindUserResponseDto;
-use App\Dashboard\User\Application\Model\Query\FindUserQuery;
-use App\Dashboard\User\Domain\Entity\User;
+use App\Dashboard\Shared\Application\Service\DashboardServiceInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,6 +15,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class GetBoardController extends AbstractController
 {
     public function __construct(
+        private readonly DashboardServiceInterface $dashboardService,
         private readonly QueryBusInterface $queryBus,
         private readonly NormalizerInterface $normalizer
     )
@@ -31,15 +27,7 @@ class GetBoardController extends AbstractController
      */
     #[Route('/api/board', name: 'app_get_board', methods: ['GET'])]
     public function index(): Response{
-        /** @var Account $account */
-        $account = $this->getUser()->getAggregate();
-
-        $findUserQuery = new FindUserQuery(
-            $account->id()
-        );
-
-        /** @var FindUserResponseDto $userDto */
-        $userDto = $this->queryBus->handle($findUserQuery);
+        $userDto =  $this->dashboardService->findUser();
 
         $findBoardQuery = new FindBoardQuery(
             $userDto->getId()
