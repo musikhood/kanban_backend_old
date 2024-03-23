@@ -8,12 +8,12 @@ use App\Shared\Domain\ValueObject\UserId;
 readonly class FindUserQuery implements QueryInterface
 {
     public function __construct(
-        private UserId $userId
+        private string $userId
     )
     {
     }
 
-    public function getUserId(): UserId
+    public function getUserId(): string
     {
         return $this->userId;
     }

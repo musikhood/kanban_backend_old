@@ -2,9 +2,9 @@
 
 namespace App\Account\Application\Handler;
 
+use App\Account\Domain\Entity\User;
 use App\Shared\Domain\Cqrs\CommandHandlerInterface;
 use App\Shared\Domain\ValueObject\UserId;
-use App\User\Domain\Entity\User;
 use App\Account\Application\Exception\UserAlreadyExistException;
 use App\Account\Application\Model\Command\CreateUserCommand;
 use App\Account\Domain\Repository\UserRepositoryInterface;

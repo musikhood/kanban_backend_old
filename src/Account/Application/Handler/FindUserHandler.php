@@ -2,10 +2,10 @@
 
 namespace App\Account\Application\Handler;
 
+use App\Account\Application\Dto\FindUserResponseDto;
+use App\Account\Application\Model\Query\FindUserQuery;
 use App\Shared\Domain\Cqrs\QueryHandlerInterface;
-use App\User\Domain\Entity\User;
 use App\Account\Application\Exception\UserNotFoundException;
-use App\User\Domain\Model\Query\FindUserQuery;
 use App\Account\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -21,7 +21,7 @@ readonly class FindUserHandler implements QueryHandlerInterface
     /**
      * @throws UserNotFoundException
      */
-    public function __invoke(FindUserQuery $findUserQuery): ?User
+    public function __invoke(FindUserQuery $findUserQuery): FindUserResponseDto
     {
         $user = $this->userRepository->findOneBy(['id'=>$findUserQuery->getUserId()]);
 
@@ -29,6 +29,10 @@ readonly class FindUserHandler implements QueryHandlerInterface
             throw new UserNotFoundException();
         }
 
-        return $user;
+        return new FindUserResponseDto(
+            $user->id(),
+            $user->email(),
+            $user->getRoles()
+        );
     }
 }

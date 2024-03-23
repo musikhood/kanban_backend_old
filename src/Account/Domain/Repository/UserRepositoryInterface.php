@@ -2,7 +2,8 @@
 
 namespace App\Account\Domain\Repository;
 
-use App\User\Domain\Entity\User;
+
+use App\Account\Domain\Entity\User;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
