@@ -2,10 +2,10 @@
 
 namespace App\Account\Application\Handler;
 
-use App\Account\Application\Exception\AccountAlreadyExistException;
 use App\Account\Application\Model\Command\CreateAccountCommand;
 use App\Account\Domain\Entity\Account;
 use App\Account\Domain\Entity\AccountId;
+use App\Account\Domain\Exception\AccountAlreadyExistException;
 use App\Account\Domain\Repository\AccountRepositoryInterface;
 use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use Ramsey\Uuid\Uuid;
