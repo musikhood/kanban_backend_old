@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="App\User\Domain\Entity\RefreshToken" table="refreshToken" repository-class="App\User\Infrastructure\Repository\RefreshTokenRepository">
+    <entity name="App\Account\Domain\Entity\RefreshToken" table="refreshToken" repository-class="App\Account\Infrastructure\Repository\RefreshTokenRepository">
 <!--        <id name="id" type="int" column="id" length="36" />-->
 
 <!--        <field name="refreshToken" column="refreshToken" length="180" />-->

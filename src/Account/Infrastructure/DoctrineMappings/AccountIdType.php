@@ -2,13 +2,13 @@
 
 namespace App\Account\Infrastructure\DoctrineMappings;
 
-use App\Shared\Domain\ValueObject\UserId;
+use App\Account\Domain\Entity\AccountId;
 use App\Shared\Infrastructure\DoctrineMappings\UuidType;
 
-class UserIdType extends UuidType
+class AccountIdType extends UuidType
 {
     protected function typeClassName(): string
     {
-        return UserId::class;
+        return AccountId::class;
     }
 }

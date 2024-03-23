@@ -2,20 +2,20 @@
 
 namespace App\Board\Domain\Model\Query;
 
+use App\Account\Domain\Entity\AccountId;
 use App\Board\Domain\Entity\BoardId;
 use App\Shared\Domain\Cqrs\QueryInterface;
-use App\Shared\Domain\ValueObject\UserId;
 
 readonly class FindSingleBoardQuery implements QueryInterface
 {
     public function __construct(
         private BoardId $boardId,
-        private UserId $userId
+        private AccountId $userId
     )
     {
     }
 
-    public function getUserId(): UserId
+    public function getUserId(): AccountId
     {
         return $this->userId;
     }

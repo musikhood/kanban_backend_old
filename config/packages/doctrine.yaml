@@ -24,12 +24,12 @@ doctrine:
               prefix: 'App\Board\Domain\Entity'
               alias: Board
 
-          User:
+          Account:
             type: xml
             is_bundle: false
-            dir: '%kernel.project_dir%/src/User/Infrastructure/DoctrineMappings'
-            prefix: 'App\User\Domain\Entity'
-            alias: User
+            dir: '%kernel.project_dir%/src/Account/Infrastructure/DoctrineMappings'
+            prefix: 'App\Account\Domain\Entity'
+            alias: Account
 
 when@test:
     doctrine:

@@ -2,6 +2,7 @@
 
 namespace App\Board\Application\Service;
 
+use App\Account\Domain\Entity\AccountId;
 use App\Board\Application\Dto\ColumnDto;
 use App\Board\Application\Dto\CreateBoardResponseDto;
 use App\Board\Application\Dto\CreateColumnResponseDto;
@@ -25,7 +26,6 @@ use App\Board\Domain\Model\Query\FindBoardQuery;
 use App\Board\Domain\Model\Query\FindSingleBoardQuery;
 use App\Shared\Application\Bus\CommandBusInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
-use App\Shared\Domain\ValueObject\UserId;
 
 readonly class BoardService implements BoardServiceInterface
 {
@@ -35,7 +35,7 @@ readonly class BoardService implements BoardServiceInterface
     ) {
     }
 
-    public function findBoard(UserId $userId): FindBoardResponseDto
+    public function findBoard(AccountId $userId): FindBoardResponseDto
     {
         $findBoardQuery = new FindBoardQuery(
             $userId
@@ -59,7 +59,7 @@ readonly class BoardService implements BoardServiceInterface
 
         return new FindBoardResponseDto($boards);
     }
-    public function findSingleBoard(UserId $userId, BoardId $boardId): FindSingleBoardResponseDto
+    public function findSingleBoard(AccountId $userId, BoardId $boardId): FindSingleBoardResponseDto
     {
 
         $findBoardQuery = new FindSingleBoardQuery(
@@ -81,7 +81,7 @@ readonly class BoardService implements BoardServiceInterface
             $columns
         );
     }
-    public function createBoard(UserId $userId, BoardName $boardName): CreateBoardResponseDto
+    public function createBoard(AccountId $userId, BoardName $boardName): CreateBoardResponseDto
     {
         $createBoardCommand = new CreateBoardCommand(
             $boardName,
@@ -94,7 +94,7 @@ readonly class BoardService implements BoardServiceInterface
             'Board created successfully'
         );
     }
-    public function updateBoard(UserId $userId, BoardId $boardId, BoardName $boardName): UpdateBoardResponseDto
+    public function updateBoard(AccountId $userId, BoardId $boardId, BoardName $boardName): UpdateBoardResponseDto
     {
         $updateBoardCommand = new UpdateBoardCommand(
             $userId,
@@ -108,7 +108,7 @@ readonly class BoardService implements BoardServiceInterface
             'Board updated successfully'
         );
     }
-    public function addColumn(UserId $userId, BoardId $boardId, ColumnName $columnName, ColumnColor $columnColor): CreateColumnResponseDto
+    public function addColumn(AccountId $userId, BoardId $boardId, ColumnName $columnName, ColumnColor $columnColor): CreateColumnResponseDto
     {
         $createColumnCommand = new CreateColumnCommand(
             $userId,
@@ -125,7 +125,7 @@ readonly class BoardService implements BoardServiceInterface
 
     }
 
-    public function updateColumn(UserId $userId, BoardId $boardId, ColumnId $columnId, ColumnName $columnName, ColumnColor $columnColor): UpdateColumnResponseDto
+    public function updateColumn(AccountId $userId, BoardId $boardId, ColumnId $columnId, ColumnName $columnName, ColumnColor $columnColor): UpdateColumnResponseDto
     {
         $updateColumnCommand = new UpdateColumnCommand(
             $userId,

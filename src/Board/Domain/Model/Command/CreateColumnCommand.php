@@ -2,18 +2,18 @@
 
 namespace App\Board\Domain\Model\Command;
 
+use App\Account\Domain\Entity\AccountId;
 use App\Board\Domain\Entity\BoardId;
 use App\Board\Domain\Entity\ColumnColor;
 use App\Board\Domain\Entity\ColumnName;
 use App\Shared\Domain\Cqrs\CommandInterface;
-use App\Shared\Domain\ValueObject\UserId;
 
 readonly class CreateColumnCommand implements CommandInterface
 {
     public function __construct(
-        private UserId $userId,
-        private BoardId $boardId,
-        private ColumnName $name,
+        private AccountId   $userId,
+        private BoardId     $boardId,
+        private ColumnName  $name,
         private ColumnColor $color
     )
     {
@@ -25,7 +25,7 @@ readonly class CreateColumnCommand implements CommandInterface
     }
 
 
-    public function getUserId(): UserId
+    public function getUserId(): AccountId
     {
         return $this->userId;
     }

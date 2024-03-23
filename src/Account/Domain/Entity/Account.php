@@ -4,23 +4,22 @@ namespace App\Account\Domain\Entity;
 
 use App\Account\Domain\Event\UserCreatedEvent;
 use App\Shared\Domain\Aggregate\AggregateRoot;
-use App\Shared\Domain\ValueObject\UserId;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class User extends AggregateRoot implements UserInterface, PasswordAuthenticatedUserInterface
+class Account extends AggregateRoot implements UserInterface, PasswordAuthenticatedUserInterface
 {
     private string $password;
     public function __construct(
-        private readonly UserId $id,
-        private string          $email,
-        private array           $roles = []
+        private readonly AccountId $id,
+        private string             $email,
+        private array              $roles = []
     )
     {
     }
-    public function id(): UserId
+    public function id(): AccountId
     {
         return $this->id;
     }
@@ -61,11 +60,11 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-    public static function registerUser(UserId $userId, string $email, string $password, array $roles): self
+    public static function registerAccount(AccountId $userId, string $email, string $password, array $roles): self
     {
         $passwordHasherFactory = new PasswordHasherFactory([
             // auto hasher with default options for the User class (and children)
-            User::class => ['algorithm' => 'auto'],
+            Account::class => ['algorithm' => 'auto'],
 
             // auto hasher with custom options for all PasswordAuthenticatedUserInterface instances
             PasswordAuthenticatedUserInterface::class => [
@@ -75,18 +74,18 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         ]);
         $hasher = new UserPasswordHasher($passwordHasherFactory);
 
-        $user = new self($userId, $email, $roles);
+        $account = new self($userId, $email, $roles);
 
         $hashedPassword = $hasher->hashPassword(
-            $user,
+            $account,
             $password
         );
-        $user->updatePassword($hashedPassword);
+        $account->updatePassword($hashedPassword);
 
-        $user->recordDomainEvent(new UserCreatedEvent($email));
+        $account->recordDomainEvent(new UserCreatedEvent($email));
         // Nie tworzymy tutaj hasła, bo trzeba będzie je zahashować.
         // Nie możemy zrobić tego w tym miejscu, bo musimy wstrzyknąć serwis do hashowania
 
-        return $user;
+        return $account;
     }
 }

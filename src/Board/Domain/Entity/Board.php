@@ -2,12 +2,12 @@
 
 namespace App\Board\Domain\Entity;
 
+use App\Account\Domain\Entity\AccountId;
 use App\Board\Domain\Event\BoardCreatedEvent;
 use App\Board\Domain\Event\ColumnCreatedEvent;
 use App\Board\Domain\Event\ColumnUpdatedEvent;
 use App\Board\Domain\Exception\ColumnNotFoundException;
 use App\Shared\Domain\Aggregate\AggregateRoot;
-use App\Shared\Domain\ValueObject\UserId;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -17,7 +17,7 @@ class Board extends AggregateRoot
     public function __construct(
         private readonly BoardId $id,
         private BoardName        $name,
-        private UserId           $userId
+        private AccountId $userId
     )
     {
         $this->columns = new ArrayCollection();
@@ -38,12 +38,12 @@ class Board extends AggregateRoot
         $this->name = $name;
     }
 
-    public function userId(): UserId
+    public function userId(): AccountId
     {
         return $this->userId;
     }
 
-    public function updateUser(UserId $userId): void
+    public function updateUser(AccountId $userId): void
     {
         $this->userId = $userId;
     }
@@ -102,8 +102,8 @@ class Board extends AggregateRoot
         return $column;
     }
     public static function create(
-        BoardId $boardId,
-        UserId $userId,
+        BoardId   $boardId,
+        AccountId $userId,
         BoardName $name
     ): self {
         $board = new self($boardId, $name, $userId);

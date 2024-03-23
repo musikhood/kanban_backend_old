@@ -4,8 +4,8 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="App\Account\Domain\Entity\User" table="users" repository-class="App\Account\Infrastructure\Repository\UserRepository">
-        <id name="id" type="user_id" column="id" length="36" />
+    <entity name="App\Account\Domain\Entity\Account" table="account" repository-class="App\Account\Infrastructure\Repository\AccountRepository">
+        <id name="id" type="account_id" column="id" length="36" />
 
         <field name="roles" type="json" column="roles" />
         <field name="email" column="email" />
