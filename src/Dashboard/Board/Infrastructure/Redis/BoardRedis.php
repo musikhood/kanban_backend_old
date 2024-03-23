@@ -14,7 +14,7 @@ class BoardRedis extends AbstractRedis implements BoardRedisInterface
 
     protected function getCacheSecondsTTL(): int
     {
-        return 60;
+        return 3600;
     }
 
     protected function getCacheTag(): string
