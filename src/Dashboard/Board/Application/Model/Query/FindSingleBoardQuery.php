@@ -4,18 +4,19 @@ namespace App\Dashboard\Board\Application\Model\Query;
 
 use App\Account\Domain\Entity\AccountId;
 use App\Dashboard\Board\Domain\Entity\BoardId;
+use App\Dashboard\User\Domain\Entity\UserId;
 use App\Shared\Domain\Cqrs\QueryInterface;
 
 readonly class FindSingleBoardQuery implements QueryInterface
 {
     public function __construct(
         private BoardId $boardId,
-        private AccountId $userId
+        private UserId $userId
     )
     {
     }
 
-    public function getUserId(): AccountId
+    public function getUserId(): UserId
     {
         return $this->userId;
     }

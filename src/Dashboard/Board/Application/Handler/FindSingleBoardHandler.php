@@ -4,7 +4,6 @@ namespace App\Dashboard\Board\Application\Handler;
 
 use App\Dashboard\Board\Application\Exception\PermissionDeniedException;
 use App\Dashboard\Board\Application\Model\Query\FindSingleBoardQuery;
-use App\Dashboard\Board\Domain\Entity\Board;
 use App\Dashboard\Board\Domain\Exception\BoardNotFoundException;
 use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
 use App\Shared\Domain\Cqrs\QueryHandlerInterface;
@@ -14,7 +13,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 readonly class FindSingleBoardHandler implements QueryHandlerInterface
 {
     public function __construct(
-        private BoardRepositoryInterface $boardRepository,
+        private BoardRepositoryInterface $boardRepository
     )
     {
     }
@@ -23,11 +22,10 @@ readonly class FindSingleBoardHandler implements QueryHandlerInterface
      * @throws BoardNotFoundException
      * @throws PermissionDeniedException
      */
-    public function __invoke(FindSingleBoardQuery $findBoardQuery): ?Board
+    public function __invoke(FindSingleBoardQuery $findBoardQuery): FindSingleBoardQuery
     {
-        /** @var ?Board $board */
-        $board = $this->boardRepository->findOneBy([
-            'id' => $findBoardQuery->getBoardId(),
+        $board = $this->boardRepository->findBy([
+            'id' => $findBoardQuery->getBoardId()
         ]);
 
         if (!$board){

@@ -2,16 +2,16 @@
 
 namespace App\Dashboard\Board\Application\Model\Command;
 
-use App\Account\Domain\Entity\AccountId;
 use App\Dashboard\Board\Domain\Entity\BoardId;
 use App\Dashboard\Board\Domain\Entity\ColumnColor;
 use App\Dashboard\Board\Domain\Entity\ColumnName;
+use App\Dashboard\User\Domain\Entity\UserId;
 use App\Shared\Domain\Cqrs\CommandInterface;
 
 readonly class CreateColumnCommand implements CommandInterface
 {
     public function __construct(
-        private AccountId   $userId,
+        private UserId   $userId,
         private BoardId     $boardId,
         private ColumnName  $name,
         private ColumnColor $color
@@ -25,7 +25,7 @@ readonly class CreateColumnCommand implements CommandInterface
     }
 
 
-    public function getUserId(): AccountId
+    public function getUserId(): UserId
     {
         return $this->userId;
     }

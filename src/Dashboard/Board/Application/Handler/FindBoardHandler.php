@@ -2,6 +2,8 @@
 
 namespace App\Dashboard\Board\Application\Handler;
 
+use App\Dashboard\Board\Application\Dto\FindBoardResponseDto;
+use App\Dashboard\Board\Application\Dto\FindSingleBoardResponseDto;
 use App\Dashboard\Board\Application\Model\Query\FindBoardQuery;
 use App\Dashboard\Board\Domain\Entity\Board;
 use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
@@ -18,8 +20,21 @@ readonly class FindBoardHandler implements CommandHandlerInterface
     }
 
     /** @return array<Board> */
-    public function __invoke(FindBoardQuery $findBoardQuery): array
+    public function __invoke(FindBoardQuery $findBoardQuery): FindBoardResponseDto
     {
-        return $this->boardRepository->findBy(['userId'=>$findBoardQuery->getUserId()]);
+        $boardsEntity =  $this->boardRepository->findBy(['userId'=>$findBoardQuery->getUserId()]);
+
+        $boards = [];
+
+        /** @var Board $board */
+        foreach ($boardsEntity as $board){
+            $boards[] = new FindSingleBoardResponseDto(
+                $board->id(),
+                $board->userId(),
+                $board->name(),
+            );
+        }
+
+        return new FindBoardResponseDto($boards);
     }
 }

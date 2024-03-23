@@ -1,34 +1,41 @@
 <?php
 
 namespace App\Dashboard\Board\Application\Dto;
-readonly class FindSingleBoardResponseDto
+use App\Dashboard\Board\Domain\Entity\BoardId;
+use App\Dashboard\Board\Domain\Entity\BoardName;
+use App\Dashboard\User\Domain\Entity\UserId;
+
+readonly class FindSingleBoardResponseDto implements \JsonSerializable
 {
     public function __construct(
-        private string $id,
-        private string $user,
-        private string $name,
-        private array $columns
+        private BoardId $id,
+        private UserId $userId,
+        private BoardName $boardName,
     )
     {
     }
 
-    public function getId(): string
+    public function getId(): BoardId
     {
         return $this->id;
     }
 
-    public function getUser(): string
+    public function getUser(): UserId
     {
-        return $this->user;
+        return $this->userId;
     }
 
-    public function getName(): string
+    public function getBoardName(): BoardName
     {
-        return $this->name;
+        return $this->boardName;
     }
 
-    public function getColumns(): array
+    public function jsonSerialize(): mixed
     {
-        return $this->columns;
+        return [
+            'id'=>$this->id->value(),
+            'userId'=>$this->userId->value(),
+            'boardName'=>$this->boardName->value()
+        ];
     }
 }
