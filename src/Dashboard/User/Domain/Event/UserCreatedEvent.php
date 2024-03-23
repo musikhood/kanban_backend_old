@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Account\Domain\Event;
+namespace App\Dashboard\User\Domain\Event;
 
-use App\Account\Domain\Entity\AccountId;
+use App\Dashboard\User\Domain\Entity\UserId;
 use App\Shared\Domain\Event\DomainEventInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class AccountCreatedEvent extends Event implements DomainEventInterface
+class UserCreatedEvent extends Event implements DomainEventInterface
 {
     private \DateTimeImmutable $occur;
     public function __construct(
-        private readonly AccountId $accountId,
+        private readonly UserId $userId,
     )
     {
         $this->occur = new \DateTimeImmutable();
@@ -21,9 +21,9 @@ class AccountCreatedEvent extends Event implements DomainEventInterface
         return $this->occur;
     }
 
-    public function getAccountId(): AccountId
+    public function getUserId(): UserId
     {
-        return $this->accountId;
+        return $this->userId;
     }
 
 }

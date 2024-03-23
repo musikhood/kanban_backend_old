@@ -9,6 +9,7 @@ doctrine:
         use_savepoints: true
         types:
             account_id: App\Account\Infrastructure\DoctrineMappings\AccountIdType
+            user_id: App\Dashboard\User\Infrastructure\DoctrineMappings\UserIdType
             board_id: App\Board\Infrastructure\DoctrineMappings\BoardIdType
             column_id: App\Board\Infrastructure\DoctrineMappings\ColumnIdType
 
@@ -25,11 +26,18 @@ doctrine:
               alias: Board
 
           Account:
-            type: xml
-            is_bundle: false
-            dir: '%kernel.project_dir%/src/Account/Infrastructure/DoctrineMappings'
-            prefix: 'App\Account\Domain\Entity'
-            alias: Account
+              type: xml
+              is_bundle: false
+              dir: '%kernel.project_dir%/src/Account/Infrastructure/DoctrineMappings'
+              prefix: 'App\Account\Domain\Entity'
+              alias: Account
+
+          User:
+              type: xml
+              is_bundle: false
+              dir: '%kernel.project_dir%/src/Dashboard/User/Infrastructure/DoctrineMappings'
+              prefix: 'App\Dashboard\User\Domain\Entity'
+              alias: User
 
 when@test:
     doctrine:

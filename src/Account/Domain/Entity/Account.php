@@ -51,7 +51,7 @@ class Account extends AggregateRoot
     {
         $this->password = $password;
     }
-    public static function registerAccount(AccountId $accountId, string $email, string $password, array $roles): self
+    public static function registerAccount(AccountId $id, string $email, string $password, array $roles): self
     {
         $passwordHasherFactory = new PasswordHasherFactory([
             // auto hasher with default options for the User class (and children)
@@ -65,7 +65,7 @@ class Account extends AggregateRoot
         ]);
         $hasher = new UserPasswordHasher($passwordHasherFactory);
 
-        $account = new self($accountId, $email, $roles);
+        $account = new self($id, $email, $roles);
 
         $hashedPassword = $hasher->hashPassword(
             new AccountAdapter($account),
@@ -73,7 +73,7 @@ class Account extends AggregateRoot
         );
         $account->updatePassword($hashedPassword);
 
-        $account->recordDomainEvent(new AccountCreatedEvent($email));
+        $account->recordDomainEvent(new AccountCreatedEvent($id));
 
         return $account;
     }

@@ -16,7 +16,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 readonly class CreateAccountHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private AccountRepositoryInterface $userRepository,
+        private AccountRepositoryInterface $accountRepository,
         private EventDispatcherInterface   $eventDispatcher
     )
     {
@@ -27,7 +27,7 @@ readonly class CreateAccountHandler implements CommandHandlerInterface
      */
     public function __invoke(CreateAccountCommand $createUserCommand): void
     {
-        $account = $this->userRepository->findOneBy(['email'=>$createUserCommand->getEmail()]);
+        $account = $this->accountRepository->findOneBy(['email'=>$createUserCommand->getEmail()]);
         if ($account){
             throw new AccountAlreadyExistException();
         }
@@ -39,7 +39,7 @@ readonly class CreateAccountHandler implements CommandHandlerInterface
             $createUserCommand->getRoles()
         );
 
-        $this->userRepository->save($account);
+        $this->accountRepository->save($account);
 
         foreach ($account->pullDomainEvents() as $domainEvent) {
             $this->eventDispatcher->dispatch($domainEvent);
