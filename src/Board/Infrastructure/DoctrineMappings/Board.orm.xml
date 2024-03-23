@@ -14,7 +14,7 @@
             </cascade>
         </one-to-many>
 
-        <field name="userId" column="user_id" type="user_id"/>
+        <field name="userId" column="account_id" type="account_id"/>
         <embedded name="name" class="App\Board\Domain\Entity\BoardName"  use-column-prefix="false" />
     </entity>
 
