@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Dashboard\Board\Domain\Handler;
+namespace App\Dashboard\Board\Application\Handler;
 
+use App\Dashboard\Board\Application\Model\Command\CreateColumnCommand;
+use App\Dashboard\Board\Application\Model\Query\FindSingleBoardQuery;
 use App\Dashboard\Board\Domain\Entity\Board;
 use App\Dashboard\Board\Domain\Entity\Column;
 use App\Dashboard\Board\Domain\Entity\ColumnId;
-use App\Dashboard\Board\Domain\Model\Command\CreateColumnCommand;
-use App\Dashboard\Board\Domain\Model\Query\FindSingleBoardQuery;
-use App\Dashboard\Board\Domain\RepositoryPort\ColumnRepositoryInterface;
+use App\Dashboard\Board\Domain\Repository\ColumnRepositoryInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
 use App\Shared\Domain\Cqrs\CommandHandlerInterface;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

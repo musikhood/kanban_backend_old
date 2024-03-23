@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dashboard\Board\Domain\RepositoryPort;
+namespace App\Dashboard\Board\Domain\Repository;
 
 use App\Dashboard\Board\Domain\Entity\Board;
 

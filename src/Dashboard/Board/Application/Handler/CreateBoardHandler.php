@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Dashboard\Board\Domain\Handler;
+namespace App\Dashboard\Board\Application\Handler;
 
+use App\Dashboard\Board\Application\Model\Command\CreateBoardCommand;
 use App\Dashboard\Board\Domain\Entity\Board;
 use App\Dashboard\Board\Domain\Entity\BoardId;
-use App\Dashboard\Board\Domain\Model\Command\CreateBoardCommand;
-use App\Dashboard\Board\Domain\RepositoryPort\BoardRepositoryInterface;
+use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
 use App\Shared\Domain\Cqrs\CommandHandlerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dashboard\Board\Domain\Model\Command;
+namespace App\Dashboard\Board\Application\Model\Command;
 
 use App\Account\Domain\Entity\AccountId;
 use App\Dashboard\Board\Domain\Entity\BoardId;

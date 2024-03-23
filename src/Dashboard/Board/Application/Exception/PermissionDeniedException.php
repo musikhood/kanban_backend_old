@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Dashboard\User\Application\Exception;
+namespace App\Dashboard\Board\Application\Exception;
 
 use App\Shared\Domain\Exception\CustomException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\WithHttpStatus;
 
-#[WithHttpStatus(Response::HTTP_NOT_FOUND)]
-
-class UserNotFoundException extends CustomException
+#[WithHttpStatus(Response::HTTP_FORBIDDEN)]
+class PermissionDeniedException extends CustomException
 {
 
     public function errorCode(): string
     {
-       return Response::HTTP_NOT_FOUND;
+        return Response::HTTP_FORBIDDEN;
     }
 
     public function errorMessage(): string
     {
-        return 'User Not Found';
+        return 'Permission Denied';
     }
 }

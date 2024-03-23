@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Dashboard\Board\Domain\Handler;
+namespace App\Dashboard\Board\Application\Handler;
 
+use App\Dashboard\Board\Application\Model\Command\UpdateColumnCommand;
+use App\Dashboard\Board\Application\Model\Query\FindSingleBoardQuery;
 use App\Dashboard\Board\Domain\Entity\Board;
 use App\Dashboard\Board\Domain\Exception\ColumnNotFoundException;
-use App\Dashboard\Board\Domain\Model\Command\UpdateColumnCommand;
-use App\Dashboard\Board\Domain\Model\Query\FindSingleBoardQuery;
-use App\Dashboard\Board\Domain\RepositoryPort\ColumnRepositoryInterface;
+use App\Dashboard\Board\Domain\Repository\ColumnRepositoryInterface;
 use App\Shared\Application\Bus\QueryBusInterface;
 use App\Shared\Domain\Cqrs\CommandHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
