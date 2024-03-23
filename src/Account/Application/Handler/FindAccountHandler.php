@@ -34,7 +34,7 @@ readonly class FindAccountHandler implements QueryHandlerInterface
         return new FindAccountResponseDto(
             $account->id(),
             $account->email(),
-            $account->getRoles()
+            $account->roles()
         );
     }
 }

@@ -3,13 +3,13 @@
 namespace App\Account\Domain\Entity;
 
 use App\Account\Domain\Event\AccountCreatedEvent;
+use App\Account\Infrastructure\Security\AccountAdapter;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
-class Account extends AggregateRoot implements UserInterface, PasswordAuthenticatedUserInterface
+class Account extends AggregateRoot
 {
     private string $password;
     public function __construct(
@@ -31,11 +31,7 @@ class Account extends AggregateRoot implements UserInterface, PasswordAuthentica
     {
         $this->email = $email;
     }
-    public function getUserIdentifier(): string
-    {
-        return $this->email();
-    }
-    public function getRoles(): array
+    public function roles(): array
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
@@ -47,7 +43,7 @@ class Account extends AggregateRoot implements UserInterface, PasswordAuthentica
     {
         $this->roles = $roles;
     }
-    public function getPassword(): string
+    public function password(): string
     {
         return $this->password;
     }
@@ -55,12 +51,7 @@ class Account extends AggregateRoot implements UserInterface, PasswordAuthentica
     {
         $this->password = $password;
     }
-    public function eraseCredentials(): void
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
-    public static function registerAccount(AccountId $userId, string $email, string $password, array $roles): self
+    public static function registerAccount(AccountId $accountId, string $email, string $password, array $roles): self
     {
         $passwordHasherFactory = new PasswordHasherFactory([
             // auto hasher with default options for the User class (and children)
@@ -74,17 +65,15 @@ class Account extends AggregateRoot implements UserInterface, PasswordAuthentica
         ]);
         $hasher = new UserPasswordHasher($passwordHasherFactory);
 
-        $account = new self($userId, $email, $roles);
+        $account = new self($accountId, $email, $roles);
 
         $hashedPassword = $hasher->hashPassword(
-            $account,
+            new AccountAdapter($account),
             $password
         );
         $account->updatePassword($hashedPassword);
 
         $account->recordDomainEvent(new AccountCreatedEvent($email));
-        // Nie tworzymy tutaj hasła, bo trzeba będzie je zahashować.
-        // Nie możemy zrobić tego w tym miejscu, bo musimy wstrzyknąć serwis do hashowania
 
         return $account;
     }
