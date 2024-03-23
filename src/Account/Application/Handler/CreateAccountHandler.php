@@ -27,7 +27,10 @@ readonly class CreateAccountHandler implements CommandHandlerInterface
      */
     public function __invoke(CreateAccountCommand $createUserCommand): void
     {
-        $account = $this->accountRepository->findOneBy(['email'=>$createUserCommand->getEmail()]);
+        $account = $this->accountRepository->findOneByEmail(
+            $createUserCommand->getEmail()
+        );
+
         if ($account){
             throw new AccountAlreadyExistException();
         }

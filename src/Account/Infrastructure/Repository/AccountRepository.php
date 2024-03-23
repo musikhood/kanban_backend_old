@@ -45,4 +45,11 @@ class AccountRepository extends ServiceEntityRepository implements PasswordUpgra
             'id' => $accountId
         ]);
     }
+
+    public function findOneByEmail(string $email): ?Account
+    {
+        return $this->findOneBy([
+            'email' => $email
+        ]);
+    }
 }
