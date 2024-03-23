@@ -7,7 +7,7 @@ use App\Account\Application\Model\Command\CreateAccountCommand;
 use App\Account\Domain\Entity\Account;
 use App\Account\Domain\Entity\AccountId;
 use App\Account\Domain\Repository\AccountRepositoryInterface;
-use App\Shared\Domain\Cqrs\CommandHandlerInterface;
+use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;

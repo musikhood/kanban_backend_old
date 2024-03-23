@@ -3,7 +3,7 @@
 namespace App\Dashboard\User\Application\Model\Command;
 
 use App\Account\Domain\Entity\AccountId;
-use App\Shared\Domain\Cqrs\CommandInterface;
+use App\Shared\Application\Cqrs\CommandInterface;
 
 readonly class CreateUserCommand implements CommandInterface
 {

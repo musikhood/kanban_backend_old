@@ -5,7 +5,7 @@ namespace App\Dashboard\Board\Application\Handler;
 use App\Dashboard\Board\Application\Dto\FindSingleBoardResponseDto;
 use App\Dashboard\Board\Application\Model\Query\FindSingleBoardQuery;
 use App\Dashboard\Board\Application\Service\BoardServiceInterface;
-use App\Shared\Domain\Cqrs\QueryHandlerInterface;
+use App\Shared\Application\Cqrs\QueryHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

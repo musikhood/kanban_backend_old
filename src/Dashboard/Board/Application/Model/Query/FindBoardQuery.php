@@ -3,7 +3,7 @@
 namespace App\Dashboard\Board\Application\Model\Query;
 
 use App\Dashboard\User\Domain\Entity\UserId;
-use App\Shared\Domain\Cqrs\QueryInterface;
+use App\Shared\Application\Cqrs\QueryInterface;
 
 readonly class FindBoardQuery implements QueryInterface
 {

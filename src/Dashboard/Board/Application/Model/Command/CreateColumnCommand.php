@@ -6,7 +6,7 @@ use App\Dashboard\Board\Domain\Entity\BoardId;
 use App\Dashboard\Board\Domain\Entity\ColumnColor;
 use App\Dashboard\Board\Domain\Entity\ColumnName;
 use App\Dashboard\User\Domain\Entity\UserId;
-use App\Shared\Domain\Cqrs\CommandInterface;
+use App\Shared\Application\Cqrs\CommandInterface;
 
 readonly class CreateColumnCommand implements CommandInterface
 {

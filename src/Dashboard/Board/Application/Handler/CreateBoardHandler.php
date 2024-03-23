@@ -6,7 +6,7 @@ use App\Dashboard\Board\Application\Model\Command\CreateBoardCommand;
 use App\Dashboard\Board\Domain\Entity\Board;
 use App\Dashboard\Board\Domain\Entity\BoardId;
 use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
-use App\Shared\Domain\Cqrs\CommandHandlerInterface;
+use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;

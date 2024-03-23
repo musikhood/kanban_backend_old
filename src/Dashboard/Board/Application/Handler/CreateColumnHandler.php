@@ -8,7 +8,7 @@ use App\Dashboard\Board\Domain\Entity\Column;
 use App\Dashboard\Board\Domain\Entity\ColumnId;
 use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
 use App\Dashboard\Board\Domain\Repository\ColumnRepositoryInterface;
-use App\Shared\Domain\Cqrs\CommandHandlerInterface;
+use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

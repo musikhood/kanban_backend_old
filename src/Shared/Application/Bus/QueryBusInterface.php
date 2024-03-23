@@ -2,7 +2,7 @@
 
 namespace App\Shared\Application\Bus;
 
-use App\Shared\Domain\Cqrs\QueryInterface;
+use App\Shared\Application\Cqrs\QueryInterface;
 
 interface QueryBusInterface
 {

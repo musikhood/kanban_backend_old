@@ -5,7 +5,7 @@ namespace App\Dashboard\Board\Application\Model\Command;
 use App\Dashboard\Board\Domain\Entity\BoardId;
 use App\Dashboard\Board\Domain\Entity\BoardName;
 use App\Dashboard\User\Domain\Entity\UserId;
-use App\Shared\Domain\Cqrs\CommandInterface;
+use App\Shared\Application\Cqrs\CommandInterface;
 
 readonly class UpdateBoardCommand implements CommandInterface
 {

@@ -8,7 +8,7 @@ use App\Dashboard\Board\Application\Model\Query\FindBoardQuery;
 use App\Dashboard\Board\Application\Service\BoardServiceInterface;
 use App\Dashboard\Board\Domain\Entity\Board;
 use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
-use App\Shared\Domain\Cqrs\CommandHandlerInterface;
+use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

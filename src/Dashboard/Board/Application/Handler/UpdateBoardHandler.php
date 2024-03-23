@@ -5,7 +5,7 @@ namespace App\Dashboard\Board\Application\Handler;
 use App\Dashboard\Board\Application\Model\Command\UpdateBoardCommand;
 use App\Dashboard\Board\Application\Service\BoardServiceInterface;
 use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
-use App\Shared\Domain\Cqrs\CommandHandlerInterface;
+use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

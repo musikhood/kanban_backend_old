@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Domain\Cqrs;
+namespace App\Shared\Application\Cqrs;
 
 interface CommandInterface
 {

@@ -6,7 +6,7 @@ use App\Dashboard\User\Application\Dto\FindUserResponseDto;
 use App\Dashboard\User\Application\Model\Query\FindUserQuery;
 use App\Dashboard\User\Domain\Exception\UserNotFoundException;
 use App\Dashboard\User\Domain\Repository\UserRepositoryInterface;
-use App\Shared\Domain\Cqrs\QueryHandlerInterface;
+use App\Shared\Application\Cqrs\QueryHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

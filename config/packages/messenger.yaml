@@ -11,8 +11,8 @@ framework:
 
         routing:
             # Route your messages to the transports
-             App\Shared\Domain\Cqrs\CommandInterface: sync
-             App\Shared\Domain\Cqrs\QueryInterface: sync
+             App\Shared\Application\Cqrs\CommandInterface: sync
+             App\Shared\Application\Cqrs\QueryInterface: sync
 
 # when@test:
 #    framework:

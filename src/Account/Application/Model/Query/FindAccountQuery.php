@@ -2,7 +2,7 @@
 
 namespace App\Account\Application\Model\Query;
 
-use App\Shared\Domain\Cqrs\QueryInterface;
+use App\Shared\Application\Cqrs\QueryInterface;
 
 readonly class FindAccountQuery implements QueryInterface
 {

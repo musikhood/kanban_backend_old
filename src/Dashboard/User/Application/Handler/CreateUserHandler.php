@@ -7,7 +7,7 @@ use App\Dashboard\User\Application\Model\Command\CreateUserCommand;
 use App\Dashboard\User\Domain\Entity\User;
 use App\Dashboard\User\Domain\Entity\UserId;
 use App\Dashboard\User\Domain\Repository\UserRepositoryInterface;
-use App\Shared\Domain\Cqrs\CommandHandlerInterface;
+use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;

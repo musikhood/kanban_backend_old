@@ -7,7 +7,7 @@ use App\Dashboard\Board\Application\Service\BoardServiceInterface;
 use App\Dashboard\Board\Domain\Exception\ColumnNotFoundException;
 use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
 use App\Dashboard\Board\Domain\Repository\ColumnRepositoryInterface;
-use App\Shared\Domain\Cqrs\CommandHandlerInterface;
+use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

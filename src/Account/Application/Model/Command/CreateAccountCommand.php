@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Account\Application\Model\Command;
-use App\Shared\Domain\Cqrs\CommandInterface;
+use App\Shared\Application\Cqrs\CommandInterface;
 use SensitiveParameter;
 
 readonly class CreateAccountCommand implements CommandInterface
