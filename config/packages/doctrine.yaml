@@ -21,8 +21,8 @@ doctrine:
           Board:
               type: xml
               is_bundle: false
-              dir: '%kernel.project_dir%/src/Board/Infrastructure/DoctrineMappings'
-              prefix: 'App\Board\Domain\Entity'
+              dir: '%kernel.project_dir%/src/Dashboard/Board/Infrastructure/DoctrineMappings'
+              prefix: 'App\Dashboard\Board\Domain\Entity'
               alias: Board
 
           Account:

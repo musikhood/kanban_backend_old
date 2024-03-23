@@ -1,7 +1,7 @@
 board_controller:
     resource:
-        path: ../src/Board/Application/Controller/
-        namespace: App\Board\Application\Controller
+        path: ../src/Dashboard/Board/Application/Controller/
+        namespace: App\Dashboard\Board\Application\Controller
     type: attribute
 
 account_controller:
