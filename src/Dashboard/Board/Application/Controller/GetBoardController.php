@@ -29,12 +29,12 @@ class GetBoardController extends AbstractController
     {
         $user = $this->dashboardService->findUser();
 
-        $findSingleBoardQuery = new FindBoardQuery(
+        $findBoardQuery = new FindBoardQuery(
             new BoardId($boardId),
             $user->id()
         );
 
-        $board = $this->queryBus->handle($findSingleBoardQuery);
+        $board = $this->queryBus->handle($findBoardQuery);
 
         $response = $this->normalizer->normalize($board);
 
