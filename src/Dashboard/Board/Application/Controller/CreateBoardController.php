@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Throwable;
 
-class PostBoardController extends AbstractController
+class CreateBoardController extends AbstractController
 {
     public function __construct(
         private readonly DashboardServiceInterface $dashboardService,

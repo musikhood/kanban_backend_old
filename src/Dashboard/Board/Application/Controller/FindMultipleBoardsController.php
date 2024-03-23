@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class GetMultipleBoardsController extends AbstractController
+class FindMultipleBoardsController extends AbstractController
 {
     public function __construct(
         private readonly DashboardServiceInterface $dashboardService,

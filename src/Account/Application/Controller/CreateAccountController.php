@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Throwable;
 
-class PostAccountController extends AbstractController
+class CreateAccountController extends AbstractController
 {
     public function __construct(
         private readonly CommandBusInterface $commandBus,

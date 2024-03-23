@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Throwable;
 
-class GetAccountController extends AbstractController
+class FindAccountController extends AbstractController
 {
     public function __construct(
         private readonly QueryBusInterface $queryBus,

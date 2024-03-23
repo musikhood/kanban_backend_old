@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Throwable;
 
-class GetBoardController extends AbstractController
+class FindBoardController extends AbstractController
 {
     public function __construct(
         private readonly DashboardServiceInterface $dashboardService,

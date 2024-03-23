@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Throwable;
 
-class PostColumnController extends AbstractController
+class CreateColumnController extends AbstractController
 {
     public function __construct(
         private readonly DashboardServiceInterface $dashboardService,
