@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Domain\ValueObject;
+namespace App\Shared\Domain\Entity\ValueObject;
 
 abstract class StringValueObject
 {

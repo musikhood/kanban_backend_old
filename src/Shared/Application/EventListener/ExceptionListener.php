@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Domain\EventListener;
+namespace App\Shared\Application\EventListener;
 
 use App\Shared\Domain\Exception\CustomException;
 use App\Shared\Domain\Exception\ExceptionHandler;

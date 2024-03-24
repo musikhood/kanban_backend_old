@@ -4,7 +4,7 @@ namespace App\Dashboard\User\Domain\Entity;
 
 use App\Account\Domain\Entity\AccountId;
 use App\Dashboard\User\Domain\Event\UserCreatedEvent;
-use App\Shared\Domain\Aggregate\AggregateRoot;
+use App\Shared\Domain\Entity\AggregateRoot;
 
 class User extends AggregateRoot
 {

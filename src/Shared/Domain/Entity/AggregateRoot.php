@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Domain\Aggregate;
+namespace App\Shared\Domain\Entity;
 
 use App\Shared\Domain\Event\DomainEventInterface;
 

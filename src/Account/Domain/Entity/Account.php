@@ -4,7 +4,7 @@ namespace App\Account\Domain\Entity;
 
 use App\Account\Domain\Event\AccountCreatedEvent;
 use App\Account\Infrastructure\Security\AccountAdapter;
-use App\Shared\Domain\Aggregate\AggregateRoot;
+use App\Shared\Domain\Entity\AggregateRoot;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;

@@ -10,7 +10,7 @@ use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnName;
 use App\Dashboard\Board\Domain\Event\BoardCreatedEvent;
 use App\Dashboard\Board\Domain\Exception\ColumnNotFoundException;
 use App\Dashboard\User\Domain\Entity\UserId;
-use App\Shared\Domain\Aggregate\AggregateRoot;
+use App\Shared\Domain\Entity\AggregateRoot;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 

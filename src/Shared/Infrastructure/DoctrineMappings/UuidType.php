@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure\DoctrineMappings;
 
-use App\Shared\Domain\ValueObject\Uuid;
+use App\Shared\Domain\Entity\ValueObject\Uuid;
 use App\Shared\Utils;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
