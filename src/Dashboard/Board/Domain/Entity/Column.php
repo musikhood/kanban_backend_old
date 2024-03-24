@@ -2,6 +2,10 @@
 
 namespace App\Dashboard\Board\Domain\Entity;
 
+use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnColor;
+use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnName;
+
 class Column
 {
     public function __construct(

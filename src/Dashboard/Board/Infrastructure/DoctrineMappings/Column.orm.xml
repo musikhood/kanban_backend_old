@@ -15,8 +15,8 @@
             <join-column nullable="false" />
         </many-to-one>
 
-        <embedded name="name" class="App\Dashboard\Board\Domain\Entity\ColumnName"  use-column-prefix="false" />
-        <embedded name="color" class="App\Dashboard\Board\Domain\Entity\ColumnColor"  use-column-prefix="false" />
+        <embedded name="name" class="App\Dashboard\Board\Domain\Entity\ValueObject\ColumnName"  use-column-prefix="false" />
+        <embedded name="color" class="App\Dashboard\Board\Domain\Entity\ValueObject\ColumnColor"  use-column-prefix="false" />
     </entity>
 
 </doctrine-mapping>

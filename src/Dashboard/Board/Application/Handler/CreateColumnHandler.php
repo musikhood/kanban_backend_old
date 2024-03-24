@@ -5,7 +5,7 @@ namespace App\Dashboard\Board\Application\Handler;
 use App\Dashboard\Board\Application\Model\Command\CreateColumnCommand;
 use App\Dashboard\Board\Application\Service\BoardServiceInterface;
 use App\Dashboard\Board\Domain\Entity\Column;
-use App\Dashboard\Board\Domain\Entity\ColumnId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnId;
 use App\Dashboard\Board\Domain\Repository\ColumnRepositoryInterface;
 use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use Ramsey\Uuid\Uuid;

@@ -2,8 +2,7 @@
 
 namespace App\Dashboard\Board\Application\Model\Query;
 
-use App\Account\Domain\Entity\AccountId;
-use App\Dashboard\Board\Domain\Entity\BoardId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardId;
 use App\Dashboard\User\Domain\Entity\UserId;
 use App\Shared\Application\Cqrs\QueryInterface;
 

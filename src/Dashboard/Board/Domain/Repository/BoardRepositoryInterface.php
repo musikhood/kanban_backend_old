@@ -3,7 +3,7 @@
 namespace App\Dashboard\Board\Domain\Repository;
 
 use App\Dashboard\Board\Domain\Entity\Board;
-use App\Dashboard\Board\Domain\Entity\BoardId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardId;
 use App\Dashboard\User\Domain\Entity\UserId;
 
 interface BoardRepositoryInterface

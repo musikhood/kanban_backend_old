@@ -2,9 +2,9 @@
 
 namespace App\Dashboard\Board\Application\Model\Command;
 
-use App\Dashboard\Board\Domain\Entity\BoardId;
-use App\Dashboard\Board\Domain\Entity\ColumnColor;
-use App\Dashboard\Board\Domain\Entity\ColumnName;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnColor;
+use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnName;
 use App\Dashboard\User\Domain\Entity\UserId;
 use App\Shared\Application\Cqrs\CommandInterface;
 

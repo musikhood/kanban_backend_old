@@ -2,7 +2,7 @@
 
 namespace App\Dashboard\Board\Domain\Event;
 
-use App\Dashboard\Board\Domain\Entity\ColumnName;
+use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnName;
 use App\Shared\Domain\Event\DomainEventInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 

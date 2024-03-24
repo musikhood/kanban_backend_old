@@ -4,10 +4,10 @@ namespace App\Dashboard\Board\Application\Controller;
 
 use App\Dashboard\Board\Application\Dto\UpdateColumnRequestDto;
 use App\Dashboard\Board\Application\Model\Command\UpdateColumnCommand;
-use App\Dashboard\Board\Domain\Entity\BoardId;
-use App\Dashboard\Board\Domain\Entity\ColumnColor;
-use App\Dashboard\Board\Domain\Entity\ColumnId;
-use App\Dashboard\Board\Domain\Entity\ColumnName;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnColor;
+use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnName;
 use App\Dashboard\Board\Domain\Redis\BoardRedisInterface;
 use App\Dashboard\Shared\Application\Service\DashboardServiceInterface;
 use App\Shared\Application\Bus\CommandBusInterface;

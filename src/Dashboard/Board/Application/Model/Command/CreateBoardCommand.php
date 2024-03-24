@@ -2,7 +2,7 @@
 
 namespace App\Dashboard\Board\Application\Model\Command;
 
-use App\Dashboard\Board\Domain\Entity\BoardName;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardName;
 use App\Dashboard\User\Domain\Entity\UserId;
 use App\Shared\Application\Cqrs\CommandInterface;
 

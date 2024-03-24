@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Dashboard\Board\Application\Dto;
-use App\Dashboard\Board\Domain\Entity\BoardId;
-use App\Dashboard\Board\Domain\Entity\BoardName;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardName;
 use App\Dashboard\User\Domain\Entity\UserId;
 
 readonly class BoardDto implements \JsonSerializable

@@ -4,7 +4,7 @@ namespace App\Dashboard\Board\Application\Controller;
 
 use App\Dashboard\Board\Application\Dto\CreateBoardRequestDto;
 use App\Dashboard\Board\Application\Model\Command\CreateBoardCommand;
-use App\Dashboard\Board\Domain\Entity\BoardName;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardName;
 use App\Dashboard\Board\Domain\Redis\BoardRedisInterface;
 use App\Dashboard\Shared\Application\Service\DashboardServiceInterface;
 use App\Shared\Application\Bus\CommandBusInterface;

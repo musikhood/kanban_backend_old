@@ -2,6 +2,11 @@
 
 namespace App\Dashboard\Board\Domain\Entity;
 
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardName;
+use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnColor;
+use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\ColumnName;
 use App\Dashboard\Board\Domain\Event\BoardCreatedEvent;
 use App\Dashboard\Board\Domain\Exception\ColumnNotFoundException;
 use App\Dashboard\User\Domain\Entity\UserId;

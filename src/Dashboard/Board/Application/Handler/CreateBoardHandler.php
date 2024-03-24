@@ -4,7 +4,7 @@ namespace App\Dashboard\Board\Application\Handler;
 
 use App\Dashboard\Board\Application\Model\Command\CreateBoardCommand;
 use App\Dashboard\Board\Domain\Entity\Board;
-use App\Dashboard\Board\Domain\Entity\BoardId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardId;
 use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
 use App\Shared\Application\Cqrs\CommandHandlerInterface;
 use Ramsey\Uuid\Uuid;

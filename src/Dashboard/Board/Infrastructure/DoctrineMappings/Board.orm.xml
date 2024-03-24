@@ -15,7 +15,7 @@
         </one-to-many>
 
         <field name="userId" column="user_id" type="user_id"/>
-        <embedded name="name" class="App\Dashboard\Board\Domain\Entity\BoardName"  use-column-prefix="false" />
+        <embedded name="name" class="App\Dashboard\Board\Domain\Entity\ValueObject\BoardName"  use-column-prefix="false" />
     </entity>
 
 </doctrine-mapping>

@@ -2,7 +2,7 @@
 
 namespace App\Dashboard\Board\Domain\Event;
 
-use App\Dashboard\Board\Domain\Entity\BoardName;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardName;
 use App\Shared\Domain\Event\DomainEventInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 

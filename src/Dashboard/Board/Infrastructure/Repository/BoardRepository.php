@@ -3,7 +3,7 @@
 namespace App\Dashboard\Board\Infrastructure\Repository;
 
 use App\Dashboard\Board\Domain\Entity\Board;
-use App\Dashboard\Board\Domain\Entity\BoardId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardId;
 use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
 use App\Dashboard\User\Domain\Entity\UserId;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

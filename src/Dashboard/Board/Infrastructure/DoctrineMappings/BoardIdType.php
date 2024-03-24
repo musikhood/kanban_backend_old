@@ -2,7 +2,7 @@
 
 namespace App\Dashboard\Board\Infrastructure\DoctrineMappings;
 
-use App\Dashboard\Board\Domain\Entity\BoardId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardId;
 use App\Shared\Infrastructure\DoctrineMappings\UuidType;
 
 class BoardIdType extends UuidType

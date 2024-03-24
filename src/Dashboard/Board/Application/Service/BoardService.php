@@ -5,7 +5,7 @@ namespace App\Dashboard\Board\Application\Service;
 use App\Dashboard\Board\Application\Dto\BoardDto;
 use App\Dashboard\Board\Application\Dto\ColumnDto;
 use App\Dashboard\Board\Domain\Entity\Board;
-use App\Dashboard\Board\Domain\Entity\BoardId;
+use App\Dashboard\Board\Domain\Entity\ValueObject\BoardId;
 use App\Dashboard\Board\Domain\Exception\BoardNotFoundException;
 use App\Dashboard\Board\Domain\Exception\PermissionDeniedException;
 use App\Dashboard\Board\Domain\Repository\BoardRepositoryInterface;
